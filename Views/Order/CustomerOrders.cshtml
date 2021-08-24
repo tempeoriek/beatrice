@@ -1,0 +1,164 @@
+﻿@model CustomerOrderListModel
+@{
+
+    //title
+    //Html.AddTitleParts(T("PageTitle.Account").Text);
+    Html.AddTitleParts("Order History");
+    //ViewBag.HideMenu = "true";
+    //ViewBag.HideDesktopMenu = "true";
+
+}
+
+@using Nop.Web.Models.Customer
+@using Nop.Web.Models.Order;
+
+<div class="col-main-setting" style="margin-top: 50px;">
+     <div class="mb-5">
+        <a href="/" style="color: #BCBCBC; font-size: 16px;">Home</a> / 
+        <a href="/customer/info" style="color: #BCBCBC; font-size: 16px;">Account</a> / 
+        <a id="setting-menu" href="/customer/info" style="color: #BCBCBC; font-size: 16px;">Setting</a>  
+    </div>
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div class="d-none d-md-block">
+                <p class="m-0 p-0" style="color: #525252; font-size: 16px;">Loyal Points</p>
+                <p class="abhaya m-0 p-0" style="color: #525252; font-size: 23px;">200 pts</p>
+                <br/><br/>
+                <a class="account-setting" href="@Url.RouteUrl("CustomerInfo")" style="color: #525252; font-size: 16px;">Settings</a><br/>
+                <a class="change-password-setting" href="@Url.RouteUrl("CustomerInfo")" style="color: #525252; font-size: 16px;">Change Password</a><br/>
+                <a class="address-setting" href="~/customer/addressAdd" style="color: #525252; font-size: 16px;">Address</a><br/>
+                <a class="order-setting" href="@Url.RouteUrl("CustomerOrders")" style="color: #525252; font-size: 16px;">Order History</a><br/>
+                <a class="wishlist-setting" href="@Url.RouteUrl("Wishlist")" style="color: #525252; font-size: 16px;">Wishlist</a><br/>
+                <a class="logout-setting" href="@Url.RouteUrl("Logout")" style="color: #525252; font-size: 16px;">Logout</a><br/>
+            </div>
+        </div>
+        <div class="col-12 col-sm-9 col-md-9">
+            <h1 id="page-title-desktop" class="mb-5 text-left d-none d-md-block">Order History</h1>
+            <h1 id="page-title-mobile" class="mb-3 text-center d-block d-md-none">Order History</h1>
+            <hr class="d-block d-md-none" style="margin: 1rem -100px;"/>
+
+            @if (Model.Orders.Count == 0)
+            {
+                @T("Account.CustomerOrders.NoOrders")
+            }
+            else
+            {
+                foreach (var order in Model.Orders) {
+                    <div class="row m-0 p-0" id="order-@order.Id">
+                        @* desktop *@
+                        <div class="mr-4 d-none d-md-block" style="width: 132px;">
+                            <img src="~/Themes/v1/Content/images/order-history.jpg" style="width: 100%;" />
+                        </div>
+                        <div class="d-none d-md-block" style="width: 220px;">
+                            <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Order ID: #@order.Id</p> 
+                            <p class="p-0 m-0" style="color: #525252; font-size: 16px;">(Ordered @string.Format("{0:dd / MM / yy}", order.CreatedOn))</p> 
+                            <p class="p-0 m-0" style="color: #525252; font-size: 16px; font-weight: 600;">Name Product</p> 
+                            <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Variant 1</p>
+                            <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Variant 2</p>
+                            <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Status: @order.OrderStatus</p>
+                            <button onclick="detailOpen(@order.Id)" type="submit" class="btn btn-default">Details</button>
+                        </div>
+
+                        @* mobile *@
+                        <div class="col-6 d-block d-md-none">
+                            <p class="p-0 m-0" style="color: #525252; font-size: 12px;">Order ID: #@order.Id</p> 
+                            <p class="p-0 m-0" style="color: #525252; font-size: 12px;">(Ordered @string.Format("{0:dd / MM / yy}", order.CreatedOn))</p> 
+                            <p class="p-0 m-0" style="color: #525252; font-size: 12px; font-weight: 600;">Name Product</p> 
+                            <p class="p-0 m-0" style="color: #525252; font-size: 12px;">Variant 1</p>
+                            <p class="p-0 m-0" style="color: #525252; font-size: 12px;">Variant 2</p>
+                            <p class="p-0 m-0" style="color: #525252; font-size: 12px;">Status: @order.OrderStatus</p>
+                       </div>
+                        <div class="col-6 d-block d-md-none d-flex justify-content-center align-items-center">
+                            <button onclick="detailOpen(@order.Id)" type="submit" class="btn btn-default">Details</button>
+                        </div>
+                    </div>
+                    <hr style="margin-bottom: 30px; margin-top: 30px;" id="hr-@order.Id"/>
+
+                    <div id="orderdetail-@order.Id" class="m-0 p-0" style="display: none;">
+                        <p class="p-0 m-0" style="color: #525252; font-size: 16px; font-weight: 600">Order #@order.Id is @order.OrderStatus</p>
+                        <hr style="margin-bottom: 10px; margin-top: 10px;"/>
+                        <div class="row m-0 p-0">
+                            <div class="mr-4" style="width: 122px;">
+                                <img src="~/Themes/v1/Content/images/order-history.jpg" style="width: 100%;" />
+                            </div>
+                            <div style="width: 220px;">
+                                <p class="p-0 m-0" style="color: #525252; font-size: 16px; font-weight: 600;">Name Product</p> 
+                                <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Variant 1</p>
+                                <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Variant 2</p>
+                                <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Qty</p>
+                                <p class="p-0 m-0 text-right" style="color: #525252; font-size: 16px;">@order.OrderTotal</p>
+                            </div>
+                        </div>
+                        <hr style="margin-bottom: 10px; margin-top: 10px;"/>
+                        <div class="row m-0 p-0">
+                            <div class="mr-4" style="width: 138px;">
+                                <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Subtotal:</p>
+                            </div>
+                            <div style="width: 220px;">
+                                <p class="p-0 m-0 text-right" style="color: #525252; font-size: 16px;">@order.OrderTotal</p>
+                            </div>
+                        </div>
+                        <hr style="margin-bottom: 10px; margin-top: 10px;"/>
+                        <div class="row m-0 p-0">
+                            <div class="mr-4" style="width: 138px;">
+                                <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Shipping:</p>
+                            </div>
+                            <div style="width: 220px;">
+                                <p class="p-0 m-0 text-right" style="color: #525252; font-size: 16px;">@order.OrderTotal</p>
+                            </div>
+                        </div>
+                        <hr style="margin-bottom: 10px; margin-top: 10px;"/>
+                        <div class="row m-0 p-0">
+                            <div class="mr-4" style="width: 138px;">
+                                <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Payment Method:</p>
+                            </div>
+                            <div style="width: 220px;">
+                                <p class="p-0 m-0 text-right" style="color: #525252; font-size: 16px;">@order.PaymentMethod</p>
+                            </div>
+                        </div>
+                        <hr style="margin-bottom: 10px; margin-top: 10px;"/>
+                        <div class="row m-0 p-0">
+                            <div class="mr-4" style="width: 138px;">
+                                <p class="p-0 m-0" style="color: #525252; font-size: 16px; font-weight: 600">Total:</p>
+                            </div>
+                            <div style="width: 220px;">
+                                <p class="p-0 m-0 text-right" style="color: #525252; font-size: 16px; font-weight: 600;">@order.OrderTotal</p>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+   let changeColor = window.location.pathname == `/customer/info` ? ".account-setting" : 
+        window.location.pathname == `/customer/addressAdd` ? ".address-setting" : 
+        window.location.pathname.includes(`/customer/addressedit`) ? ".address-setting" : 
+        window.location.pathname == `/customer/changepassword` ? ".change-password-setting" : 
+        window.location.pathname == `/order/history` ? ".order-setting" : 
+        window.location.pathname == `/customer/wishlist` ? ".wishlist-setting" : null;
+    $(`${changeColor}`).css("cssText", 'color: #E1C2A4 !important; font-size: 16px;');
+    let menuName = window.location.pathname == `/customer/info` ? "Settings" : 
+        window.location.pathname == `/customer/addressAdd` ? "Address" : 
+        window.location.pathname.includes(`/customer/addressedit`) ? "Edit Address" : 
+        window.location.pathname == `/customer/changepassword` ? "Change Password" : 
+        window.location.pathname == `/order/history` ? "Order" : 
+        window.location.pathname == `/customer/wishlist` ? "Wishlist" : null;
+    let urlMenu = window.location.pathname;
+    $('#setting-menu').attr("href", `${urlMenu}`);
+    $('#setting-menu').text(`${menuName}`);
+
+    function detailOpen(id) {
+        $(`#orderdetail-${id}`).css("cssText", 'display: block;');
+        $(`#hr-${id}`).css("cssText", 'display: none;');
+        $(`#order-${id}`).css("cssText", 'display: none;');
+        $('#page-title-desktop').text('Order Details');
+        $('#page-title-mobile').text('Order Details');
+    }
+
+	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	console.log(model);    
+</script>

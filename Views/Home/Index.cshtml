@@ -1,0 +1,315 @@
+﻿@model IEnumerable<Nop.Web.Models.Flitts.Homepage.HomepageViewModel>
+
+@{
+  Layout = "~/Views/Shared/_Layout.cshtml";
+  //LOGIC SUBSCRIBE KLO DI HOMEPAGE AJA
+}
+
+@* subcribe *@
+@Html.Partial("_Subcribe")
+
+<div class="">@Html.Action("HeaderLinks", "Common")</div>
+
+@if (Model != null)
+{
+  if (Model.Any())
+  {
+    foreach (var item in Model)
+    {
+      @* Slider *@
+      if (item.Id == 1)
+      {
+        <div class="container-fluid">
+          @if (item.DesktopItems.Any())
+          {
+            <div class="row d-none d-md-block hidden-xs hidden-sm">
+              <div class="col-12 d-block d-md-block">
+                <div class="position-relative">
+                  <a href="@item.DesktopItems[0].NavigateTo" class="">
+                    <img class="d-block w-100 bannerhomeheader" src="@item.DesktopItems[0].PictureUrl">
+                  </a>
+                </div>
+
+                <div class="title-inside-banner">
+                  @Html.Raw(item.DesktopItems[0].Title)
+                </div>
+                
+                @Html.Partial("_HomeCoupon")
+              </div>
+            </div>
+          }
+
+          @if (item.MobileItems.Any())
+          {
+            <div class="row d-block d-md-none hidden-md hidden-xl carousel slide">
+              <div class="position-relative">
+                <a href="@item.MobileItems[0].NavigateTo">
+                  <img class="d-block w-100" src="@item.MobileItems[0].PictureUrl">
+                </a>
+              </div>
+              <div class="title-inside-banner">
+                @Html.Raw(item.MobileItems[0].Title)
+              </div>
+              <div class="coupon-inside-banner">
+                @Html.Partial("_HomeCoupon")
+              </div>
+              
+            </div>
+
+          }
+
+          
+        </div>
+
+        @Html.Partial("_HomeFlashSale")
+        
+      }
+
+      @* row 2 *@
+      if (item.Id == 2)
+      {
+        if (item.DesktopItems.Any() && item.MobileItems.Any()) {
+          <hr class="mb-5"/>
+          <h1 class="text-center text-title-demo" style="font-size: 35px; color: #454545;">Shop by Categories</h1>
+          <div class="row p-5">
+            @for (int i = 0; i < item.DesktopItems.Count(); i++) {
+              if (i < 4) {
+                <div class="col-12 col-md-6 col-sm-6 text-center">
+                  <a href="@item.DesktopItems[i].NavigateTo" style="position: relative;">
+                    <img src="@item.DesktopItems[i].PictureUrl" class="img-fluid w-100 p-4" />
+                  </a>
+                  <h1 style="display: flex; position: absolute; justify-content: center; width: 100%; top: 0; align-items: center; height: 100%;">
+                    <a href="@item.DesktopItems[i].NavigateTo" style="text-decoration: none; color: white; font-size: 35px;">
+                      @item.DesktopItems[i].Title
+                    </a>
+                  </h1>
+                </div>
+              }
+
+            }
+          </div>
+        }
+      }
+
+    }
+  }
+}
+
+@Html.Partial("_HomeComingSoon")
+<hr class="mb-5"/>
+@Html.Partial("_HomeBestSeller")
+
+<section>
+  <div class="row" style="margin-top: 5%;">
+    <div class="col-12 col-md-12 col-sm-12" style="height: inherit">
+      <h1 class="text-center text-title-demo" style="font-size: 30px;">#iwearbeatrice</h1>
+    </div>
+  </div>
+
+  <div class="d-none d-md-block hidden-xs hidden-sm">
+    <div class="row p-5">
+      @for (int j = 0; j < 4; j++) {
+        <div class="col-6 col-sm-3 col-md-3 text-center p-2">
+          <img src="~/Themes/v1/Content/images/ig-home.png" style="height: 100%; width: 100%; padding: 0 2.5rem;">
+        </div>
+      }
+        @* <div id="feedig" /> *@
+    </div>
+  </div>
+
+  <div class="d-block d-md-none hidden-md hidden-xl mt-5 mb-5">
+    <div style="overflow-x: scroll;">
+      <div style="width: 1000px; margin-left: 35px;">
+        @for (int j = 0; j < 3; j++) {
+          <img src="~/Themes/v1/Content/images/ig-home.png" style="padding: 5px;">
+        }
+      </div>
+    </div>
+  </div>
+  <hr class="mb-2 d-block d-md-none hidden-md hidden-xl"/>
+</section>
+
+
+<input type="hidden" id="flag" value="0" />
+
+@Html.Action("Footer", "Common")
+
+@section RootHeaderSection{
+
+  <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick.css">
+  <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick-theme.css">
+
+  <link href="~/Themes/v1/Content/homepage.css" rel="stylesheet" />
+
+  <style>
+    .col-12, .col-6 {
+      padding: 0 !important;
+    }
+  </style>
+}
+
+@section RootScripts{
+
+  <script>
+    
+    $(document).ready(function () {
+      $('.carousel').carousel({
+        touch: true
+      });
+
+    });
+
+  </script>
+
+  <script src="~/Scripts/app/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+  <script src="~/Scripts/app/InstaGet/js/instaget-min.js"></script>
+
+  <script>
+    
+
+     $(document).ready(function () {
+      $('.carouselhero').slick({
+        slidesToShow: 1,
+        dots: false,
+        centerMode: false,
+        arrows: false,
+        autoplay: true,
+        autoplaySpeed: 2000,
+      });
+    });
+    $(document).ready(function () {
+      $('.carouselhero2').slick({
+        slidesToShow: 1,
+        dots: false,
+        centerMode: false,
+        arrows: false,
+      });
+    });
+    $(document).ready(function () {
+      $('.carouseldesktop').slick({
+        slidesToShow: 4,
+        centerMode: false,
+      });
+    });
+
+    $(document).ready(function () {
+      $('.carouseldesktopig').slick({
+        slidesToShow: 4,
+        dots: false,
+        centerMode: false,
+        arrows: false,
+        autoplay: true,
+        autoplaySpeed: 2000,
+      });
+    });
+    $(document).ready(function () {
+      $('.carouselmobile').slick({
+        slidesToShow: 1.5,
+        dots: false,
+        centerMode: false,
+        arrows: false,
+      });
+    });
+
+    $(document).ready(function () {
+      $('.carouselmobileig').slick({
+        slidesToShow: 1,
+        dots: false,
+        centerMode: false,
+        arrows: false,
+      });
+    });
+    $('.prevslider').click(function () {
+      $('.carouseldesktop.coming-soon').slick('slickPrev');
+    })
+
+    $('.nextslider').click(function () {
+      $('.carouseldesktop.coming-soon').slick('slickNext');
+    })
+    $('.leftslider').click(function () {
+      $('.carouselmobile.coming-soon').slick('slickPrev');
+    })
+
+    $('.rightslider').click(function () {
+      $('.carouselmobile.coming-soon').slick('slickNext');
+    })
+    $('.prevsliderbest').click(function () {
+      $('.carouseldesktop.best-seller').slick('slickPrev');
+    })
+    $('.nextsliderbest').click(function () {
+      $('.carouseldesktop.best-seller').slick('slickNext');
+    })
+    $('.leftsliderbest').click(function () {
+      $('.carouselmobile.best-seller').slick('slickPrev');
+    })
+
+    $('.rightsliderbest').click(function () {
+      $('.carouselmobile.best-seller').slick('slickNext');
+    })
+    
+    
+  </script>
+}
+<script>
+  $(".close-subcribe").click(function () {
+    $('.modal-subcribe').attr('style', 'display: none !important');
+    $('.modal-subcribe-mobile').attr('style', 'display: none !important');
+    $(".aside-backdrop").removeClass("in");
+    $('.aside-backdrop').attr('style', 'z-index: -1 !important');
+  });
+  /*new instaGet('#feedig', {
+    token: 'IGQVJYUDRobEs5aV9nM3RUVW5Pbk1pS1hkcDlQZAndDU1lHZAUNvTUhLMHhTb3RKMjNEYVFpb0FEQWUzMFVxVmFpS0wtNGdhQnh1clFzWTFNcDVyOWppM2hPOEZAmQ3BqUy1ab0s4dTA5eGdRM2NWSFJEWQZDZD',
+    counter: 4,
+    numcol: 4,
+    moreBtn: false,
+    info: false,
+    width: '100%',
+    height: '100%',
+  });
+  setTimeout(() => {
+    $('div[class*="ig-instagram-items"]').addClass('row')
+    $('.ig-instagram-item').addClass('col-4 col-md-4 col-sm-4 p-1')
+    $('div.ig-instagram-item a').addClass('ig-inherit')
+    $('div.ig-instagram-item img').addClass('img-fluid ig-inherit')
+  }, 1700)*/
+    
+  // Set the date we're counting down to
+  var countDownDate = new Date("Aug 20, 2021 15:37:25").getTime();
+  var countDownDate2 = new Date("Aug 20, 2021 15:37:25").getTime();
+
+  // Update the count down every 1 second
+  var x = setInterval(function() {
+
+    // Get today's date and time
+    var now = new Date().getTime();
+      
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+    var distance2 = countDownDate2 - now;
+      
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    var days = Math.floor(distance2 / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance2 % (1000 * 60)) / 1000);
+      
+    // Output the result in an element with id="demo"
+    document.getElementById("demo").innerHTML = "Ends in   " + days + " : " + hours + " : " + minutes + " : " + seconds ;
+    document.getElementById("demo2").innerHTML = "Available in   " + days + " : " + hours + " : " + minutes + " : " + seconds ;
+      
+    // If the count down is over, write some text 
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("demo").innerHTML = "EXPIRED";
+      document.getElementById("demo2").innerHTML = "EXPIRED";
+    }
+  }, 1000);
+	//console.log(`HOME`);
+	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	//console.log(model);    
+</script>

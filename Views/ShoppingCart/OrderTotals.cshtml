@@ -1,0 +1,179 @@
+﻿@model OrderTotalsModel
+@using Nop.Web.Models.ShoppingCart;
+
+@{
+    string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
+
+}
+@* <div class="summary-total">
+    <div class="total-row-left">
+        <h4>@T("ShoppingCart.Totals.SubTotal")</h4>
+        @if (!String.IsNullOrEmpty(Model.SubTotalDiscount))
+        {
+            <h4 class="order-subtotal-discount">@T("ShoppingCart.Totals.SubTotalDiscount")</h4>
+        }
+        
+        <h4>@T("ShoppingCart.Totals.Shipping")
+            @if (Model.RequiresShipping && !String.IsNullOrEmpty(Model.SelectedShippingMethod))
+            {
+                <span class="selected-shipping-method">@T("ShoppingCart.Totals.Shipping.Method", Model.SelectedShippingMethod)</span>
+            }
+        </h4>
+
+        @if (!String.IsNullOrEmpty(Model.PaymentMethodAdditionalFee)){
+            <h4 class="additional-fees">@T("ShoppingCart.Totals.PaymentMethodAdditionalFee")</h4>
+        }
+
+        @if (!String.IsNullOrEmpty(Model.OrderTotalDiscount))
+        {
+            <h4 class="discount-total">@T("ShoppingCart.Totals.OrderTotalDiscount")
+            @if (Model.AllowRemovingOrderTotalDiscount){
+            }
+            </h4>
+        }
+
+        @if (Model.GiftCards.Count > 0)
+        {
+
+            foreach (var gc in Model.GiftCards)
+            {
+                <h4 class="giftcard-summary">
+                        @if (Model.IsEditable)
+                        {
+                            //little hack here with empty "value" element
+                            <input type="submit" name="removegiftcard-@gc.Id" value="[ X ]" title="@T("Common.Remove")" class="remove-gift-card-button" />
+                        }
+
+                        @T("ShoppingCart.Totals.GiftCardInfo")
+                        <span>@T("ShoppingCart.Totals.GiftCardInfo.Code", gc.CouponCode)</span>
+
+                        <span class="giftcard-remaining">@string.Format(T("ShoppingCart.Totals.GiftCardInfo.Remaining").Text, gc.Remaining)</span>
+                    </h4>
+             }
+        }
+
+    </div>
+    <div class="total-row-right">
+        <h4>@Model.SubTotal</h4>
+        @if (!String.IsNullOrEmpty(Model.SubTotalDiscount)){
+            if (Model.AllowRemovingSubTotalDiscount){
+            /*empty value (little hack for FormValueExistsAttribute)*/
+            }
+        <h4><span class="value-summary">@Model.SubTotalDiscount</span></h4>
+        }
+
+        <h4>
+            @if (Model.RequiresShipping)
+            {
+                if (!String.IsNullOrEmpty(Model.Shipping))
+                {
+                    if (@Model.Shipping.Length <= 4)
+                    {
+                        <span class="value-summary">-</span>
+                    }
+                    else
+                    {
+                        <span class="value-summary">@Model.Shipping</span>
+                    }
+
+
+                }
+                else
+                {
+                    <span>@T("ShoppingCart.Totals.CalculatedDuringCheckout")</span>
+                }
+            }
+            else
+            {
+                <span>@T("ShoppingCart.Totals.Shipping.NotRequired")</span>
+            }
+        </h4>
+     
+        @if (!String.IsNullOrEmpty(Model.PaymentMethodAdditionalFee)){
+        <h4><span class="value-summary">@Model.PaymentMethodAdditionalFee</span></h4>
+        }
+
+        @if (!String.IsNullOrEmpty(Model.OrderTotalDiscount))
+            {
+            <h4><span class="value-summary">@Model.OrderTotalDiscount</span></h4>
+        }
+
+        @if (Model.GiftCards.Count > 0)
+            {
+                foreach (var gc in Model.GiftCards)
+                {
+                    <h4><span class="value-summary">@gc.Amount</span></h4>
+                }
+            }
+
+    </div>
+</div>
+<div style="border-top:1px solid #000; width:100%; margin:auto;"></div>
+<div class="summary-total">
+    <div class="total-row-left">
+        <h4 class="total-amount">@T("ShoppingCart.Totals.OrderTotal").ToString().ToUpper()</h4>
+    </div>
+    <div class="total-row-right">
+        <h4 class="total-amount">@if (!String.IsNullOrEmpty(Model.OrderTotal)) {
+            <span class="value-summary">@Model.OrderTotal</span>
+        }
+        else
+        {
+            <span>@T("ShoppingCart.Totals.CalculatedDuringCheckout")</span>
+        }</h4>
+    </div>
+</div> *@
+
+<div style="margin: 10px 0; border: 1px solid #707070; padding: 20px; background-color: #E5E3DF4D;">
+    <p style="color: #454545; font-size: 16px; font-weight: bold;">ORDER SUMMARY</p>
+    <div style="width: 100%; display: flow-root">
+        <p style="float: left; color: #454545; font-size: 16px;">Subtotal</p>
+        <p style="float: right; color: #454545; font-size: 16px;">@Model.SubTotal</p>
+    </div>
+    <div style="width: 100%; display: flow-root">
+        <p style="float: left; color: #454545; font-size: 16px;">Shipping Cost</p>
+        <p style="float: right; color: #454545; font-size: 14px;">Calculated during checkout</p>
+    </div>
+    <div style="width: 100%; display: flow-root">
+        <p style="float: left; color: #454545; font-size: 16px;">Discount</p>
+        <p style="float: right; color: #454545; font-size: 14px;">Calculated during checkout</p>
+    </div>
+    <hr class="mb-3 mt-3" style="margin: -7%">
+    <div style="width: 100%; display: flow-root">
+        <b style="float: left; color: #454545; font-size: 16px;">Grand Total</b>
+        <b style="float: right; color: #454545; font-size: 14px;">Calculated during checkout</b>
+    </div>
+
+    @if(absolutepath.Contains("/cart")) {
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#checkout').click(function () {
+                    //terms of service
+                    var termOfServiceOk = true;
+                    if ($('#termsofservice').length > 0) {
+                        //terms of service element exists
+                        if (!$('#termsofservice').is(':checked')) {
+                            $("#terms-of-service-warning-box").dialog();
+                            termOfServiceOk = false;
+                        } else {
+                            termOfServiceOk = true;
+                        }
+                    }
+                    return termOfServiceOk;
+                });
+            });
+        </script>
+
+        <button type="submit" id="checkout" name="checkout" value="checkout" class="mt-3 btn btn-default" style="width: 100%;">Checkout ></button>
+    } else {
+        <input type="button" style="width: 100%;"  class="mt-3 btn btn-default confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="Checkout" />
+        <span class="please-wait" id="confirm-order-please-wait" style="display: none;">@T("Checkout.SubmittingOrder")</span>
+    }
+</div>
+
+
+<script>
+	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	//console.log(model);    
+</script>

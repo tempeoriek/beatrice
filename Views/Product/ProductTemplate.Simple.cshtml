@@ -1,0 +1,355 @@
+﻿@model ProductDetailsModel
+@using Nop.Core
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Services.Localization;
+@using Nop.Web.Models.Catalog;
+@{
+  //Layout = "~/Views/Shared/_LayoutTwo.cshtml";
+
+  //title, meta
+  Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+  Html.AddMetaDescriptionParts(Model.MetaDescription);
+  Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+  var seoSettings = EngineContext.Current.Resolve<SeoSettings>();
+
+  //canonical URL
+  if (seoSettings.CanonicalUrlsEnabled)
+  {
+    var productUrl = Url.RouteUrl("Product", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+    Html.AddCanonicalUrlParts(productUrl);
+  }
+
+  //open graph META tags
+  if (seoSettings.OpenGraphMetaTags)
+  {
+    var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+    Html.AddHeadCustomParts("<meta property=\"og:type\" content=\"product\" />");
+    Html.AddHeadCustomParts("<meta property=\"og:title\" content=\"" + Html.Encode(Model.Name) + "\" />");
+    Html.AddHeadCustomParts("<meta property=\"og:description\" content=\"" + Html.Encode(Model.MetaDescription) + "\" />");
+    Html.AddHeadCustomParts("<meta property=\"og:image\" content=\"" + Model.DefaultPictureModel.ImageUrl + "\" />");
+    Html.AddHeadCustomParts("<meta property=\"og:url\" content=\"" + Request.Url.AbsoluteUri + "\" />");
+    Html.AddHeadCustomParts("<meta property=\"og:site_name\" content=\"" + Html.Encode(storeName) + "\" />");
+  }
+
+  //Twitter META tags
+  if (seoSettings.TwitterMetaTags)
+  {
+    var storeName = EngineContext.Current.Resolve<IStoreContext>().CurrentStore.GetLocalized(x => x.Name);
+    Html.AddHeadCustomParts("<meta property=\"twitter:card\" content=\"summary\" />");
+    Html.AddHeadCustomParts("<meta property=\"twitter:site\" content=\"" + Html.Encode(storeName) + "\" />");
+    Html.AddHeadCustomParts("<meta property=\"twitter:title\" content=\"" + Html.Encode(Model.Name) + "\" />");
+    Html.AddHeadCustomParts("<meta property=\"twitter:description\" content=\"" + Html.Encode(Model.MetaDescription) + "\" />");
+    Html.AddHeadCustomParts("<meta property=\"twitter:image\" content=\"" + Model.DefaultPictureModel.ImageUrl + "\" />");
+    Html.AddHeadCustomParts("<meta property=\"twitter:url\" content=\"" + Request.Url.AbsoluteUri + "\" />");
+  }
+}
+
+
+
+
+<div class="container product-detail" style="margin-top: -1%;">
+  <div class="row" style="margin-top: 5%;">
+    <div class="col-12 col-sm-7 col-md-7">
+      @Html.Partial("_ProductDetailsPictures", Model)
+    </div>
+
+    <div class="col-12 col-sm-5 col-md-5 p-4">
+      @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
+        {
+          @* FOR FLASH SALE *@
+          @* <div class="row" style="background-color: #9D3131; height: 50px; margin-bottom: 10% !important">
+            <div class="col-6 d-flex justify-content-start align-items-center">
+              <span class="worksans-medium" style="color: white; font-size: 16px;">FLASH SALE</span>
+            </div>
+            <div class="col-6 d-flex justify-content-end align-items-center">
+              <span class="worksans-reg" style="font-style: italic; color: white; font-size: 16px;" id="demo" />
+            </div>
+          </div> *@
+
+          @* FOR WEBHUNT *@
+          @* <div class="row" style="background-color: #D8C7BD; height: 50px; margin-bottom: 10% !important">
+            <div class="col-5 d-flex justify-content-start align-items-center">
+              <span class="worksans-medium" style="color: white; font-size: 16px;">COMMING SOON</span>
+            </div>
+            <div class="col-7 d-flex justify-content-end align-items-center">
+              <span class="worksans-reg" style="font-style: italic; color: white; font-size: 16px;" id="demo2" />
+            </div>
+          </div> *@
+
+
+          <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id" style="margin-top: 5%;">
+            <h1 class="worksans-medium" itemprop="name" style="font-size: 20px; color: #525252; margin-bottom: 1%; text-align: center; text-transform: uppercase;">@Model.Name</h1>
+            @{
+              var dataDictPrice = new ViewDataDictionary();
+              dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
+              
+              if (Model.AddToCart.AvailableForPreOrder) {
+                <div class="description" style="color: black;">
+                  PRE-ORDER
+                </div>
+              } else {
+                <div class="d-flex justify-content-center align-items-center">
+                  @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
+                </div>
+              }
+            }
+
+
+            @{
+              //notify me if oos
+              var totalstock = 0;
+              if (Model.ProductAttributeCombinations.Count() == 0) {
+                totalstock = 1;
+              } else {
+                foreach (var pa in Model.ProductAttributes)
+                {
+                  foreach (var s in pa.Values)
+                  {
+                    totalstock += s.VariantStockQuantity;
+                  }
+                }
+              }
+
+              if (totalstock == 0) {
+                <p class="text-center" style="color: #9D3131; font-weight: bold; font-size: 16px;">
+                  Out of stock
+                </p>
+              }
+            
+              
+              <div class="row no-gutters pt-4">
+                @if (Model.ProductAttributeCombinations.Count() > 0) {
+                  <div class="col-12">
+                    @{
+                      var dataDictAttributes = new ViewDataDictionary();
+                      dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
+                      @Html.Partial("_ProductAttributes", Model.ProductAttributes, dataDictAttributes)}
+                  </div>
+                } else {
+                  <div class="col-12">
+                    @{
+                      var dataDictAttributes = new ViewDataDictionary();
+                      dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
+                      @Html.Partial("_ProductAttributes", Model.ProductAttributes, dataDictAttributes)}
+                  </div>
+                }
+                
+                @if (totalstock == 0) {
+                    <button disabled type="button"class="btn-addcart-disabled">
+                      <span>Add to Shopping Bag</span>
+                    </button>
+                } else {
+                  var dataDictAddToCart = new ViewDataDictionary();
+                  dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
+                  @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)
+                  var dataDictAddToWishlist = new ViewDataDictionary();
+                  dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
+                  @Html.Partial("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
+                }
+                
+              </div>
+
+              @* description 2 *@
+              <div>
+                <ul class="nav nav-pills-product mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item" style="margin-right: 10px;">
+                    <a class="nav-link-product worksans-medium active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                      Details
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link-product worksans-medium" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                      Info
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="text-product-detail tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    @Html.Raw(Model.FullDescription)
+                  </div>
+                  <div class="text-product-detail tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    @Model.ShortDescription
+                  </div>
+                </div>
+              </div>
+
+              if (totalstock == 0) {
+                <div class="d-flex justify-content-start align-items-center">
+                  <span class="worksans-reg" style="font-size: 14px; color: #9D5D3E;">Get an alert when the product is in stock:</span>
+                </div>
+                <div class="d-flex justify-content-start align-items-center mb-4">
+                  <div id="nieuwsbrief" style="width: 80%;">
+                    <form action="" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                      <div class="form-group justify-content-center mb-4 mb-md-0" style="vertical-align:top;">
+                        <input id="mce-EMAIL" class="email form-footer" type="email" style="border-bottom: 1px solid #9D5D3E; color: #9D5D3E; padding: 15px 0; background-color: white;" name="EMAIL" placeholder="Enter your e-mail" value="" required="required" />
+                        <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_0713301c8224b9979b17bdd9b_0e2ea9797e" tabindex="-1" value=""></div>
+                      </div>
+                      <br>
+                      <button id="mc-embedded-subscribe" style="width: 98%; height: 45px; margin: 0 !important; border: 1px solid #9D5D3E;" type="submit" name="subscribe" value="">
+                        <span style="color: #9D5D3E; font-weight: bold;">Notify Me!</span>
+                      </button>
+                    </form>
+                    <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+                    <script type='text/javascript'>(function ($) { window.fnames = new Array(); window.ftypes = new Array(); fnames[0] = 'EMAIL'; ftypes[0] = 'email'; fnames[1] = 'FNAME'; ftypes[1] = 'text'; fnames[2] = 'LNAME'; ftypes[2] = 'text'; }(jQuery)); var $mcj = jQuery.noConflict(true);</script>
+                  </div>
+                  <div id="nieuwsbrief-msg" style="display:none;">
+                    Thank you for subscribing!
+                  </div>
+                </div>
+              }
+
+              <div class="d-flex justify-content-start align-items-center">
+                <span class="worksans-medium" style="color: #454545; font-size: 16px; font-weight: bold; margin-right: 10px;">SHARE</span>
+                <a style="margin-right: 10px;" href="https://www.instagram.com/beatriceclothing/">
+                  <img src="~/Themes/v1/Content/images/ig.svg" />
+                </a>
+                <a style="margin-right: 10px;" href="https://www.facebook.com/BeatriceClothing/">
+                  <img src="~/Themes/v1/Content/images/fb.svg" />
+                </a>
+                <a style="margin-right: 10px; cursor: pointer;" onclick="copyUrl()">
+                  <img src="~/Themes/v1/Content/images/share.svg" />
+                </a>
+              </div>
+            }
+            
+          </div>
+        }
+    </div>
+  </div>
+  
+
+
+</div>
+
+@* Related Products Desktop *@
+@Html.Action("RelatedProducts", "Product", new {productId = Model.Id})
+@Html.Action("RelatedProducts", "Product", new {productId = Model.Id})
+
+  <script>
+    function copyUrl() {
+      var dummy = document.createElement('input'),
+        text = window.location.href;
+      document.body.appendChild(dummy);
+      dummy.value = text;
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+      alert("Copied")
+    }
+
+    $(document).ready(function () {
+      $('.carousel').carousel({
+        touch: true
+      });
+
+    });
+
+  </script>
+  <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick.css">
+  <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick-theme.css">
+  <link href="~/Themes/v1/Content/homepage.css" rel="stylesheet" />
+  <script src="~/Scripts/app/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    $(document).ready(function () {
+      $('.carouselhero').slick({
+        slidesToShow: 1,
+        dots: false,
+        centerMode: false,
+        arrows: false,
+        autoplay: true,
+        autoplaySpeed: 2000,
+      });
+    });
+    $(document).ready(function () {
+      $('.carouselhero2').slick({
+        slidesToShow: 2,
+        dots: false,
+        centerMode: false,
+        arrows: false,
+      });
+    });
+    $(document).ready(function () {
+      $('.carouseldesktoprelated').slick({
+        slidesToShow: 4,
+        dots: false,
+        centerMode: false,
+      });
+    });
+    $(document).ready(function () {
+      $('.carouselmobile').slick({
+        slidesToShow: 2,
+        dots: false,
+        centerMode: false,
+      });
+    });
+
+    $('.prevslider').click(function () {
+      $('.carouseldesktoprelated').slick('slickPrev');
+    })
+
+    $('.nextslider').click(function () {
+      $('.carouseldesktoprelated').slick('slickNext');
+    })
+
+    $('.leftslidermobile').click(function () {
+      $('.carouselmobile').slick('slickPrev');
+    })
+
+    $('.rightslidermobile').click(function () {
+      $('.carouselmobile').slick('slickNext');
+    })
+
+    $('.add').click(function () {
+      if ($(this).prev().val() < 9) {
+        $(this).prev().val(+$(this).prev().val() + 1);
+      }
+    });
+    $('.sub').click(function () {
+      if ($(this).next().val() > 1) {
+        if ($(this).next().val() > 1) $(this).next().val(+$(this).next().val() - 1);
+      }
+    });
+
+    function btnclick() {
+      if ($(".btn-addcart").innerHTML == "ADD TO BAG") {
+        $(".btn-addcart").innerHTML = "✓ SEE BAG";
+      }
+      else {
+        $(".btn-addcart").innerHTML = "ADD TO BAG";
+      }
+    }
+    //console.log(`PRODUCT DETAIL`);
+    var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+    //console.log(model);    
+
+    var countDownDate = new Date("Aug 20, 2021 15:37:25").getTime();
+    var countDownDate2 = new Date("Aug 20, 2021 15:37:25").getTime();
+    var x = setInterval(function() {
+      var now = new Date().getTime();
+      var distance = countDownDate - now;
+      var distance2 = countDownDate2 - now;
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      var days2 = Math.floor(distance2 / (1000 * 60 * 60 * 24));
+      var hours2 = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
+      //document.getElementById("demo").innerHTML = "Ends in   " + days + " : " + hours + " : " + minutes + " : " + seconds ;
+      //document.getElementById("demo2").innerHTML = "Available in   " + days2 + " : " + hours2 + " : " + minutes2 + " : " + seconds2 ;
+      if (distance < 0) {
+        clearInterval(x);
+        //document.getElementById("demo").innerHTML = "EXPIRED";
+      }
+      if (distance2 < 0) {
+        clearInterval(x);
+        //document.getElementById("demo2").innerHTML = "EXPIRED";
+      }
+  }, 1000);
+
+  var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	console.log(model);
+  </script>

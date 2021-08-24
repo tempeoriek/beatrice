@@ -1,0 +1,335 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="">@Html.Action("HeaderLinks", "Common")</div>
+
+
+@*<div class="row mt-5">
+        <a href="/tops" class="col-6 home-catalogue position-relative">
+            <img src="~/content/images/uploaded/homepage/1.png" class="img-fluid w-100 h-100 homeimg" />
+            <div class="hover-hometxt">
+                <h1 class="big position-absolute mon-light" style="color:#707070;">NEW BRAND OTTSUI</h1>
+                <div class="d-none d-md-block">
+                    <div class="d-flex position-absolute" style="right: 20px; bottom: 10px;">
+                        <h2 class="pr-3 mon-light">SHOP COLLECTION </h2>
+                        <div><img class="pt-4" src="~/Themes/v1/Content/images/arrow.png" /></div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <a href="/bottoms" class="col-6 home-catalogue position-relative">
+            <img src="~/content/images/uploaded/homepage/2.png" class="img-fluid w-100 h-100 homeimg" />
+            <div class="hover-hometxt">
+                <h1 class="big position-absolute mon-light" style="color:#707070;">NEW BRAND OTTSUI</h1>
+                <div class="d-none d-md-block">
+                    <div class="d-flex position-absolute" style="right: 20px; bottom: 10px;">
+                        <h2 class="pr-3 mon-light">SHOP COLLECTION </h2>
+                        <div><img class="pt-4" src="~/Themes/v1/Content/images/arrow.png" /></div>
+                    </div>
+                    </div>
+                </div>
+        </a>
+    </div>*@
+<section class="container mt-5 pt-5">
+    <div class="row position-relative">
+        <div class="col-12 text-center hero d-none d-lg-block" style="background-image:url('/Content/images/uploaded/homepage/main.jpg'); background-position:center center; background-size:cover"></div>
+        <div class="col-12 text-center hero d-lg-none" style="background-image:url('/Content/images/uploaded/homepage/main-mobile.jpg'); background-position:center center; background-size:cover"></div>
+
+        @*<div class="hero-text"><h1 class="font-italic">New Arrival</h1><h6 class="work" style="line-height:16px;">Lorem ipsum dolor sit amet, consetetur <br />sadipscing elitr, sed diam.</h6><button class="mt-4 button_sare">Start Shopping</button></div>*@
+    </div>
+</section>
+
+
+@*@Html.Action("HomepageCategories", "Catalog")*@
+
+<div class="container mt-3">
+    <div class="row pt-2">
+        <div class="col-12 col-md-6 position-relative home-box">
+            <img src="~/content/images/uploaded/homepage/apparel.jpg" class="img-fluid w-100 pl-3 pr-3 pl-md-0 pr-md-0" />
+            <div class="caption-top font-italic"><h2>Apparel</h2></div>
+            <div class="caption-bottom"><a href="~/apparel"><h6 class="work">Shop Apparel</h6></a></div>
+        </div>
+        <div class="col-6 col-md-3 position-relative home-box pt-2 pt-md-0 pr-1 pr-md-3">
+            <img src="~/content/images/uploaded/homepage/Accessories.jpg" class="img-fluid w-100 h-100 pl-3 pl-md-0" />
+            <div class="caption-top font-italic"><h2>Accessories</h2></div>
+            <div class="caption-bottom"><a href="~/accessories"><h6 class="work">Shop Accessories</h6></a></div>
+        </div>
+        <div class="col-6 col-md-3 position-relative home-box pt-2 pt-md-0 pl-1 pl-md-3">
+            <img src="~/content/images/uploaded/homepage/supplement.jpg" class="img-fluid w-100 h-100 pr-3 pr-md-0" />
+            <div class="caption-top caption__colright font-italic"><h2>Supplement</h2></div>
+            <div class="caption-bottom caption__colright"><a href="~/supplement"><h6 class="work">Shop Supplement</h6></a></div>
+        </div>
+    </div>
+    <div class="row mt-2 mt-md-4">
+        <div class="col-12 col-md-6 position-relative home-box">
+            <img src="~/content/images/uploaded/homepage/bodycare.jpg" class="img-fluid w-100 pl-3 pl-md-0 pr-3 pr-md-0" />
+            <div class="caption-top font-italic"><h2>Bodycare</h2></div>
+            <div class="caption-bottom"><a href="~/bodycare"><h6 class="work">Shop Bodycare</h6></a></div>
+        </div>
+        <div class="col-12 col-md-6 position-relative home-box mt-2 mt-md-0">
+            <img src="~/content/images/uploaded/homepage/Equipment.jpg" class="img-fluid w-100 pl-3 pl-md-0 pr-3 pr-md-0" />
+            <div class="caption-top font-italic"><h2>Equipment</h2></div>
+            <div class="caption-bottom"><a href="~/Equipment"><h6 class="work">Shop Equipment</h6></a></div>
+        </div>
+    </div>
+</div>
+
+@*<div class="container mt-3">
+        <div class="row pt-2">
+            <div class="col-12">
+                <img src="~/content/images/uploaded/homepage/home_img2.png" class="img-fluid w-100 pl-3 pl-md-0 pr-3 pr-md-0" />
+            </div>
+        </div>
+    </div>*@
+
+@*<section class="pb-0 pt-0 pb-md-5 pt-md-5">
+        <div class="best-selling row d-flex justify-content-center mt-5">
+            <h2 class="font-italic">Best Seller</h2>
+        </div>
+        <div class="best-selling row d-flex justify-content-center">
+            <p class="work">Our popular products this month</p>
+        </div>
+        <div class="container mt-5">
+            <div class="row d-flex">
+                <div class="d-none d-md-block col-md-3">
+                    <a href="#"><img src="~/content/images/uploaded/homepage/12B.png" class="img-fluid w-100 h-100" alt=""></a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a href="#"><img src="~/content/images/uploaded/homepage/20A.png" class="img-fluid w-100 h-100 pl-3 pl-md-0" alt=""></a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a href="#"><img src="~/content/images/uploaded/homepage/23A.png" class="img-fluid w-100 h-100 pr-3 pr-md-0"></a>
+                </div>
+                <div class="d-none d-md-block col-md-3">
+                    <a href="#"><img src="~/content/images/uploaded/homepage/25A.png" class="img-fluid w-100 h-100"></a>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-4" style="line-height:10px;">
+                <div class="col-md-3 d-none d-md-block">
+                    <h6>BUTTERFLY ONESIES</h6>
+                    <p>IDR 199.000</p>
+                </div>
+                <div class="col-6 col-md-3">
+                    <h6 class="pl-3 pl-md-0">BUTTERFLY ONESIES</h6>
+                    <p class="pl-3 pl-md-0">IDR 199.000</p>
+                </div>
+                <div class="col-6 col-md-3">
+                    <h6 class="pr-3 pr-md-0">BUTTERFLY ONESIES</h6>
+                    <p class="pr-3 pr-md-0">IDR 199.000</p>
+                </div>
+                <div class="col-md-3 d-none d-md-block">
+                    <h6>BUTTERFLY ONESIES</h6>
+                    <p>IDR 199.000</p>
+                </div>
+
+            </div>
+            </div>
+    </section>*@
+
+@*<section>
+        <div class="row hero" style="background-image:url(/content/images/uploaded/homepage/newsletter_bg.png);height:50vh;">
+            <div class="text-center col-12 mt-5 pt-5">
+                <h2>Join Our Newsletter</h2>
+                <p>Sign up to our newsletter for news and special offers.</p>
+                <div id="subBox" class="subscriptionBox">
+                    <div id="nieuwsbrief" class="text-center text-lg-left" style="margin-top:-5px">
+                        <form action="//" method="post" id="mc-embedded-subscribe-form"
+                              name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                            <div class="form-group subscription-form m-auto text-center pt-5" style="vertical-align:top;">
+                                <input id="mce-EMAIL" class="email2" type="email" style="" name="EMAIL" placeholder="your email" value="" required="required" />
+                                <button id="mc-embedded-subscribe2" type="submit" name="subscribe" value="SUBMIT">Suscribe</button>
+                                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c2fa237f2170db1a3c72e46f5_e06080e67e" id="b_c2fa237f2170db1a3c72e46f5_e06080e67e" tabindex="-1" value=""></div>
+                            </div>
+                        </form>
+                        <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+                        <script type='text/javascript'>(function ($) { window.fnames = new Array(); window.ftypes = new Array(); fnames[0] = 'EMAIL'; ftypes[0] = 'email'; fnames[1] = 'FNAME'; ftypes[1] = 'text'; fnames[2] = 'LNAME'; ftypes[2] = 'text'; }(jQuery)); var $mcj = jQuery.noConflict(true);</script>
+                    </div>
+                    <div id="nieuwsbrief-msg" style="display:none;">
+                        You're almost done. Please confirm your email address to complete your subscription.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>*@
+
+
+    <section>
+        <div class="row d-flex justify-content-center mt-5">
+            <h2 class="font-italic">Share with Officially Rise</h2>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <p>Follow @@OfficiallyRise for inspiration.</p>
+        </div>
+        <div class="row pb-5">
+
+            <div class="col-12">
+                <div id="instagram-feed" />
+            </div>
+
+        </div>
+
+    </section>
+
+
+@Html.Action("Footer", "Common")
+
+<script src="~/Scripts/app/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+    $(document).on('ready', function () {
+
+        $(".other").slick({
+            slidesToShow: 6,
+
+            dots: false,
+            centerMode: false,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            responsive: [
+                {
+                    breakpoint: 575.98,
+                    settings: {
+                        slidesToShow: 2,
+                    }
+                }
+            ]
+        });
+
+    });
+
+    $("#mc-embedded-subscribe2").click(function () {
+        $("#nieuwsbrief").css("display", "none");
+        $("#nieuwsbrief-msg").css("display", "block");
+    });
+</script>
+
+
+@section RootHeaderSection
+{
+
+
+
+
+    <link href="~/Themes/v1/Content/homepage.css" rel="stylesheet" />
+
+    <link href="~/Scripts/app/InstaGet/css/instaget.css" rel="stylesheet" />
+
+    <style>
+        .caption-top {
+            position: absolute;
+            top: 8px;
+            left: 40px;
+        }
+
+        .caption-bottom {
+            position: absolute;
+            bottom: 8px;
+            left: 40px;
+        }
+
+        .hero-text {
+            position: absolute;
+            bottom: 60px;
+            left: 40px;
+        }
+
+        .home-box {
+            display: inline-block;
+            overflow: hidden;
+        }
+
+            .home-box img {
+                -webkit-transition: all .2s ease;
+                -moz-transition: all .2s ease;
+                -ms-transition: all .2s ease;
+                -o-transition: all .2s ease;
+                transition: all .2s ease;
+                vertical-align: middle;
+            }
+
+            .home-box:hover img {
+                -webkit-transform: scale(1.1); /* Safari and Chrome */
+                -moz-transform: scale(1.1); /* Firefox */
+                -ms-transform: scale(1.1); /* IE 9 */
+                -o-transform: scale(1.1); /* Opera */
+                transform: scale(1.1);
+            }
+
+        .caption-bottom {
+            transition: 0.5s;
+        }
+
+            .caption-bottom:after {
+                content: '>';
+                position: absolute;
+                opacity: 0;
+                top: 11px;
+                right: -20px;
+                transition: 0.5s;
+            }
+
+            .caption-bottom:hover {
+                padding-right: 24px;
+                padding-left: 8px;
+            }
+
+                .caption-bottom:hover:after {
+                    opacity: 1;
+                    right: 10px;
+                }
+
+
+        @@media (max-width: 767px) {
+            .caption__colright {
+                left: 15px;
+            }
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick-theme.css">
+}
+
+@section RootScripts{
+
+
+    
+        <script src="~/Scripts/app/InstaGet/js/instaget-min.js"></script>
+         <script>
+             new instaGet('#instagram-feed', {
+                 token: 'IGQVJWZAVBLYmFQcUxwY0dTN1JvLUdQczJCVEx2a2lBUnF2U2wwRkZATMGw4SVF4WWhDSjhaLVJUbnVOYVkwT1B0T3J5TnZAsb2VybS1JM1E0R2FVc1hqSklLUlVoSzN3SkRtRU83U0t0TFJOMjVKcHBSagZDZD',
+                 counter: 6,
+                 numcol: 6,
+                 moreBtn: false,
+                 info: false,
+                 width: '100%',
+                 height: '100%',
+             });
+         </script>
+    
+    @*
+        <script src="~/Scripts/app/InstaGet/js/instaget.min.js"></script>
+        <script>
+            new instaGet('#instagram-feed', {
+                username: 'officiallyrise',
+                //hashtag: 'officiallyrise',
+                counter: 6,
+                numcol: 6,
+                moreBtn: false,
+                info: false,
+                width: '100%',
+                height: '100%',
+                resolution: 'm',
+            });
+        </script>
+    *@
+
+}

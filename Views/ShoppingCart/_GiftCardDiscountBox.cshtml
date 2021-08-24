@@ -1,0 +1,141 @@
+﻿@model ShoppingCartModel.DiscountBoxModel
+@using Nop.Web.Models.ShoppingCart;
+@{
+    string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
+
+}
+
+@if (Model.Display)
+{
+    <div style="margin: 30px 0; border: 1px solid #707070; padding: 20px; background-color: #E5E3DF4D;">
+        <p class="m-0 p-0 mb-3" style="font-weight: bold; color: #454545; font-size: 16px; text-transform: uppercase;">Redeem Voucher or Points</p>
+        <p class="m-0 p-0" style="font-weight: bold; color: #454545; font-size: 14px;">Redeem Points</p> 
+        <p class="m-0 p-0" style="color: #454545; font-size: 14px;">You have IDR 125.000 Points</p> 
+        <div style="border: 1px solid #707070;">
+            <input type="text" name="couponcode" class="" placeholder="IDR 100.000" style="padding-left: 15px; width: 65%; background-color: transparent; height: 50px; border: 0;">
+            <button type="submit" name="applycouponcode" value="Apply" style="background-color: transparent; height: 50px; width: 35%; margin-left: -5px; border: 0; border-left: 1px solid #707070;">APPLY</button>
+        </div>
+        <p class="m-0 p-0" style="color: #9D5D3E; font-size: 14px;">You’ll get IDR 24.000 after checking out</p> 
+        <hr class="mb-3 mt-3" style="margin: -7%">
+        <p class="m-0 p-0" style="font-weight: bold; color: #454545; font-size: 14px;">Redeem Voucher</p> 
+        <div style="border: 1px solid #707070;">
+            <input type="text" placeholder="Coupon Code" style="padding-left: 15px; width: 65%; background-color: transparent; height: 50px; border: 0;">
+            <button style="background-color: transparent; height: 50px; width: 35%; margin-left: -5px; border: 0; border-left: 1px solid #707070">APPLY</button>
+        </div>
+        @if(absolutepath.Contains("/cart")) {
+            <a onclick="openModal()" class="m-0 p-0" style="color: #525252; font-size: 14px; text-decoration: underline;">View available voucher ></a> 
+        } else {
+            <div class="row mt-3 m-0" style="line-height: 15px; font-size: 12px; text-align: center; ">
+                <div style="display: grid; align-items: center; width: 65%; height: 80px; border-left: 1px solid #707070; border-bottom: 1px solid #707070; border-top: 1px solid #707070;">
+                    <p class="m-0 p-0" style="font-size: 13px">10% Off by using coupon code</p>
+                    <b class="m-0 p-0" style="font-size: 15px">"BEATRICE101X"</b>
+                    <p class="m-0 p-0" style="font-size: 9px">*T&C: one voucher per transaction</p>
+                </div>
+                <div style="width: 35%;">
+                    <button style="background-color: transparent; height: 80px; width: 100%; margin: 0; padding: 0; border: 1px solid #707070;">APPLY</button>
+                </div>
+            </div>
+            <div class="row mt-3 m-0" style="line-height: 15px; font-size: 12px; text-align: center; ">
+                <div style="display: grid; align-items: center; width: 65%; height: 80px; border-left: 1px solid #707070; border-bottom: 1px solid #707070; border-top: 1px solid #707070;">
+                    <p class="m-0 p-0" style="font-size: 13px">10% Off by using coupon code</p>
+                    <b class="m-0 p-0" style="font-size: 15px">"BEATRICE101X"</b>
+                    <p class="m-0 p-0" style="font-size: 9px">*T&C: one voucher per transaction</p>
+                </div>
+                <div style="width: 35%;">
+                    <button style="background-color: transparent; height: 80px; width: 100%; margin: 0; padding: 0; border: 1px solid #707070;">APPLY</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row modal-subcribe" style="display: none;">
+        <div class="col-1 col-sm-4 col-md-4"></div>
+        <div class="col-10 col-sm-4 col-md-4 text-center" style="background-color: white; padding: 20px !important;">
+            <span class="abhaya" style="font-size: 24px; color: #9D5D3E;">Available Vouchers</span>
+            <br><br>
+            <p class="close-subcribe" style="cursor: pointer; position: absolute; top: 5px; right: 5px; color: #9D5D3E; font-size: 14px; margin-right: 5px;">X</p>
+            <div class="row mt-3 m-0" style="line-height: 15px; font-size: 12px; text-align: center; ">
+                <div style="display: grid; align-items: center; width: 65%; height: 80px; border-left: 1px solid #707070; border-bottom: 1px solid #707070; border-top: 1px solid #707070;">
+                    <p class="m-0 p-0" style="font-size: 13px">10% Off by using coupon code</p>
+                    <b class="m-0 p-0" style="font-size: 15px">"BEATRICE101X"</b>
+                    <p class="m-0 p-0" style="font-size: 9px">*T&C: one voucher per transaction</p>
+                </div>
+                <div style="width: 35%;">
+                    <button style="background-color: transparent; height: 80px; width: 100%; margin: 0; padding: 0; border: 1px solid #707070;">APPLY</button>
+                </div>
+            </div>
+            <div class="row mt-3 m-0" style="line-height: 15px; font-size: 12px; text-align: center; ">
+                <div style="display: grid; align-items: center; width: 65%; height: 80px; border-left: 1px solid #707070; border-bottom: 1px solid #707070; border-top: 1px solid #707070;">
+                    <p class="m-0 p-0" style="font-size: 13px">10% Off by using coupon code</p>
+                    <b class="m-0 p-0" style="font-size: 15px">"BEATRICE101X"</b>
+                    <p class="m-0 p-0" style="font-size: 9px">*T&C: one voucher per transaction</p>
+                </div>
+                <div style="width: 35%;">
+                    <button style="background-color: transparent; height: 80px; width: 100%; margin: 0; padding: 0; border: 1px solid #707070;">APPLY</button>
+                </div>
+            </div>
+         
+        </div>
+        <div class="col-1 col-sm-4 col-md-4">
+        </div>
+        </div>
+        <div class="aside-backdrop"></div>
+
+    @* <div class="summary-total">
+        <div class="total-row-left" style="margin-top:-7px;">
+            <h4>Voucher code</h4>
+        </div>
+        <div class="total-row-right">
+            <div class="row no-gutters">
+                <div class="col-8">
+                    <input name="couponcode" type="text" class="form-control tbCoupon" placeholder="Promo Code" />
+                </div>
+                <div class="col-4">
+                    <button type="submit" name="applycouponcode" value="Apply" class="btnCoupon"><i class="fa fa-check"></i> APPLY</button>
+                </div>
+            </div>
+
+            @if (!String.IsNullOrEmpty(Model.Message))
+            {
+
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <div class="text-danger" style="font-size:0.92rem; padding-top:5px;">
+                            @Model.Message
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (!String.IsNullOrEmpty(Model.CurrentCode))
+            {
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <div class="text-highlight" style="font-style:italic; font-size:11px; padding-top:13px;">
+                            @string.Format(T("ShoppingCart.DiscountCouponCode.CurrentCode").Text, Model.CurrentCode)
+                            <input type="submit" name="removediscountcouponcode" value="[ X ]" title="@T("Common.Remove")" class="remove-discount-button" />
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+
+
+       
+
+    </div> *@
+}
+
+<script>
+    function openModal() {
+        $(".aside-backdrop").addClass("in");
+        $('.modal-subcribe').attr('style', 'display: flex !important');
+    }
+
+    $(".close-subcribe").click(function () {
+        $('.modal-subcribe').attr('style', 'display: none !important');
+        $(".aside-backdrop").removeClass("in");
+        $('.aside-backdrop').attr('style', 'z-index: -1 !important');
+    });
+</script>

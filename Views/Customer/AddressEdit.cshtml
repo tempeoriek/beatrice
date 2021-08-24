@@ -1,0 +1,70 @@
+﻿@model CustomerAddressEditModel
+@using Nop.Web.Models.Customer;
+@{
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Account").Text);
+    ViewBag.HideMenu = "true";
+    
+}
+
+@*@section left
+{
+    @Html.Action("CustomerNavigation", "Customer", new { selectedTabId = CustomerNavigationEnum.Addresses })
+}*@
+
+<div class="col-main-setting" style="margin-top:  50px;">
+   @Html.Partial("_SettingBreadcrumb")
+
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div class="d-none d-md-block">
+                @Html.Partial("_SubMenuSetting")
+            </div>
+        </div>
+        <div class="col-12 col-sm-9 col-md-9">
+            <div class="row">
+                <div class="col-md-12 address-book-form">
+                    <h1 class="text-left mb-5 d-none d-md-block" id="title-address">@T("Account.CustomerAddresses.Edit")</h1>
+                    <h1 class="text-center mb-5 d-block d-md-none" id="title-address">@T("Account.CustomerAddresses.Edit")</h1>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        var validationSummary = Html.ValidationSummary(true);
+
+                        if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+                        {
+                            <div class="message-error">
+                                @validationSummary
+                            </div>
+                        }
+
+                        var dataDictAddress = new ViewDataDictionary();
+                        //Merge ModelState (required for validation)
+                        dataDictAddress.ModelState.Merge(ViewData.ModelState);
+                        dataDictAddress.TemplateInfo.HtmlFieldPrefix = "Address";
+                        @Html.Partial("_CreateOrUpdateAddress", Model.Address, dataDictAddress)
+
+
+                            <div class="form-group mt-50 mb-default">
+                                <div class="buttons">
+                                    <button type="submit" class="btn btn-default" value="Update">Update</button>
+                                    <a class="btn btn-default"  href="#" onclick="history.go(-1)">Cancel</a>
+                                </div>
+                            </div>
+                    }
+                </div>
+                @* <div class="col-md-6 address-book">
+                    @Html.Action("Addresses")
+                </div> *@
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

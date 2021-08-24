@@ -1,0 +1,41 @@
+﻿<div class="row p-0 m-0 mb-5" style="background-color: #9D3131;">
+  <div class="col-12 col-md-2 col-sm-2 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
+    <h1 class="text-white text-title-demo" style="font-size: 38px;">Flash Sale</h1> 
+  </div>
+  <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;">
+    <span class="worksans-reg text-white text-demo" style="font-size: 24px;" id="demo" />
+  </div>
+  <div class="col-md-7 col-sm-7 d-flex justify-content-end align-items-center"> 
+    <button class="d-none d-md-block hidden-xs hidden-sm flash-sale-btn">
+      <p class="m-0" style="color: #9D3131; font-size: 16px;">View All</p>
+    </button>
+  </div>
+</div>
+
+<div class="row mx-3">
+  @for(var i = 0; i < 6 ; i++) {
+    <div class="col-6 col-sm-4 col-md-4 mt-3">
+      <div class="px-5">
+        <div class="row">
+          <img src="~/Themes/v1/Content/images/flash-sale.jpg" class="img-fluid center-block" style="position: relative; width: 100%"/>
+          <div style="top: 0; position: absolute; height: 10%; width: 16%; background-color: #9D3131;">
+            <p class="m-0 d-none d-md-block hidden-xs hidden-sm flash-sale-text" style="font-size: 20px;">10% <br> OFF</p>
+            <p class="m-0 d-block d-md-none hidden-md hidden-xl flash-sale-text" style="font-size: 12px; line-height: 17px;">10% OFF</p>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <p class="m-0 p-0 worksans-medium text-demo" style="font-size: 20px; color: #525252;">Valen Dress</p>
+        </div>
+        <div class="row">
+          <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #525252;">IDR 224.000</p>
+        </div>
+        <div class="row mb-2">
+          <progress id="@i-product" value="32" max="100" style="width: 100%; height: 8px;"/>
+        </div>
+        <div class="row">
+          <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #525252;">Available</p>
+        </div>
+      </div>
+    </div>
+  }
+</div>

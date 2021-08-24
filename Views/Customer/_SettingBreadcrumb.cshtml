@@ -1,0 +1,15 @@
+﻿ <div class="mb-5">
+    <a href="/" style="color: #BCBCBC; font-size: 16px;">Home</a> / 
+    <a href="/customer/info" style="color: #BCBCBC; font-size: 16px;">Account</a> / 
+    <a id="setting-menu" style="color: #BCBCBC; font-size: 16px;">Setting</a>  
+</div>
+
+<script>
+    let menuName = window.location.pathname == `/customer/info` ? "Settings" : 
+        window.location.pathname == `/customer/addressAdd` ? "Address" : 
+        window.location.pathname.includes(`/customer/addressedit`) ? "Edit Address" : 
+        window.location.pathname == `/customer/changepassword` ? "Change Password" : 
+        window.location.pathname == `/order/history` ? "Order" : 
+        window.location.pathname == `/customer/wishlist` ? "Wishlist" : null;
+    $('#setting-menu').text(`${menuName}`);
+</script>

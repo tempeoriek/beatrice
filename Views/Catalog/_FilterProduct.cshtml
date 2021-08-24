@@ -1,0 +1,40 @@
+﻿@{
+  string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
+}
+
+<div class="row m-0" style="padding: 5% 5% 10px;">
+  <div class="col-1 col-sm-8 col-md-8 p-0" style="display: flex; justify-content: flex-start; align-items: center;">
+    @if(!absolutepath.Equals("/new-arrivals") && !absolutepath.Equals("/coming-soon") && !absolutepath.Equals("/flash-sale")) {
+      <div class="d-none d-md-block">
+        <span style="font-size: 16px; color: #525252; margin-right: 20px;">SORT BY:</span>
+        <span class="text-sort-hover" name="sortcatalog" id="whatnew">NEW IN</span>
+        <span class="text-sort-hover" name="sortcatalog" id="lowtohigh">PRICE (LOW - HIGH)</span>
+        <span class="text-sort-hover" name="sortcatalog" id="hightolow">PRICE (HIGH - LOW)</span>
+        <span class="text-sort-hover" name="sortcatalog" id="az">A - Z</span>
+        <span class="text-sort-hover" name="sortcatalog" id="za">Z - A</span>
+      </div>
+
+      <div class="d-block d-md-none hidden-md hidden-lg sort-dropdown" style="display: flex; justify-content: flex-end; align-items: center; color: black;">
+        <img src="~/Themes/v1/Content/images/arrow-short-by.png" style="height: 25%;"/>
+        <div class="sort-dropdown-content">
+          <form action="">
+            <label><input type="radio" class="text-sort-hover" name="sortcatalog" id="whatnew" style="margin-right: 5px;">NEW IN</label> <br>
+            <label><input type="radio" class="text-sort-hover" name="sortcatalog" id="lowtohigh" style="margin-right: 5px;">PRICE (LOW - HIGH)</label><br>
+            <label><input type="radio" class="text-sort-hover" name="sortcatalog" id="hightolow" style="margin-right: 5px;">PRICE (HIGH - LOW)</label><br>
+            <label><input type="radio" class="text-sort-hover" name="sortcatalog" id="az" style="margin-right: 5px;">A - Z</label><br>
+            <label><input type="radio" class="text-sort-hover" name="sortcatalog" id="za" style="margin-right: 5px;">Z - A</label>
+          </form>
+          <a style="text-decoration: underline; cursor: pointer" id="removesort">Remove Sort</a>
+        </div>
+      </div>
+    }
+    </div>
+
+  <div class="col-11 col-sm-4 col-md-4 p-0" style="display: flex; justify-content: flex-end; align-items: center; ">
+    <span class="text-view-hover" name="sortpageview" id="all">VIEW ALL</span>
+    <span style="font-size: 16px; color: #525252; margin-left: 20px;">SHOW:</span>
+    <span class="text-view-hover" name="sortpageview" id="15">15</span>
+    <span class="text-view-hover" name="sortpageview" id="30">30</span>
+    <span class="text-view-hover" name="sortpageview" id="45">45</span>
+  </div>
+</div>

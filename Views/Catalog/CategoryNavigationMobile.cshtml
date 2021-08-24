@@ -1,0 +1,187 @@
+﻿@model CategoryNavigationModel
+@using Nop.Web.Models.Catalog;
+
+@{
+  string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
+}
+
+@functions{
+  public bool BreadCrumbContainsCurrentCategoryId(CategorySimpleModel category)
+  {
+    if (Model.CurrentCategoryId == 0)
+      return false;
+
+    if (category.Id == Model.CurrentCategoryId)
+      return true;
+
+    foreach (var subCategory in category.SubCategories)
+    {
+      if (BreadCrumbContainsCurrentCategoryId(subCategory))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+}
+
+@helper RenderCategoryLineSidebar(CategorySimpleModel category)
+{
+  bool active = category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
+  bool last = category.Id == Model.CurrentCategoryId;
+  string liClass = active ? "active" : "inactive";
+
+  if (last)
+  {
+    liClass += " last";
+  }
+
+  <li class="listItemB"><a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="@liClass"> <img alt="icon" src="~/Content/Images/dot menu.png"> @category.Name</a></li>
+
+  if (category.Id == Model.CurrentCategoryId ||
+    category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0)
+  {
+    if (category.SubCategories.Count > 0)
+    {
+      <ul class="sublist">
+        @foreach (var subCategory in category.SubCategories)
+        {
+          @RenderCategoryLine(subCategory)
+        }
+      </ul>
+    }
+  }
+}
+
+
+@*untuk yang category shop*@
+@helper RenderCategoryLine(CategorySimpleModel category)
+{
+  bool active = category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
+  bool last = category.Id == Model.CurrentCategoryId;
+  string liClass = active ? "active" : "inactive";
+
+  if (last)
+  {
+    liClass += " last";
+  }
+
+  <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="@liClass dropdown-item"> @category.Name</a>
+}
+
+@*untuk yang category collection*@
+@helper RenderCategoryLineCollection(CategorySimpleModel category)
+{
+  bool active = category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
+  bool last = category.Id == Model.CurrentCategoryId;
+  string liClass = active ? "active" : "inactive";
+
+  if (last)
+  {
+    liClass += " last";
+  }
+
+  <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })" class="@liClass dropdown-item"> @category.Name</a>
+}
+
+@helper RenderCategoryMobile(CategorySimpleModel category)
+{
+  bool active = category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
+  bool last = category.Id == Model.CurrentCategoryId;
+  string liClass = active ? "active" : "inactive";
+
+  if (last)
+  {
+    liClass += " last";
+  }
+  <li><a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name.ToUpper()</a></li>
+
+}
+
+@helper RenderCategoryMobileCollection(CategorySimpleModel category)
+{
+  bool active = category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
+  bool last = category.Id == Model.CurrentCategoryId;
+  string liClass = active ? "active" : "inactive";
+
+  if (last)
+  {
+    liClass += " last";
+  }
+  <li><a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name</a></li>
+}
+
+
+@{
+  var liCollapse = (Model.CurrentCategoryId > 0) ? "" : "collapse";
+  var parentId = (ViewBag.isMobile != null) ? "phmenu-mobile" : "phmenu";
+  var divId = (ViewBag.isMobile != null) ? "shop-mobile" : "shop";
+
+}
+
+@for (int j = 0 ; j < Model.Categories.Count(); j++) {
+  var category = Model.Categories[j];
+  @* MOBILE SIDE MENU NAVIGATION *@
+  <div class="header-links">
+    <div class="d-block d-md-none hidden-md hidden-lg" style="border-top: 1px solid lightgray; !important">
+      @if (category.SubCategories.Any()) {
+        <div role="tab" id="Headingheader-@category.SeName">
+          <a style="font-size: 16px; text-transform: uppercase;" data-toggle="collapse" href="#collapseheader-@category.SeName" aria-expanded="false" aria-controls="collapseheader-@category.SeName">
+            @category.Name
+          </a>
+        </div>
+
+        <div data-parent="#accMobileHeader" id="collapseheader-@category.SeName" class="collapse" style="padding-left: 5%;" role="tabpanel" aria-labelledby="Headingheader-@category.SeName">
+            @foreach (var subcat in category.SubCategories)
+            {
+              if (subcat.SeName != "flash-sale" && subcat.SeName != "coming-soon") {
+                <div class="mb-2"><a style="line-height: initial; padding: 0; font-size: 16px;" href="@Url.RouteUrl("Category", new { SeName = subcat.SeName })">@subcat.Name</a></div>
+              }
+            }
+        </div>
+      } else {
+        <div role="tab" id="Headingheader-@category.SeName">
+          <a href="/@category.SeName" style="font-size: 16px; text-transform: uppercase;">
+            @category.Name
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+}
+
+
+<script>
+  $(function() {
+    $("a[id^='id-acc-category-']").click(function() {
+      var ids = [];
+      var className = $(this).attr("class");
+      var id_press = parseInt(className.replace("child-acc-category-", ""), 10);
+
+      $('a[class*="child-acc-category-"]').each(function () {
+        var other_id = parseInt(this.id.replace("id-acc-category-", ""), 10);
+        if (id_press != other_id) {
+          var class_name = "child-acc-category-"+other_id;
+          $("."+class_name).addClass("collapsed");
+        } else {
+          var class_name = "child-acc-category-"+id_press;
+          setTimeout(function(){
+            $("."+class_name).removeClass("collapsed");
+          }, 10);
+
+          if (id_press && !className.includes("collapsed")) {
+            setTimeout(function(){
+              $("."+class_name).addClass("collapsed");
+            }, 10);
+          }
+        }
+      });
+    });
+  });
+  
+  
+  //console.log(`CATEGORY MOBILE`);
+	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	//console.log(model);    
+</script>

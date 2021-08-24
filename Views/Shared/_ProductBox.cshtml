@@ -1,0 +1,89 @@
+﻿@model Nop.Web.Models.Catalog.ProductOverviewModel
+
+@{
+  string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
+  string strInfo = absolutepath.Equals("/flash-sale") ? "Available with normal price" : "";
+  string strInfoNewArrivals = absolutepath.Equals("/coming-soon") ? "IDR ???.000" : "";
+}
+<div class="product-item">
+    <div class="ori-product-img">
+        @if (absolutepath.Equals("/coming-soon")) {
+          <div style="position: relative;">
+            <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName})" class="clean">
+              <img src="@Model.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
+            </a>
+            <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
+              <p class="m-0 text-center" style="color: #9D5D3E; height: 100%; font-size: 17px;">COMING SOON</p>
+            </div>
+          </div>
+        } else {
+          <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName})" class="clean">
+            <img src="@Model.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
+          </a>
+        }
+        
+        @if (Model.Quantity == 0) {
+          <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName})" class="clean">
+            <div class="d-flex justify-content-center align-items-center backdrop-product">
+              <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
+            </div>
+          </a>
+
+        }
+    </div>
+
+    <div class="description">
+      <p class="d-flex m-0" style="line-height: 1.5em; justify-content: space-between; align-items: center;">
+        <a class="clean worksans-reg text-product-box worksans-medium" href="@Url.RouteUrl("Product", new { SeName = Model.SeName})">
+          @Model.Name
+        </a>
+        @if (absolutepath.Equals("/new-arrivals")) {
+          <span class="text-out-of-stock worksans-reg d-none d-md-block hidden-xs hidden-sm" style="color: #9D5D3E; font-size: 20px; text-transform: capitalize !important;">New Arrival</span>
+        }
+      </p>
+
+      <div class="prices text-left" style="line-height: 1.5em; padding-top: 0;">
+        @if (Model.Quantity == 0 && !absolutepath.Equals("/coming-soon") && !absolutepath.Equals("/new-arrivals")) {
+          <div class="text-out-of-stock price worksans-reg" style="color: #9D5D3E; font-size: 20px; text-transform: capitalize;">Out of stock</div>
+        } else if (Model.ProductPrice.AvailableForPreOrder) {
+          <div class="price worksans-reg">Request A Quote</div>
+        } else if (absolutepath.Equals("/coming-soon")) {
+          <div class="worksans-reg prices" style="color: #454545; text-transform: initial; font-size: 20px;">@strInfoNewArrivals</div>
+        } else {
+          if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice) || Model.ProductPrice.DisplayTaxShippingInfo)
+          {
+              if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+              {
+
+                  <div class="price old--price">
+                    <span class="worksans-reg old--price" style="text-decoration:line-through; font-size: 20px; color: #525252;">
+                      @Model.ProductPrice.OldPrice
+                    </span>
+                  </div>
+
+              }
+              <div class="price actual--price worksans-reg"><b class="text-product-box">@Model.ProductPrice.Price</b></div>
+          }
+          else
+          {
+              <div class="price text-product-box worksans-reg">@Model.ProductPrice.Price</div>
+          }
+        }
+      </div>
+      @if (Model.Quantity > 0) {
+        <div class="text-out-of-stock worksans-reg" style="color: #9D3131; text-transform: initial; font-size: 20px;">@strInfo</div>
+      }
+      @if (absolutepath.Equals("/new-arrivals")) {
+          <span class="text-out-of-stock worksans-reg d-block d-md-none hidden-md hidden-lg" style="color: #9D5D3E; font-size: 20px; text-transform: capitalize !important;">New Arrival</span>
+        }
+    </div>
+
+
+</div>
+
+
+<script>
+	//console.log(`PRODUCT BOX`);
+	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	//console.log(model);
+</script>
