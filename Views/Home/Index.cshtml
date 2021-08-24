@@ -110,7 +110,10 @@
     <div class="row p-5">
       @for (int j = 0; j < 4; j++) {
         <div class="col-6 col-sm-3 col-md-3 text-center p-2">
-          <img src="~/Themes/v1/Content/images/ig-home.png" style="height: 100%; width: 100%; padding: 0 2.5rem;">
+          <a href="https://www.instagram.com/beatriceclothing" target="_blank" rel="noopener noreferrer" class="clean">
+            <img src="@String.Format("/Content/Images/uploaded/home/ig-home-{0}.jpg", j)" style="height: 100%; width: 100%; padding: 0 2.5rem;">
+            @* <img src="~/Themes/v1/Content/images/ig-home.png" style="height: 100%; width: 100%; padding: 0 2.5rem;"> *@
+          </a>
         </div>
       }
         @* <div id="feedig" /> *@
@@ -121,7 +124,11 @@
     <div style="overflow-x: scroll;">
       <div style="width: 1000px; margin-left: 35px;">
         @for (int j = 0; j < 3; j++) {
-          <img src="~/Themes/v1/Content/images/ig-home.png" style="padding: 5px;">
+          <a href="https://www.instagram.com/beatriceclothing" target="_blank" rel="noopener noreferrer" class="clean">
+            <img src="@String.Format("/Content/Images/uploaded/home/ig-home-{0}.jpg", j)" style="padding: 5px;">
+          </a>
+
+          @* <img src="~/Themes/v1/Content/images/ig-home.png" style="padding: 5px;"> *@
         }
       </div>
     </div>

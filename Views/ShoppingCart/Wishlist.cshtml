@@ -86,13 +86,21 @@
                                             <p class="m-0 worksans-medium" style="color: #525252; font-size: 18px; text-decoration: capitalize;">@item.ProductName</p>
                                             <span style="color: #525252; font-size: 16px">@Html.Raw(item.AttributeInfo)</span>
                                             <p class="m-0" style="color: #525252; font-size: 16px">@item.Quantity</p>
-                                            <div class="row">
+                                            <div class="row m-0 p-0 d-flex justify-content-center align-items-center">
                                                 @if (Model.DisplayAddToCart)
                                                 {
-                                                    <input style="width: 40%; height: 40px !important; margin-right: 8px;" type="submit" name="addtocartbutton" value="Add to bag" class="btn-addcart button_sare" />
+                                                    <input type="checkbox" name="addtocart" value="@(item.Id)" style="margin-right: 5px"/>
+                                                    <input 
+                                                        style="width: 40%; height: 40px !important; margin-right: 8px;" 
+                                                        type="submit" 
+                                                        name="addtocartbutton" 
+                                                        value="Add to bag" 
+                                                        class="btn-addcart button_sare" 
+                                                    />
                                                 }
                                                 @if (Model.IsEditable)
                                                 {
+                                                    <input type="checkbox" name="removefromcart" value="@(item.Id)" style="margin-right: 5px"/>
                                                     <input 
                                                         style="width: 40%; height: 40px !important;" 
                                                         type="submit" name="updatecart" 
