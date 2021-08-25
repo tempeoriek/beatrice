@@ -77,7 +77,7 @@
 	
 	@* new nav bar full width dropdown *@
 	@Html.Action("CategoryNavigation", "Catalog", new {saleall = saleall, about = about, newproduct = newproduct, contact = contact, currentCategoryId = currentCategoryId, currentProductId = currentProductId, isSidebar = false })
-
+	
 	<div style="width:100%; text-align:center;">
 		<div class="d-flex justify-content-center align-items-center" style="float:left; width:20%; height: 70px;">
 			<a href="~/"><img src="@logo_header" class="brandImage" /></a>
@@ -298,7 +298,7 @@
 			});
     }
   );
-
+	
 </script>
 
 @if (Model.ShoppingCartEnabled)
