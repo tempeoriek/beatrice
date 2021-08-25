@@ -7,6 +7,12 @@
   if(!Model.AvailableForPreOrder) {
     classcss = "";
   }
+
+  var absolutepath = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
+  var query_type = "";
+  if (!String.IsNullOrEmpty(HttpUtility.ParseQueryString(absolutepath.Query).Get("type"))) {
+    query_type = HttpUtility.ParseQueryString(absolutepath.Query).Get("type").ToLower();
+  }
 }
   <div class="col-12 @classcss">
     @if (!Model.DisableBuyButton || Model.CustomerEntersPrice)
@@ -121,7 +127,12 @@
             <span>@addToCartText</span>
           </button>
         }
+        var dataDictAddToWishlist = new ViewDataDictionary();
+        dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.ProductId);
 
+        if (query_type.Equals("coming-soon")) {
+          @Html.Partial("_AddToWishlist", Model, dataDictAddToWishlist)
+        }
         <div id="add2cart-notification" title="@T("Common.Notification")" style="display:none;"></div>
       }
     }

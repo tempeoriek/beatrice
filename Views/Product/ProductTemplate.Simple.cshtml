@@ -44,9 +44,26 @@
     Html.AddHeadCustomParts("<meta property=\"twitter:image\" content=\"" + Model.DefaultPictureModel.ImageUrl + "\" />");
     Html.AddHeadCustomParts("<meta property=\"twitter:url\" content=\"" + Request.Url.AbsoluteUri + "\" />");
   }
+
+  var absolutepath = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
+  var query_type = "";
+  var count_text = "";
+  var count_style = "";
+  bool type_detail = false;
+  if (!String.IsNullOrEmpty(HttpUtility.ParseQueryString(absolutepath.Query).Get("type"))) {
+    query_type = HttpUtility.ParseQueryString(absolutepath.Query).Get("type").ToLower();
+    if (query_type.Equals("flash-sale")) { 
+      count_text = "FLASH SALE";
+      count_style = "background-color: #9D3131; height: 50px; margin-bottom: 10% !important";
+      type_detail = true;
+    }
+    if (query_type.Equals("coming-soon")) { 
+      type_detail = true;
+      count_text = "COMING SOON";
+      count_style = "background-color: #D8C7BD; height: 50px; margin-bottom: 10% !important";
+    }
+  }
 }
-
-
 
 
 <div class="container product-detail" style="margin-top: -1%;">
@@ -58,29 +75,22 @@
     <div class="col-12 col-sm-5 col-md-5 p-4">
       @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
         {
-          @* FOR FLASH SALE *@
-          @* <div class="row" style="background-color: #9D3131; height: 50px; margin-bottom: 10% !important">
-            <div class="col-6 d-flex justify-content-start align-items-center">
-              <span class="worksans-medium" style="color: white; font-size: 16px;">FLASH SALE</span>
+          if (type_detail) {
+            @* FOR FLASH SALE *@
+            <div class="row" style="@count_style">
+              <div class="col-6 d-flex justify-content-start align-items-center">
+                <span class="worksans-medium" style="color: white; font-size: 16px;">@count_text</span>
+              </div>
+              <div class="col-6 d-flex justify-content-end align-items-center">
+                <span class="worksans-reg" style="font-style: italic; color: white; font-size: 16px;" id="demo" />
+              </div>
             </div>
-            <div class="col-6 d-flex justify-content-end align-items-center">
-              <span class="worksans-reg" style="font-style: italic; color: white; font-size: 16px;" id="demo" />
-            </div>
-          </div> *@
-
-          @* FOR WEBHUNT *@
-          @* <div class="row" style="background-color: #D8C7BD; height: 50px; margin-bottom: 10% !important">
-            <div class="col-5 d-flex justify-content-start align-items-center">
-              <span class="worksans-medium" style="color: white; font-size: 16px;">COMMING SOON</span>
-            </div>
-            <div class="col-7 d-flex justify-content-end align-items-center">
-              <span class="worksans-reg" style="font-style: italic; color: white; font-size: 16px;" id="demo2" />
-            </div>
-          </div> *@
-
+          }
 
           <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id" style="margin-top: 5%;">
-            <h1 class="worksans-medium" itemprop="name" style="font-size: 20px; color: #525252; margin-bottom: 1%; text-align: center; text-transform: uppercase;">@Model.Name</h1>
+            <h1 class="worksans-medium text-product-detail" itemprop="name">
+              @Model.Name
+            </h1>
             @{
               var dataDictPrice = new ViewDataDictionary();
               dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
@@ -144,9 +154,7 @@
                   var dataDictAddToCart = new ViewDataDictionary();
                   dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
                   @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)
-                  var dataDictAddToWishlist = new ViewDataDictionary();
-                  dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
-                  @Html.Partial("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
+                 
                 }
                 
               </div>
@@ -249,6 +257,7 @@
   </script>
   <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick.css">
   <link rel="stylesheet" type="text/css" href="~/Scripts/app/slick/slick-theme.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <link href="~/Themes/v1/Content/homepage.css" rel="stylesheet" />
   <script src="~/Scripts/app/slick/slick.js" type="text/javascript" charset="utf-8"></script>
   <script>
@@ -323,33 +332,29 @@
     //console.log(`PRODUCT DETAIL`);
     var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
     //console.log(model);    
+    let searchParams = new URLSearchParams(window.location.search);
+    let query_date = searchParams.has('date')  ? moment(searchParams.get('date'), 'DD-MM-YYYY').toDate()  : null
+    let date_count = query_date  ? moment(query_date).format('MMM DD, YYYY HH:MM:SS') : null;
+    let query_type = searchParams.has('date') ? searchParams.has('type') : null;
+    let str = query_type == 'flash-sale' ? `Ends in  ` : `Available in  `;
 
-    var countDownDate = new Date("Aug 20, 2021 15:37:25").getTime();
-    var countDownDate2 = new Date("Aug 20, 2021 15:37:25").getTime();
+    var countDownDate = new Date(`${date_count}`).getTime();
     var x = setInterval(function() {
       var now = new Date().getTime();
       var distance = countDownDate - now;
-      var distance2 = countDownDate2 - now;
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      var days2 = Math.floor(distance2 / (1000 * 60 * 60 * 24));
-      var hours2 = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes2 = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds2 = Math.floor((distance2 % (1000 * 60)) / 1000);
-      //document.getElementById("demo").innerHTML = "Ends in   " + days + " : " + hours + " : " + minutes + " : " + seconds ;
-      //document.getElementById("demo2").innerHTML = "Available in   " + days2 + " : " + hours2 + " : " + minutes2 + " : " + seconds2 ;
+
+      document.getElementById("demo").innerHTML = str + days + " : " + hours + " : " + minutes + " : " + seconds ;
       if (distance < 0) {
         clearInterval(x);
         //document.getElementById("demo").innerHTML = "EXPIRED";
       }
-      if (distance2 < 0) {
-        clearInterval(x);
-        //document.getElementById("demo2").innerHTML = "EXPIRED";
-      }
+
   }, 1000);
 
   var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	console.log(model);
+	//console.log(model);
   </script>

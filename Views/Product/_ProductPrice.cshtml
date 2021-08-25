@@ -5,6 +5,16 @@
 @using Nop.Web.Models.Catalog;
 @using System.Text.RegularExpressions;
 
+@{
+    var absolutepath = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
+    var query_type = "";
+    var price_flashsale_type = "font-size: 20px; color: #525252;";
+    if (!String.IsNullOrEmpty(HttpUtility.ParseQueryString(absolutepath.Query).Get("type"))) {
+        price_flashsale_type = "font-size: 20px; color: #9D3131;";
+        query_type = HttpUtility.ParseQueryString(absolutepath.Query).Get("type").ToLower();
+    }
+}
+
 <div class="prices" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
 
@@ -33,9 +43,17 @@
         if (!String.IsNullOrWhiteSpace(Model.OldPrice))
         {
             @*old price*@
-            <div class="old-product-price" style="display:inline-block; padding-right:20px;">
+            <div class="old-product-price text-center">
                 @*<label>@T("Products.Price.OldPrice"):</label>*@
-                <span style="text-decoration:line-through">@Model.OldPrice</span>
+                <span style="text-decoration:line-through; font-size: 18px; color: #BCBCBC;">@Model.OldPrice</span>
+            </div>
+        }
+
+        //FOR FLASH SALE
+        if (query_type.Equals("flash-sale"))
+        {
+            <div class="old-product-price text-center">
+                <span style="text-decoration:line-through; font-size: 18px; color: #BCBCBC;">IDR 389.000</span>
             </div>
         }
 
@@ -53,7 +71,7 @@
 
             @*render price*@
             <p>
-                <span style="font-size: 20px; color: #525252;" @if (String.IsNullOrWhiteSpace(Model.PriceWithDiscount)) { <text> itemprop="price" class="price-value-@(Model.ProductId)" </text> }>
+                <span class="worksans-medium" style="@price_flashsale_type" @if (String.IsNullOrWhiteSpace(Model.PriceWithDiscount)) { <text> itemprop="price" class="price-value-@(Model.ProductId)" </text> }>
                     @Html.Raw(Model.Price)
                 </span>
             </p>
