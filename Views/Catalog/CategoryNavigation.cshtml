@@ -287,28 +287,27 @@
 <script>
   var path = window.location.pathname;
   var host = window.location.origin;
-
+  let open_header = false;
   if (path == '/') {
 		$(window).on("scroll", function() {
 				if($(window).scrollTop() > 50) {
 					$(".headertextcolor").attr('style', 'color: black !important');
 				} else {
-					$(".headertextcolor").attr('style', 'color: white !important');
+          if (!open_header) {
+					  $(".headertextcolor").attr('style', 'color: white !important');
+          }
 				}
 		});
 	}
-
   
   //Close header
   $( "#close-category-header" ).click(function() {
     if (path == '/') {
-      $(window).on("scroll", function() {
-          if($(window).scrollTop() > 50) {
-            $(".headertextcolor").attr('style', 'color: black !important');
-          } else {
-            $(".headertextcolor").attr('style', 'color: white !important');
-          }
-      });
+      if($(window).scrollTop() > 50) {
+        $(".headertextcolor").attr('style', 'color: black !important');
+      } else {
+        $(".headertextcolor").attr('style', 'color: white !important');
+      }
     } else {
       $(".headertextcolor").attr('style', 'color: white !important');
     }
@@ -363,16 +362,15 @@
   //Hover header category
   $("a[id^='headingCategory-']").hover(
     function() {
+      open_header = true;
       var id = parseInt(this.id.replace("headingCategory-", ""), 10);
       $("#dropdownMenuLink-" + id).css("display", "flex");
       if (path == '/') {
-        $(window).on("scroll", function() {
-            if($(window).scrollTop() > 50) {
-              $(".headertextcolor").attr('style', 'color: black !important');
-            } else {
-              $(".headertextcolor").attr('style', 'color: white !important');
-            }
-        });
+          if($(window).scrollTop() > 50) {
+            $(".headertextcolor").attr('style', 'color: black !important');
+          } else {
+            $(".headertextcolor").attr('style', 'color: black !important');
+          }
       } else {
         $(".headertextcolor").attr('style', 'color: black !important');
       }
@@ -386,6 +384,7 @@
       });
     }, 
     function() {
+      open_header = false;
       var id_drop = parseInt(this.id.replace("headingCategory-", ""), 10);
       $("#dropdownMenuLink-" + id_drop).css("display", "flex");
       $("#headingCategory-" + id_drop).css("text-decoration", "underline");
@@ -402,13 +401,11 @@
           var id = parseInt(this.id.replace("headingCategory-", ""), 10);
           $("#dropdownMenuLink-" + id).css("display", "none");
           if (path == '/') {
-             $(window).on("scroll", function() {
-                if($(window).scrollTop() > 50) {
-                  $(".headertextcolor").attr('style', 'color: black !important');
-                } else {
-                  $(".headertextcolor").attr('style', 'color: white !important');
-                }
-            });
+              if($(window).scrollTop() > 50) {
+                $(".headertextcolor").attr('style', 'color: black !important');
+              } else {
+                $(".headertextcolor").attr('style', 'color: white !important');
+              }
           } else {
             $(".headertextcolor").attr('style', 'color: black !important');
           }
@@ -451,6 +448,6 @@
 
 	//console.log(`CATEGORY NAVIGATION`);
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	console.log(model);
+	//console.log(model);
 </script>
 

@@ -72,23 +72,47 @@
         if (item.DesktopItems.Any() && item.MobileItems.Any()) {
           <hr class="mb-5"/>
           <h1 class="text-center text-title-demo" style="font-size: 35px; color: #454545;">Shop by Categories</h1>
-          <div class="row p-5">
-            @for (int i = 0; i < item.DesktopItems.Count(); i++) {
-              if (i < 4) {
-                <div class="col-12 col-md-6 col-sm-6 text-center">
-                  <a href="@item.DesktopItems[i].NavigateTo" style="cursor: pointer; width: 100%; height: 100%">
-                    <span style="position: relative;">
-                      <img src="@item.DesktopItems[i].PictureUrl" class="img-fluid w-100 p-4" />
-                    <h1 style="display: flex; position: absolute; justify-content: center; width: 100%; top: 0; align-items: center; height: 100%;">
-                      <span style="text-decoration: none; color: white; font-size: 35px;">
-                        @item.DesktopItems[i].Title
-                      </span>
-                    </h1>
-                  </a>
-                </div>
-              }
 
-            }
+          <div class="d-none d-md-block hidden-xs hidden-sm">
+            <div class="row p-5">
+              @for (int i = 0; i < item.DesktopItems.Count(); i++) {
+                if (i < 4) {
+                  <div class="col-12 col-md-6 col-sm-6 text-center">
+                    <a href="@item.DesktopItems[i].NavigateTo" style="cursor: pointer; width: 100%; height: 100%">
+                      <span style="position: relative;">
+                        <img src="@item.DesktopItems[i].PictureUrl" class="img-fluid w-100 p-4" />
+                        <h1 style="display: flex; position: absolute; justify-content: center; width: 100%; top: 0; align-items: center; height: 100%;">
+                        <span style="text-decoration: none; color: white; font-size: 35px;">
+                          @item.DesktopItems[i].Title
+                        </span>
+                      </h1>
+                    </a>
+                  </div>
+                }
+
+              }
+            </div>
+          </div>
+          
+          <div class="d-block d-md-none hidden-md hidden-xl">
+            <div class="row p-5">
+              @for (int i = 0; i < item.DesktopItems.Count(); i++) {
+                if (i < 4) {
+                  <div class="col-12 col-md-6 col-sm-6 text-center">
+                    <a href="@item.DesktopItems[i].NavigateTo" style="cursor: pointer; width: 100%; height: 100%">
+                      <span style="position: relative;">
+                        <img src="@item.DesktopItems[i].PictureUrl" class="img-fluid w-100 pb-4" />
+                        <h1 style="display: flex; position: absolute; justify-content: center; width: 100%; top: 0; align-items: center; height: 100%;">
+                        <span style="text-decoration: none; color: white; font-size: 27px;">
+                          @item.DesktopItems[i].Title
+                        </span>
+                      </h1>
+                    </a>
+                  </div>
+                }
+
+              }
+            </div>
           </div>
         }
       }

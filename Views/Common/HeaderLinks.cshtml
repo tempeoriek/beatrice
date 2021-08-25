@@ -135,7 +135,8 @@
 						}
 						<a href="#bag">
 							<div id="icbag-panel" class="@cssCartItem">
-								<img src="@bag_icon" class="bag-header"/>&nbsp;<span id="mCartItemsQty" style="@text_header_color" class="cart-qty">@cartItem</span>
+								<img src="@bag_icon" class="bag-header"/>&nbsp;
+								<span id="mCartItemsQty" style="@text_header_color" class="cart-qty bag-text">@cartItem</span>
 							</div>
 						</a>
 						
@@ -165,7 +166,7 @@
 
 @*mobile navbar*@
 <div id="headermobilehide" class="d-block d-md-none hidden-md hidden-lg sidebarNavigation fixed-top header-desktop" style="background-color: transparent;">
-	<nav class="navbar navbar-expand-md" data-sidebarClass="navbar-dark" style="background-color: white;">
+	<nav class="navbar navbar-expand-md header-desktop" data-sidebarClass="navbar-dark" style="background-color: transparent;">
 		<div class="text-center" style="width:100%;">
 			<div class="row m-1">
 				<div class="col-3 d-flex justify-content-start">
@@ -182,7 +183,7 @@
 				</div>
 
 
-				<div class="col-3 d-flex justify-content-end align-items-center" style="padding-right: 5% !important;">
+				<div class="col-3 d-flex justify-content-end align-items-center m-0 p-0" style="">
 					<a href="/customer/info" class="" style="padding-right:17px;"><img src="@acc_icon" class="acc-header" /></a>
 					@if (Model.ShoppingCartEnabled)
 					{
@@ -196,7 +197,7 @@
 						<a href="#bag" onclick="$('.aside').asidebar('open')">
 							<div id="icbag-panel" class="@cssCartItem align-items-center d-flex">
 								<span class="nav-item" style="color:white;margin-left:-8px;">
-									<img src="@bag_icon" class="bag-header" style="width: 17px;" />&nbsp;<span id="mCartItemsQty" style="@text_header_color" class="cart-qty">@cartItem</span>
+									<img src="@bag_icon" class="bag-header" style="width: 17px;" />&nbsp;<span id="mCartItemsQty" style="@text_header_color" class="cart-qty bag-text">@cartItem</span>
 								</span>
 							</div>
 						</a>
@@ -253,6 +254,7 @@
 
 	if (window.location.pathname == '/') {
 		$(window).on("scroll", function() {
+				
 				let logo_header = $(window).scrollTop() > 50 ?  "/Themes/v1/Content/images/logo-hitam.svg" :  "/Themes/v1/Content/images/logo.svg";
 				let menu_icon = $(window).scrollTop() > 50 ? "/Themes/v1/Content/images/menu-black.png" : "/Themes/v1/Content/images/menu-white.png";
 				let src_img = $(window).scrollTop() > 50 ? "/Themes/v1/Content/images/search2.svg" : "/Themes/v1/Content/images/search.svg";
@@ -266,7 +268,9 @@
 
 				if($(window).scrollTop() > 50) {
 					$(".header-desktop").attr('style', 'background-color: white !important');
+					$(".bag-text").attr('style', 'color: black !important');
 				} else {
+					$(".bag-text").attr('style', 'color: white !important');
 					$(".header-desktop").attr('style', 'background-color: transparent !important');
 					$(".logo-header").attr('src', window.location.origin + logo_header);
 				}
