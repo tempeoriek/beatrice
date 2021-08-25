@@ -120,8 +120,7 @@
   var divId = (ViewBag.isMobile != null) ? "shop-mobile" : "shop";
   string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
   string host = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-	var text_header_color = "color: black !important";
-	@* var text_header_color = absolutepath.Equals("/") ? "color: white !important": "color: black !important"; *@
+	var text_header_color = absolutepath.Equals("/") ? "color: white !important": "color: black !important";
 }
 
 
@@ -288,11 +287,34 @@
 <script>
   var path = window.location.pathname;
   var host = window.location.origin;
+
+  if (path == '/') {
+		$(window).on("scroll", function() {
+				if($(window).scrollTop() > 50) {
+					$(".headertextcolor").attr('style', 'color: black !important');
+				} else {
+					$(".headertextcolor").attr('style', 'color: white !important');
+				}
+		});
+	}
+
+  
   //Close header
   $( "#close-category-header" ).click(function() {
-    $(".headertextcolor").attr('style', 'color: white !important');
+    if (path == '/') {
+      $(window).on("scroll", function() {
+          if($(window).scrollTop() > 50) {
+            $(".headertextcolor").attr('style', 'color: black !important');
+          } else {
+            $(".headertextcolor").attr('style', 'color: white !important');
+          }
+      });
+    } else {
+      $(".headertextcolor").attr('style', 'color: white !important');
+    }
     $("a[id^='headingCategory-']").each(function() {
       var id = parseInt(this.id.replace("headingCategory-", ""), 10);
+      console.log(id)
       $("#dropdownMenuLink-" + id).css("display", "none");
       $("#headingCategory-" + id).css("text-decoration", "none");
     });
@@ -343,7 +365,17 @@
     function() {
       var id = parseInt(this.id.replace("headingCategory-", ""), 10);
       $("#dropdownMenuLink-" + id).css("display", "flex");
-      $(".headertextcolor").attr('style', 'color: black !important');
+      if (path == '/') {
+        $(window).on("scroll", function() {
+            if($(window).scrollTop() > 50) {
+              $(".headertextcolor").attr('style', 'color: black !important');
+            } else {
+              $(".headertextcolor").attr('style', 'color: white !important');
+            }
+        });
+      } else {
+        $(".headertextcolor").attr('style', 'color: black !important');
+      }
 
       $("a[id^='headingCategory-']").each(function() {
         var id_drop = parseInt(this.id.replace("headingCategory-", ""), 10);
@@ -370,7 +402,13 @@
           var id = parseInt(this.id.replace("headingCategory-", ""), 10);
           $("#dropdownMenuLink-" + id).css("display", "none");
           if (path == '/') {
-            $(".headertextcolor").attr('style', 'color: white !important');
+             $(window).on("scroll", function() {
+                if($(window).scrollTop() > 50) {
+                  $(".headertextcolor").attr('style', 'color: black !important');
+                } else {
+                  $(".headertextcolor").attr('style', 'color: white !important');
+                }
+            });
           } else {
             $(".headertextcolor").attr('style', 'color: black !important');
           }
@@ -413,6 +451,6 @@
 
 	//console.log(`CATEGORY NAVIGATION`);
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	//console.log(model);
+	console.log(model);
 </script>
 
