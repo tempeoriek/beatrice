@@ -61,7 +61,8 @@
           
         </div>
 
-        @Html.Partial("_HomeFlashSale")
+        @Html.Action("ShowOnHomepage", "FlashSale")
+        @* @Html.Partial("_HomeFlashSale") *@
         
       }
 
@@ -75,14 +76,15 @@
             @for (int i = 0; i < item.DesktopItems.Count(); i++) {
               if (i < 4) {
                 <div class="col-12 col-md-6 col-sm-6 text-center">
-                  <a href="@item.DesktopItems[i].NavigateTo" style="position: relative;">
-                    <img src="@item.DesktopItems[i].PictureUrl" class="img-fluid w-100 p-4" />
+                  <a href="@item.DesktopItems[i].NavigateTo" style="cursor: pointer; width: 100%; height: 100%">
+                    <span style="position: relative;">
+                      <img src="@item.DesktopItems[i].PictureUrl" class="img-fluid w-100 p-4" />
+                    <h1 style="display: flex; position: absolute; justify-content: center; width: 100%; top: 0; align-items: center; height: 100%;">
+                      <span style="text-decoration: none; color: white; font-size: 35px;">
+                        @item.DesktopItems[i].Title
+                      </span>
+                    </h1>
                   </a>
-                  <h1 style="display: flex; position: absolute; justify-content: center; width: 100%; top: 0; align-items: center; height: 100%;">
-                    <a href="@item.DesktopItems[i].NavigateTo" style="text-decoration: none; color: white; font-size: 35px;">
-                      @item.DesktopItems[i].Title
-                    </a>
-                  </h1>
                 </div>
               }
 
@@ -95,10 +97,22 @@
   }
 }
 
-@Html.Partial("_HomeComingSoon")
+    @*
+        Partial view: /views/catalog/_UpcomingCollection.cshtml    
+    *@
+
+    @Html.Action("Comingsoon", "Catalog", new { isPartial = true })
+
+    @*@Html.Partial("_HomeComingSoon")*@
+
+
+
+
+
 <hr class="mb-5"/>
-@Html.Partial("_HomeBestSeller")
-@Html.Action("HomepageBestSellers", "Product")
+
+@* @Html.Partial("_HomeBestSeller") *@
+@Html.Action("HomepageProducts", "Product", new { categoryId = 2 })
 
 <section>
   <div class="row" style="margin-top: 5%;">
@@ -282,8 +296,8 @@
   }, 1700)*/
     
   // Set the date we're counting down to
-  var countDownDate = new Date("Aug 20, 2021 15:37:25").getTime();
-  var countDownDate2 = new Date("Aug 20, 2021 15:37:25").getTime();
+  var countDownDate = new Date("Aug 28, 2021 15:37:25").getTime();
+  var countDownDate2 = new Date("Aug 28, 2021 15:37:25").getTime();
 
   // Update the count down every 1 second
   var x = setInterval(function() {

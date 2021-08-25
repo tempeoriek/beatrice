@@ -120,7 +120,8 @@
   var divId = (ViewBag.isMobile != null) ? "shop-mobile" : "shop";
   string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
   string host = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-	var text_header_color = absolutepath.Equals("/") ? "color: white !important": "color: black !important";
+	var text_header_color = "color: black !important";
+	@* var text_header_color = absolutepath.Equals("/") ? "color: white !important": "color: black !important"; *@
 }
 
 
@@ -153,7 +154,7 @@
               }
               else
               {
-                <a id="headingCategory-@category.Id" class="category-item" href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
+                <a style="@text_header_color" class="category-item headertextcolor" href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
                   @category.Name.ToUpper()
                 </a>
               }

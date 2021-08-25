@@ -1,0 +1,42 @@
+﻿
+@model CategoryModel
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Models.Catalog;
+@using Nop.Web.Extensions;
+
+@{ 
+    //Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+    //Html.AddMetaDescriptionParts(Model.MetaDescription);
+    //Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+    var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
+    if (canonicalUrlsEnabled)
+    {
+        var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        Html.AddCanonicalUrlParts(categoryUrl);
+    }
+}
+
+
+
+@if (Model == null)
+{
+
+}
+else
+{
+
+    if (Model.Products.Any())
+    {
+        <div class="row catalogue-img pl-md-0 pr-md-0">
+        @foreach (var item in Model.Products)
+        {
+            var colCss = "col-6 col-sm-6 col-md-4 col-lg-3";
+            
+            <div class="@colCss catalog-line">@Html.Partial("_ProductBox", item)</div>
+        }
+        </div> 
+    }
+}
