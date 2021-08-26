@@ -199,12 +199,7 @@
               <div class="row px-5 mx-3" style="height: 100%">
                 @for (var i = 0 ; i < 4; i++) {
                   <div class="col-3 col-md-3 col-sm-3 text-center d-flex" style="position: relative; height: 100%">
-                    @if (i == 3) {
-                      <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
-                      <a id="close-category-header" class="ml-3" style="font-size: 20px; cursor: pointer; font-weight: 600; position: absolute; top: 1%; right: -5%;">X</a>
-                    } else {
-                      <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
-                    }
+                    <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
                   </div>
                 }
               </div>
@@ -237,12 +232,13 @@
               <div class="row px-5 mx-3" style="height: 100%">
                 @for (var i = 0 ; i < 4; i++) {
                   <div class="col-3 col-md-3 col-sm-3 text-center d-flex" style="position: relative; height: 100%">
-                    @if (i == 3) {
+                    <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
+                    @* @if (i == 3) {
                       <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
                       <a id="close-category-header" class="ml-3" style="font-size: 20px; cursor: pointer; font-weight: 600; position: absolute; top: 1%; right: -5%;">X</a>
                     } else {
                       <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
-                    }
+                    } *@
                   </div>
                 }
               </div>

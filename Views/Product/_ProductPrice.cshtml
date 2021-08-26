@@ -71,7 +71,7 @@
 
             @*render price*@
             <p>
-                <span class="worksans-medium" style="@price_flashsale_type" @if (String.IsNullOrWhiteSpace(Model.PriceWithDiscount)) { <text> itemprop="price" class="price-value-@(Model.ProductId)" </text> }>
+                <span class="worksans-medium text-product-price" style="@price_flashsale_type" @if (String.IsNullOrWhiteSpace(Model.PriceWithDiscount)) { <text> itemprop="price" class="price-value-@(Model.ProductId)" </text> }>
                     @Html.Raw(Model.Price)
                 </span>
             </p>

@@ -176,7 +176,7 @@ label { font-weight: normal; margin-bottom: 0; color: black; text-transform: cap
 }
 
 .text-product-detail {
-    font-size: 20px;
+    font-size: 20px !important;
     color: #525252;
     margin-bottom: 1%;
     text-align: center;
@@ -249,10 +249,10 @@ label { font-weight: normal; margin-bottom: 0; color: black; text-transform: cap
     text-transform: capitalize !important;
 }
 
-.text-product-detail {
+/* .text-product-detail {
     font-size: 16px; 
     color: #525252;
-}
+} */
 
 .text-white {
     color: white;
@@ -2722,6 +2722,16 @@ a.dropdown-item {
         padding: 0 0.25rem
     }
 
+    .text-product-price {
+        font-size: 17px !important;
+    }
+    .text-product-detail {
+        font-size: 18px !important;
+        color: #525252;
+        margin-bottom: 1%;
+        text-align: center;
+        text-transform: uppercase;
+    }
 
 
 

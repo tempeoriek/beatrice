@@ -52,8 +52,9 @@
 	}
   string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
   string host = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-	var src_img = ""; var menu_icon = ""; var bag_icon = ""; var acc_icon = ""; var logo_header = ""; var logo_mobile = host + "/Themes/v1/Content/images/logo-hitam.svg"; var text_header_color = ""; var header_background = "";
+	var src_img = ""; var menu_icon = ""; var bag_icon = ""; var acc_icon = ""; var logo_header = ""; var logo_mobile = host + "/Themes/v1/Content/images/logo-hitam.svg"; var text_header_color = ""; var header_background = ""; var header_background_mobile = "";
 	if (absolutepath.Equals("/")) {
+		header_background_mobile = "background-color: transparent;";
 		header_background = "background-color: transparent; height: 70px;";
 		menu_icon = host + "/Themes/v1/Content/images/menu-white.png";
 		src_img = host + "/Themes/v1/Content/images/search.svg";
@@ -62,6 +63,7 @@
 		logo_header = host + "/Themes/v1/Content/images/logo.svg";
 		text_header_color = "color: white !important";
 	} else {
+		header_background_mobile = "background-color: white;";
 		header_background = "background-color: white; height: 70px;";
 		menu_icon = host + "/Themes/v1/Content/images/menu-black.png";
 		src_img = host + "/Themes/v1/Content/images/search2.svg";
@@ -165,8 +167,8 @@
 </div>
 
 @*mobile navbar*@
-<div id="headermobilehide" class="d-block d-md-none hidden-md hidden-lg sidebarNavigation fixed-top header-desktop" style="background-color: transparent;">
-	<nav class="navbar navbar-expand-md header-desktop" data-sidebarClass="navbar-dark" style="background-color: transparent;">
+<div id="headermobilehide" class="d-block d-md-none hidden-md hidden-lg sidebarNavigation fixed-top header-desktop" style="@header_background_mobile">
+	<nav class="navbar navbar-expand-md header-desktop" data-sidebarClass="navbar-dark">
 		<div class="text-center" style="width:100%;">
 			<div class="row m-1">
 				<div class="col-3 d-flex justify-content-start">
