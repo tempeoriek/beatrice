@@ -9,7 +9,7 @@
     <div class="ori-product-img">
         @if (absolutepath.Equals("/coming-soon")) {
           <div style="position: relative;">
-            <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName})" class="clean">
+            <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName, date= absolutepath.Equals("/coming-soon") || absolutepath.Equals("/flash-sale") ? "02-09-2021T18:00:00" : null  , type = absolutepath.Equals("/coming-soon") ? "coming-soon" : absolutepath.Equals("/flash-sale") ? "flash-sale" : null})" class="clean">
               <img src="@Model.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
             </a>
             <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
@@ -23,7 +23,7 @@
         }
         
         @if (Model.Quantity == 0) {
-          <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName})" class="clean">
+          <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName, date= absolutepath.Equals("/coming-soon") || absolutepath.Equals("/flash-sale") ? "02-09-2021T18:00:00" : null  , type = absolutepath.Equals("/coming-soon") ? "coming-soon" : absolutepath.Equals("/flash-sale") ? "flash-sale" : null})" class="clean">
             <div class="d-flex justify-content-center align-items-center backdrop-product">
               <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
             </div>
@@ -34,7 +34,7 @@
 
     <div class="description">
       <p class="d-flex m-0" style="line-height: 1.5em; justify-content: space-between; align-items: center;">
-        <a class="clean worksans-reg text-product-box worksans-medium" href="@Url.RouteUrl("Product", new { SeName = Model.SeName})">
+        <a class="clean worksans-reg text-product-box worksans-medium" href="@Url.RouteUrl("Product", new { SeName = Model.SeName , date= absolutepath.Equals("/coming-soon") || absolutepath.Equals("/flash-sale") ? "02-09-2021T18:00:00" : null  , type = absolutepath.Equals("/coming-soon") ? "coming-soon" : absolutepath.Equals("/flash-sale") ? "flash-sale" : null})">
           @Model.Name
         </a>
         @if (absolutepath.Equals("/new-arrivals")) {

@@ -129,7 +129,7 @@
 @Html.HiddenFor(model => model.Id)
 
 
-<div class="form-horizontal">
+<div class="form-horizontal" style="margin-top: 100px;">
     @if (Model.CompanyEnabled)
     {
         <div class="form-group inputs">
@@ -306,3 +306,9 @@
 
 
 }
+
+<script>
+    var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	//console.log(`create or upate`);    
+	//console.log(model);    
+</script>

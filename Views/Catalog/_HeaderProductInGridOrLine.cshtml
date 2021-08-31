@@ -68,7 +68,7 @@
       <h1 style="@styleContentCenterDeskopFlashSale">@Model.Name</h1>
     </div>
   </div>
-} else if (absolutepath.Equals("/coming-soon")) { 
+} else if (absolutepath.Equals("/coming-soon") || absolutepath.Equals("/catalog/comingsoon")) { 
   <div class="row d-none d-md-block carousel" style="margin: 15px 0; margin-bottom: 0; position: relative;"> 
     <img class="d-block w-100" src="@String.Format("/Content/Images/uploaded/categories/{0}.jpg", Model.SeName)"> 
     <div class="text-center" style="@styleDivCenterDesktop">
@@ -152,7 +152,7 @@
     // If the count down is over, write some text 
     if (distance4 < 0 && document.getElementById("demo-coming-soon")) {
       clearInterval(x);
-      document.getElementById("demo-coming-soon").innerHTML = "Flash sale has ended";
+      document.getElementById("demo-coming-soon").innerHTML = "Sale has ended";
     }
     if (distance3 < 0 && document.getElementById("demo-2")) {
       clearInterval(x);

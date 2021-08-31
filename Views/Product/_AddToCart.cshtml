@@ -119,11 +119,13 @@
             <span>@addToCartText</span>
           </button>
         } else {
-          <button type="button" id="add-to-cart-button-@Model.ProductId" class="btn-addcart button_sare"
-              data-productid="@Model.ProductId"
-              onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form');return false;">
-            <span>@addToCartText</span>
-          </button>
+          if (!query_type.Equals("coming-soon")) {
+            <button type="button" id="add-to-cart-button-@Model.ProductId" class="btn-addcart button_sare"
+                data-productid="@Model.ProductId"
+                onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form');return false;">
+              <span>@addToCartText</span>
+            </button>
+          }
         }
         var dataDictAddToWishlist = new ViewDataDictionary();
         dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.ProductId);

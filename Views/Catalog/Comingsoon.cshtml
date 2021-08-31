@@ -1,42 +1,325 @@
-﻿
+﻿@* Due to share database and development purposes, copied from sav template*@
+
 @model CategoryModel
 @using Nop.Core.Domain.Common;
 @using Nop.Core.Domain.Seo;
 @using Nop.Core.Infrastructure;
 @using Nop.Web.Models.Catalog;
 @using Nop.Web.Extensions;
+@{
 
-@{ 
-    //Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
-    //Html.AddMetaDescriptionParts(Model.MetaDescription);
-    //Html.AddMetaKeywordParts(Model.MetaKeywords);
 
-    var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
-    if (canonicalUrlsEnabled)
-    {
-        var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
-        Html.AddCanonicalUrlParts(categoryUrl);
-    }
+  Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+  Html.AddMetaDescriptionParts(Model.MetaDescription);
+  Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+  var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
+  if (canonicalUrlsEnabled)
+  {
+      var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+      Html.AddCanonicalUrlParts(categoryUrl);
+  }
 }
 
+  @Html.Partial("_HeaderProductInGridOrLine")
 
-
-@if (Model == null)
-{
-
-}
-else
-{
-
-    if (Model.Products.Any())
-    {
-        <div class="row catalogue-img pl-md-0 pr-md-0">
-        @foreach (var item in Model.Products)
-        {
-            var colCss = "col-6 col-sm-6 col-md-4 col-lg-3";
-            
-            <div class="@colCss catalog-line">@Html.Partial("_ProductBox", item)</div>
+  @if (Model.Products.Count > 0)
+  {
+    @Html.Partial("_FilterProduct")
+    
+    <hr class="d-block d-md-none" />
+    <div style="padding: 0 5% 0; position: relative; background-color: white;">
+      <div class="row" id="sortnormal">
+        @{
+          var productnormal = Model.Products;
+          var index_productnormal = 0;
+          foreach (var item in productnormal)
+          {
+            var colCss = "col-6 col-sm-6 col-md-4 col-lg-4 p-1";
+            <div data-number="@index_productnormal" class="@colCss catalog-line allproducts" id="normal-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+              @Html.Partial("_ProductBox", item)
+            </div>
+            index_productnormal++; 
+          }
         }
-        </div> 
+      </div>
+
+      <div class="row" style="display: none;" id="sortascending">
+        @{
+          var productasc = Model.Products.OrderBy(x => x.ProductPrice.PriceValue);
+          var index_productasc = 0;
+          foreach (var item in productasc)
+          {
+            var colCss = "col-6 col-sm-6 col-md-4 col-lg-4 p-1";
+            <div data-number="@index_productasc" class="@colCss catalog-line allproducts" id="asc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+              @Html.Partial("_ProductBox", item)
+            </div>
+            index_productasc++; 
+          }
+        }
+      </div>
+
+      <div class="row" style="display: none;" id="sortdescending">
+        @{
+          var productdsc = Model.Products.OrderByDescending(x => x.ProductPrice.PriceValue);
+          var index_productdsc = 0;
+          foreach (var item in productdsc)
+          {
+            var colCss = "col-6 col-sm-6 col-md-4 col-lg-4 p-1";
+            <div data-number="@index_productdsc" class="@colCss catalog-line allproducts" id="desc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+              @Html.Partial("_ProductBox", item)
+            </div>
+            index_productdsc++; 
+          }
+        }
+      </div>
+
+      <div class="row" style="display: none;" id="sortaz">
+        @{
+          var productaz = Model.Products.OrderBy(x => x.Name).ToList();
+          var index_productaz = 0;
+          foreach (var item in productaz)
+          {
+            var colCss = "col-6 col-sm-6 col-md-4 col-lg-4 p-1";
+            <div data-number="@index_productaz" class="@colCss catalog-line allproducts" id="az-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+              @Html.Partial("_ProductBox", item)
+            </div>
+            index_productaz++; 
+          }
+        }
+      </div>
+      
+      <div class="row" style="display: none;" id="sortza">
+        @{
+          var productza = Model.Products.OrderByDescending(x => x.Name).ToList();
+          var index_productza = 0;
+          foreach (var item in productza)
+          {
+            var colCss = "col-6 col-sm-6 col-md-4 col-lg-4 p-1";
+            <div data-number="@index_productza" class="@colCss catalog-line allproducts" id="za-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+              @Html.Partial("_ProductBox", item)
+            </div>
+            index_productza++; 
+          }
+        }
+      </div>
+
+      <div class="row mt-5" style="display: none;" id="emptyproduct">
+        <div class="col-12 col-md-12 col-sm-12 text-center">
+          <h2>We're still preparing the collection. Please stay tuned.</h2>
+        </div>
+      </div>
+    </div>
+  } else {
+    <div class="row" style="padding: 10% 5% 0; position: relative; background-color: white;">
+      <div class="col-main-slim" style="max-height: 200px !important;"><h2>We're still preparing the collection. Please stay tuned.</h2></div>
+    </div>
+  }
+
+
+@*sticky thumbnail*@
+<script src="~/Themes/v1/Scripts/jquery.sticky.js"></script>
+<script>
+	$('.nav-item a').click(function(){
+    $(this).tab('show')
+    var name = $(this).attr('href').substr(1)
+    $('#pills-tabContent2').children().each(function(el) {
+      if (name === $(this).attr('id')) {
+        $(this).addClass('active show')
+      } else {
+        $(this).removeClass('active show')
+      }
+    })
+  })
+  //console.log(`PRODUCT CATEGORY`);
+	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	//console.log(model.Products);
+
+  var arr = [null, null, null, null, null, null, null], arr_multi_color = [], arr_multi_brand = [];
+  var all_arr = [], arr_none_cat = [], arr_none_color = [], arr_none_brand = [],arr_none_avail = [], arr_none_price = [], arr_none_new = [];
+  
+  $("[name=sortpageview]").click(function(){
+    var id = String(this.id, 10);
+    arr[4] = id;
+    startfilter();
+    all_arr = [];
+    $("[name=sortpageview]").each(function() {
+      var normal_id = String(this.id, 10);
+      if (normal_id == id) {
+        $(this).css("cssText", "color: #E1C2A4 !important");
+      } else {
+        $(this).css("cssText", "color: #525252 !important");
+      }
+    });
+  });
+  
+  $("[name=sortcatalog]").click(function(){
+    var id = String(this.id, 10);
+    arr[5] = id;
+    startfilter();
+    all_arr = [];
+    $("[name=sortcatalog]").each(function() {
+      var normal_id = String(this.id, 10);
+      if (normal_id == id) {
+        $(this).css("cssText", "color: #E1C2A4 !important");
+      } else {
+        $(this).css("cssText", "color: #525252 !important");
+      }
+    });
+  });
+
+  // remove sort product
+  $('#removesort').click(function(){
+    if (document.querySelector('input[name="sortcatalog"]:checked')) {
+      document.querySelector('input[name="sortcatalog"]:checked').checked = false;
+      displaysortproduct("flex", "none", "none", "none", "none")
+      arr[5] = null
+      removesortnew();
     }
-}
+    startfilter();
+  });
+
+  function removesortnew () {
+    //remove display using id
+     if (arr_none_new.length > 0) {
+      for (let i = 0; i < arr_none_new.length; i++) {
+        let temp = arr_none_new[i];
+        displayproduct(temp, "block");
+      }
+      arr_none_new = [];
+     }
+  }
+  
+  function getallarray () {
+    // get all arr
+    $(".allproducts").each(function() {
+      var normal_id = parseInt(this.id.replace("normal-", ""), 10);
+      if (normal_id) {
+        all_arr.push(parseInt(normal_id))
+      }
+    });
+  }
+
+  function startfilter () {
+    getallarray();
+
+    var ih = 0; 
+    var il = 0; 
+    var ia= 0; 
+    var iz = 0; 
+    var inr = 0; 
+    var iw = 0;
+    // start to filter the product
+    $(".allproducts").each(function(index) {
+      var product_id =  parseInt($(this).attr("id").replace("normal-", ""), 10);
+      var page_view_number = $(this).attr("data-number");
+
+      if (product_id) {
+        for (let i = 0; i < arr.length; i++) {
+
+          if (i == 4 && arr[i] && !arr[5]) {
+            displaypageview(arr[4], inr);
+            inr++;
+          }
+          // filter logic hightolow
+          if (i == 5 && arr[i]) {
+            if (arr[i].length > 0) {
+              if (arr[i] == "hightolow") {
+                displaysortproduct("none", "none", "flex", "none")
+                removesortnew();
+                displaypageview(arr[4], ih);
+                ih++;
+              } else if (arr[i] == "lowtohigh") {
+                displaysortproduct("none", "flex", "none", "none", "none")
+                displaypageview(arr[4], il);
+                il++;
+              } else if (arr[i] == "az") {
+                displaysortproduct("none", "none", "none", "flex", "none")
+                removesortnew();
+                displaypageview(arr[4], ia);
+                ia++;
+              } else if (arr[i] == "za") {
+                displaysortproduct("none", "none", "none", "none", "flex")
+                removesortnew();
+                displaypageview(arr[4], iz);
+                iz++;
+              } else if (arr[i] == "whatnew") {
+                var marknew = $(this).attr("data-new");
+                if (marknew == "True") {
+                  if (all_arr.find(element => parseInt(element) == parseInt(product_id))) {
+                    if (arr[4] == `all` || !arr[4]) {
+                      displayproduct(product_id, "block");
+                    } else if (arr[4]){
+                      displaypageview(arr[4], product_id, true, iw);
+                    }
+                  }
+                  iw++;
+                } else {
+                  if (all_arr.find(element => parseInt(element) == parseInt(product_id))) {
+                    all_arr = all_arr.filter(id => parseInt(id) !== parseInt(product_id));
+                    arr_none_new.push(parseInt(product_id));
+                    arr_none_new = [...new Set(arr_none_new)];
+                    displayproduct(product_id, "none");
+                  }
+                }
+              }
+            }
+          } 
+        }
+      }
+    });
+
+    if (all_arr.length == 0) {
+      $('#emptyproduct').css("display", "block");
+    } else {
+      $('#emptyproduct').css("display", "none");
+    }
+  }
+
+  function displaysortproduct (normal, asc, desc, az, za) {
+    $("#sortnormal").css("display", normal);
+    $("#sortascending").css("display", asc);
+    $("#sortdescending").css("display", desc);
+    $("#sortaz").css("display", az);
+    $("#sortza").css("display", za);
+  }
+  
+  function displayproductpageview (number, value) {
+    $('div[data-number='+number+']').css("display", value);
+  }
+  
+  function displaypageview(page, index, newin, newindex) {
+    if (page) {
+      if (page == "all" && !newin) displayproductpageview(index, "block");
+      else if (index < parseInt(page) && !newin) displayproductpageview(index, "block");
+      else if (!newin) displayproductpageview(index, "none");
+
+      if (page == "all" && newin) displayproduct(index, "block");
+      else if (newindex < parseInt(page) && newin) displayproduct(index, "block");
+      else if (newin) displayproduct(index, "none");
+      
+    }
+  }
+
+  function displayproduct (id, value) {
+    $('#normal-'+id).css("display", value);
+    $('#asc-'+id).css("display", value);
+    $('#desc-'+id).css("display", value);
+    $('#az-'+id).css("display", value);
+    $('#za-'+id).css("display", value);
+  }
+
+  function blockproduct (data) {
+    for (let i = 0; i < data.length; i++) {
+      let temp = data[i];
+      displayproduct(temp, "block");
+    }
+  }
+
+	console.log(`COMINGD SOON`);
+	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	console.log(model);
+  
+</script>
+
+
