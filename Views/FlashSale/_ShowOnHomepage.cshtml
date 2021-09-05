@@ -197,13 +197,13 @@
 
 
 <script>
-  console.log(`Flash sale`);
+  //console.log(`Flash sale`);
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
 	//console.log(model);
   let today = new Date();
   let date_today = new Date(`${today.getFullYear()}, ${today.getMonth()}, ${today.getDate()}`);
   let data = model.filter(mf => mf.status == `on going`).length > 0 ? model.filter(mf => mf.status == `on going`)[0] : null;
-  console.log(data)
+  //console.log(data)
   let start_day = data && data.start_date ? new Date(data.start_date).getDate() : null;
   let start_month = data && data.start_date ? new Date(data.start_date).getMonth() : null;
   let start_year = data && data.start_date ? new Date(data.start_date).getFullYear() : null;

@@ -166,15 +166,20 @@
 
         <button type="submit" id="checkout" name="checkout" value="checkout" class="mt-3 btn btn-default" style="width: 100%;">Checkout ></button>
     } else {
-        <input id="checkout-step-button" type="button" style="width: 100%;"  class="mt-3 btn btn-default confirm-order-next-step-button" onclick="Checkout()" value="Place Order >" />
+        <form id="new-checkout" method="post" action="/checkout/OpcConfirmOrder"> 
+            <input id="checkout-step-button" type="submit" name="pay" style="width: 100%;"  class="mt-3 btn btn-default confirm-order-next-step-button" onclick="Checkout(event)" value="Place Order >" />
+            @* <button id="checkout-step-button" type="submit" name="pay" style="width: 100%;" class="mt-3 btn btn-default confirm-order-next-step-button" onclick="Checkout()">Place Order ></button> *@
+            <span class="please-wait" id="confirm-order-please-wait" style="display: none;">@T("Checkout.SubmittingOrder")</span>
+        </form>
         @* <input type="button" style="width: 100%;"  class="mt-3 btn btn-default confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="Checkout" /> *@
-        <span class="please-wait" id="confirm-order-please-wait" style="display: none;">@T("Checkout.SubmittingOrder")</span>
     }
 </div>
 
 
 <script>
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+    //console.log(`order total`)
+    //console.log(model)
     let text_points = model.RedeemedRewardPoints ? `You have IDR ${model.RedeemedRewardPoints} Points` : `You have IDR 0 Points`;
     setTimeout(() => {
         $("#loyal-points-now").text(text_points)

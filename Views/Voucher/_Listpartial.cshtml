@@ -51,6 +51,8 @@
 <script>
     async function copyCouponCode(value)
     {
+        $("#checkout-step-button").prop("disabled", true);
+
         var dummy = document.createElement('input'),
         text = $("#copy-coupon-"+value).text();
         document.body.appendChild(dummy);
@@ -81,6 +83,7 @@
             }
         } catch (err) {
           console.log(err)
+            $("#checkout-step-button").removeAttr('disabled');
         }
     }
     function copyCouponCodeHome (id) {

@@ -336,7 +336,6 @@
     }
     $("a[id^='headingCategory-']").each(function() {
       var id = parseInt(this.id.replace("headingCategory-", ""), 10);
-      console.log(id)
       $("#dropdownMenuLink-" + id).css("display", "none");
       $("#headingCategory-" + id).css("text-decoration", "none");
     });

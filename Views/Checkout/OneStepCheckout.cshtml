@@ -608,7 +608,7 @@
 
   <script>
     var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-    console.log(`one step`);    
+    //console.log(`one step`);    
     //console.log(model);
     let checkout_obj = {
       billing_address: model.BillingAdress.ExistingAddresses[0].Id,
@@ -655,7 +655,7 @@
 
     async function applydisc() {
       $("#checkout-step-button").prop("disabled", true);
-
+      console.log("masuk nih")
       let disc = $("#disc-text").val();
       let button_text = $("#button-disc").text();
       if (button_text == `APPLY`) {
@@ -669,15 +669,15 @@
             }
         } catch (err) {
           console.log(err)
+          $("#checkout-step-button").removeAttr('disabled');
         }
       } else {
-        RemoveDiscountAjax(disc)
         $("#disc-text").val("")
         remove_disc();
         $("#button-disc").text("APPLY");
+        RemoveDiscountAjax(disc)
       }
 
-      $("#checkout-step-button").removeAttr('disabled');
     }
 
     function applypoint() {
@@ -689,8 +689,8 @@
         UpdateOrderTotal()
       } catch (err) {
         console.log(err)
+        $("#checkout-step-button").removeAttr('disabled');
       }
-      $("#checkout-step-button").removeAttr('disabled');
       /*let value = $("#couponcode").val();
       let button_text = $("#button-point").text();
       if (button_text == `APPLY`) {
@@ -981,8 +981,8 @@
         var fetch_data = await FetchAjax("post", "/shoppingcart/OrderTotalsJson?iseditable=false", null);
         if (fetch_data) {
           let subtotal_number = fetch_data.SubTotal ? fetch_data.SubTotal : `IDR 0`;
-          let shipping_number = fetch_data.Shipping ? fetch_data.Shipping : `Please Choose Shipping Method`;
-          let disc_number = fetch_data.SubTotalDiscount ? fetch_data.SubTotalDiscount : `IDR 0`;
+          let shipping_number = fetch_data.Shipping ? fetch_data.Shipping : `Calculated during checkout`;
+          let disc_number = fetch_data.SubTotalDiscount && checkout_obj.discount_code ? fetch_data.SubTotalDiscount : `IDR 0`;
           let grandtotal_number = fetch_data.OrderTotal ? fetch_data.OrderTotal : `Calculated during checkout`;
           setTimeout(function() {
             $("#subtotal-number").text(`${subtotal_number}`);
@@ -1002,10 +1002,14 @@
       $("#checkout-step-button").removeAttr('disabled');
     }
 
-    async function Checkout() {
+    async function Checkout(e) {
+      $("#checkout-step-button").prop("disabled", true);
+      $("#confirm-order-please-wait").css("display", "flex");
+
       if (!checkout_obj.shipping_method || !checkout_obj.payment_method || !checkout_obj.shipping_address) {
+         e.preventDefault(); 
         alert("Please complete the checkout")
-      } else {
+      } /*else {
         try {
           var fetch_data = await FetchAjax("post", "/checkout/OpcConfirmOrder", null);
           console.log(fetch_data)
@@ -1015,9 +1019,10 @@
         } catch (err) {
           console.log(err)
         }
-      }
+      }*/
+      $("#confirm-order-please-wait").css("display", "none");
+      $("#checkout-step-button").removeAttr('disabled');
     }
-
 
     $(function () {
 
