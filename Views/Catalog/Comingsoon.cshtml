@@ -19,11 +19,42 @@
       var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
       Html.AddCanonicalUrlParts(categoryUrl);
   }
+  string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
+  var styleDivCenterDesktop = "position: absolute; top: 0; left: 0; height: 100%; width: 100%; right: 0; bottom: 0;";
+  var styleContentCenterDeskopComingSoon = "font-size: 40px; color: white; display: flex; justify-content: center; align-items: center; height: 100%;";
+
+  DateTime d1 = Model.PreviewEndDateTimeUtc.Value;
+  DateTime d3 = Model.PreviewStartDateTimeUtc.Value;
+  DateTime d2 = DateTime.Now;
+  bool open = d1 > d2 ? true : false;
+  string date1 = d1.ToString("yyyyMMddHHmmss"); 
+  string date2 = d3.ToString("yyyyMMddHHmmss"); 
+
+  @* List<string> FlashSale = new List<string>();
+  FlashSale.Add("08:00");
+  FlashSale.Add("12:00"); *@
 }
 
-  @Html.Partial("_HeaderProductInGridOrLine")
+  <div class="row d-none d-md-block carousel" style="margin: 15px 0; margin-bottom: 0; position: relative;"> 
+    <img class="d-block w-100" src="@String.Format("/Content/Images/uploaded/categories/coming-soon.jpg")"> 
+    <div class="text-center" style="@styleDivCenterDesktop">
+      <h1 style="@styleContentCenterDeskopComingSoon">@Model.Name</h1>
+    </div>
+  </div>
 
-  @if (Model.Products.Count > 0)
+  <div class="row d-block d-md-none carousel" style="position: relative;"> 
+    <img style="left: 50%; position: relative; transform: translateX(-50%);" class="d-block" src="@String.Format("/Content/Images/uploaded/categories/coming-soon.jpg")"> 
+    <div class="text-center" style="@styleDivCenterDesktop">
+      <h1 style="@styleContentCenterDeskopComingSoon">@Model.Name</h1>
+    </div>
+  </div>
+
+  <div class="row p-0 m-0 mb-5" style="background-color: #D8C7BD; width: 120%; margin-left: -10% !important;">
+    <div class="col-12 col-md-12 col-sm-12 d-flex justify-content-center align-items-center" style="height: 55px;"> 
+      <h2 style="color: white; font-size: 20px;" id="demo"/>
+    </div>
+  </div>
+  @if (Model.Products.Count > 0 && open)
   {
     @Html.Partial("_FilterProduct")
     
@@ -35,7 +66,7 @@
           var index_productnormal = 0;
           foreach (var item in productnormal)
           {
-            var colCss = "col-6 col-sm-6 col-md-4 col-lg-4 p-1";
+            var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
             <div data-number="@index_productnormal" class="@colCss catalog-line allproducts" id="normal-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
               @Html.Partial("_ProductBox", item)
             </div>
@@ -50,7 +81,7 @@
           var index_productasc = 0;
           foreach (var item in productasc)
           {
-            var colCss = "col-6 col-sm-6 col-md-4 col-lg-4 p-1";
+            var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
             <div data-number="@index_productasc" class="@colCss catalog-line allproducts" id="asc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
               @Html.Partial("_ProductBox", item)
             </div>
@@ -65,7 +96,7 @@
           var index_productdsc = 0;
           foreach (var item in productdsc)
           {
-            var colCss = "col-6 col-sm-6 col-md-4 col-lg-4 p-1";
+            var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
             <div data-number="@index_productdsc" class="@colCss catalog-line allproducts" id="desc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
               @Html.Partial("_ProductBox", item)
             </div>
@@ -80,7 +111,7 @@
           var index_productaz = 0;
           foreach (var item in productaz)
           {
-            var colCss = "col-6 col-sm-6 col-md-4 col-lg-4 p-1";
+            var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
             <div data-number="@index_productaz" class="@colCss catalog-line allproducts" id="az-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
               @Html.Partial("_ProductBox", item)
             </div>
@@ -95,7 +126,7 @@
           var index_productza = 0;
           foreach (var item in productza)
           {
-            var colCss = "col-6 col-sm-6 col-md-4 col-lg-4 p-1";
+            var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
             <div data-number="@index_productza" class="@colCss catalog-line allproducts" id="za-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
               @Html.Partial("_ProductBox", item)
             </div>
@@ -106,13 +137,13 @@
 
       <div class="row mt-5" style="display: none;" id="emptyproduct">
         <div class="col-12 col-md-12 col-sm-12 text-center">
-          <h2>We're still preparing the collection. Please stay tuned.</h2>
+          <h2>We're still preparing the products. Please stay tuned.</h2>
         </div>
       </div>
     </div>
   } else {
     <div class="row" style="padding: 10% 5% 0; position: relative; background-color: white;">
-      <div class="col-main-slim" style="max-height: 200px !important;"><h2>We're still preparing the collection. Please stay tuned.</h2></div>
+      <div class="col-main-slim text-center" style="max-height: 200px !important;"><h2>We're still preparing the products. Please stay tuned.</h2></div>
     </div>
   }
 
@@ -316,10 +347,64 @@
     }
   }
 
-	console.log(`COMINGD SOON`);
+	//console.log(`COMINGD SOON`);
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	console.log(model);
-  
+	//console.log(model);
+  let today = new Date();
+  let date_today = new Date(`${today.getFullYear()}, ${today.getMonth()}, ${today.getDate()}`);
+  var x = setInterval(function() {
+    let data = model;
+
+    let start_day = data && data.PreviewStartDateTimeUtc ? new Date(data.PreviewStartDateTimeUtc).getDate() : null;
+    let start_month = data && data.PreviewStartDateTimeUtc ? new Date(data.PreviewStartDateTimeUtc).getMonth() : null;
+    let start_year = data && data.PreviewStartDateTimeUtc ? new Date(data.PreviewStartDateTimeUtc).getFullYear() : null;
+    
+    let end_day = data && data.PreviewEndDateTimeUtc ? new Date(data.PreviewEndDateTimeUtc).getDate() : null;
+    let end_month = data && data.PreviewEndDateTimeUtc ? new Date(data.PreviewEndDateTimeUtc).getMonth() : null;
+    let end_year = data && data.PreviewEndDateTimeUtc ? new Date(data.PreviewEndDateTimeUtc).getFullYear() : null;
+
+    let start_date = data && data.PreviewStartDateTimeUtc ? data.PreviewStartDateTimeUtc : null;
+    let end_date = data && data.PreviewEndDateTimeUtc ? data.PreviewEndDateTimeUtc : null;
+    let only_start_date = data && data.PreviewStartDateTimeUtc ? new Date(`${start_year}, ${start_month}, ${start_day}`) : null;
+    let only_end_date = data && data.PreviewEndDateTimeUtc ? new Date(`${end_year}, ${end_month}, ${end_day}`) : null;
+
+    var countDownDate = new Date(end_date).getTime();
+    var countDownStartDate = new Date(start_date).getTime();
+    var now = new Date().getTime();
+      
+    var distance = countDownDate - now;
+    var distance_start = countDownStartDate - now;
+      
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    var days_start = Math.floor(distance_start / (1000 * 60 * 60 * 24));
+    var hours_start = Math.floor((distance_start % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes_start = Math.floor((distance_start % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds_start = Math.floor((distance_start % (1000 * 60)) / 1000);
+
+    let result_time = `${days} : ${hours} : ${minutes} : ${days} : ${seconds}`;
+    let result_time_start = `${days_start} : ${hours_start} : ${minutes_start} : ${seconds_start}`;
+
+    if (data && distance < 0 && distance_start < 0) {
+      clearInterval(x);
+      @* document.getElementById("demo").innerHTML = "Ended"; *@
+    } else {
+      if (data && distance_start > 0) {
+        document.getElementById("demo").innerHTML = "Available in  " + result_time_start ;
+        for (let i = 0; i < model.Products.length; i++) {
+          $("#price-cs-"+model.Products[i].Id).text("IDR ???.000");
+        }
+      } else if (data && distance_start < 0){
+        document.getElementById("demo").innerHTML = "Ends in  " + result_time;
+        for (let i = 0; i < model.Products.length; i++) {
+          $("#price-cs-"+model.Products[i].Id).text(model.Products[i].ProductPrice.Price);
+        }
+      } 
+    }
+  }, 1000);
 </script>
 
 

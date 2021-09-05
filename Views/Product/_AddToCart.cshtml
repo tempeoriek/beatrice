@@ -13,6 +13,7 @@
   if (!String.IsNullOrEmpty(HttpUtility.ParseQueryString(absolutepath.Query).Get("type"))) {
     query_type = HttpUtility.ParseQueryString(absolutepath.Query).Get("type").ToLower();
   }
+
 }
   <div class="col-12 @classcss">
     @if (!Model.DisableBuyButton || Model.CustomerEntersPrice)
@@ -119,13 +120,11 @@
             <span>@addToCartText</span>
           </button>
         } else {
-          if (!query_type.Equals("coming-soon")) {
-            <button type="button" id="add-to-cart-button-@Model.ProductId" class="btn-addcart button_sare"
-                data-productid="@Model.ProductId"
-                onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form');return false;">
-              <span>@addToCartText</span>
-            </button>
-          }
+          <button id="button-atc" type="button" id="add-to-cart-button-@Model.ProductId" class="btn-addcart button_sare"
+              data-productid="@Model.ProductId"
+              onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form');return false;">
+            <span>@addToCartText</span>
+          </button>
         }
         var dataDictAddToWishlist = new ViewDataDictionary();
         dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.ProductId);
@@ -137,11 +136,27 @@
       }
     }
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
 	//console.log(`ADD TO CART`);
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	//console.log(model);    
+	//console.log(model);
+  let searchParamsATC = new URLSearchParams(window.location.search);
+  let query_date_startATC = searchParamsATC.has('start_date')  ? moment(searchParamsATC.get('start_date'), 'YYYY-MM-DD HH:mm:ss Z').toDate()  : null;
+
+  var countDownDateStart = new Date(`${query_date_startATC}`).getTime();
+  var x = setInterval(function() {
+    var now = new Date().getTime();
+    
+    var distance_start = countDownDateStart - now;
+
+    if (model && distance_start > 0) {
+      $("#button-atc").css("display", "none");
+    } else if (model && distance_start < 0){
+      $("#button-atc").css("display", "block");
+    } 
+  }, 1000);
 </script>
 
 

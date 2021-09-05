@@ -128,24 +128,23 @@
     <p style="color: #454545; font-size: 16px; font-weight: bold;">ORDER SUMMARY</p>
     <div style="width: 100%; display: flow-root">
         <p style="float: left; color: #454545; font-size: 16px;">Subtotal</p>
-        <p style="float: right; color: #454545; font-size: 16px;">@Model.SubTotal</p>
+        <p id="subtotal-number" style="float: right; color: #454545; font-size: 16px;">@Model.SubTotal</p>
     </div>
     <div style="width: 100%; display: flow-root">
         <p style="float: left; color: #454545; font-size: 16px;">Shipping Cost</p>
-        <p style="float: right; color: #454545; font-size: 14px;">Calculated during checkout</p>
+        <p id="shippingcost-number" style="float: right; color: #454545; font-size: 14px;">Calculated during checkout</p>
     </div>
     <div style="width: 100%; display: flow-root">
         <p style="float: left; color: #454545; font-size: 16px;">Discount</p>
-        <p style="float: right; color: #454545; font-size: 14px;">Calculated during checkout</p>
+        <p id="discount-number" style="float: right; color: #454545; font-size: 14px;">IDR 0</p>
     </div>
     <hr class="mb-3 mt-3" style="margin: -7%">
     <div style="width: 100%; display: flow-root">
         <b style="float: left; color: #454545; font-size: 16px;">Grand Total</b>
-        <b style="float: right; color: #454545; font-size: 14px;">Calculated during checkout</b>
+        <b id="grandtotal-number" style="float: right; color: #454545; font-size: 14px;">Calculated during checkout</b>
     </div>
 
     @if(absolutepath.Contains("/cart")) {
-
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#checkout').click(function () {
@@ -167,7 +166,8 @@
 
         <button type="submit" id="checkout" name="checkout" value="checkout" class="mt-3 btn btn-default" style="width: 100%;">Checkout ></button>
     } else {
-        <input type="button" style="width: 100%;"  class="mt-3 btn btn-default confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="Checkout" />
+        <input id="checkout-step-button" type="button" style="width: 100%;"  class="mt-3 btn btn-default confirm-order-next-step-button" onclick="Checkout()" value="Place Order >" />
+        @* <input type="button" style="width: 100%;"  class="mt-3 btn btn-default confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="Checkout" /> *@
         <span class="please-wait" id="confirm-order-please-wait" style="display: none;">@T("Checkout.SubmittingOrder")</span>
     }
 </div>
@@ -175,6 +175,8 @@
 
 <script>
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	console.log(`order total`);    
-	console.log(model);    
+    let text_points = model.RedeemedRewardPoints ? `You have IDR ${model.RedeemedRewardPoints} Points` : `You have IDR 0 Points`;
+    setTimeout(() => {
+        $("#loyal-points-now").text(text_points)
+    }, 200)
 </script>

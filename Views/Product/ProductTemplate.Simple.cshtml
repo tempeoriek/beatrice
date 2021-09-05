@@ -329,32 +329,53 @@
         $(".btn-addcart").innerHTML = "ADD TO BAG";
       }
     }
-    //console.log(`PRODUCT DETAIL`);
+    console.log(`PRODUCT DETAIL`);
     var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-    //console.log(model);    
+    console.log(model);    
+    
+    let today_cs = new Date();
     let searchParams = new URLSearchParams(window.location.search);
-    let query_date = searchParams.has('date')  ? moment(searchParams.get('date'), 'DD-MM-YYYY').toDate()  : null
-    let date_count = query_date  ? moment(query_date).format('MMM DD, YYYY HH:MM:SS') : null;
-    let query_type = searchParams.has('date') ? searchParams.has('type') : null;
-    let str = query_type == 'flash-sale' ? `Ends in  ` : `Available in  `;
+    let query_date = searchParams.has('end_date') && searchParams.get('type') == 'coming-soon' ? moment(searchParams.get('end_date'), 'YYYY-MM-DD HH:mm:ss Z').toDate()  :
+      searchParams.has('end_date') && searchParams.get('type') == 'flash-sale' ? moment(searchParams.get('end_date'), 'MM-DD-YYYY HH:mm:ss Z').toDate() : null;
+    let query_date_start = searchParams.has('start_date') && searchParams.get('type') == 'coming-soon' ? moment(searchParams.get('start_date'), 'YYYY-MM-DD HH:mm:ss Z').toDate()  :
+      searchParams.has('start_date') && searchParams.get('type') == 'flash-sale' ? moment(searchParams.get('start_date'), 'MM-DD-YYYY HH:mm:ss Z').toDate() : null;
 
-    var countDownDate = new Date(`${date_count}`).getTime();
+    if (searchParams.get('type') == 'coming-soon') {
+      $("#text-price-change").text("IDR ???.000");
+    }
+
+    var countDownDate = new Date(`${query_date}`).getTime();
+    var countDownDateStart = new Date(`${query_date_start}`).getTime();
     var x = setInterval(function() {
       var now = new Date().getTime();
+      
       var distance = countDownDate - now;
+      var distance_start = countDownDateStart - now;
+      
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      document.getElementById("demo").innerHTML = str + days + " : " + hours + " : " + minutes + " : " + seconds ;
-      if (distance < 0) {
+      var days_start = Math.floor(distance_start / (1000 * 60 * 60 * 24));
+      var hours_start = Math.floor((distance_start % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes_start = Math.floor((distance_start % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds_start = Math.floor((distance_start % (1000 * 60)) / 1000);
+
+      let result_time = `${days} : ${hours} : ${minutes} : ${days} : ${seconds}`;
+      let result_time_start = `${days_start} : ${hours_start} : ${minutes_start} : ${seconds_start}`;
+      if (model && distance < 0 && distance_start < 0) {
         clearInterval(x);
-        //document.getElementById("demo").innerHTML = "EXPIRED";
+        document.getElementById("demo").innerHTML = "Ended";
+      } else {
+        if (model && distance_start > 0) {
+          document.getElementById("demo").innerHTML = "Available in  " + result_time_start ;
+          $("#text-price-change").text("IDR ???.000");
+        } else if (model && distance_start < 0){
+          document.getElementById("demo").innerHTML = "Ends in  " + result_time;
+          $("#text-price-change").text(model.ProductPrice.Price);
+        } 
       }
+    }, 1000);
 
-  }, 1000);
-
-  var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	//console.log(model);
   </script>

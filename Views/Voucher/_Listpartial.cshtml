@@ -2,39 +2,102 @@
 @model IEnumerable<Discount>
 
 
+@{
+  string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
+  bool homepage = absolutepath.Equals("/") ? true : false;
+}
 
+@if (homepage) {
+    <div class="row mx-3 mb-5" style=" position: absolute; width: 100%; bottom: 0; color: white;">
+        <div class="col-md-2"></div>
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            var temp = Model.ToList();
+            var discount = temp[i];
+            <div class="col-md-4 col-sm-4">
+            <div class="row p-3">
+                <div class="col-9 col-md-9 col-sm-9 text-center body-coupon">
+                <p style="font-size: 17px; font-weight: 400;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
+                <p style="font-size: 17px; font-weight: 600; margin-top: -30px !important;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon-@i">@discount.CouponCode</p> 
+                </div>
+                <div onclick="copyCouponCodeHome(@i)" class="col-3 col-md-3 col-sm-3 text-center d-flex justify-content-center align-items-center body-coupon" style="cursor: pointer;">
+                <a style="font-size: 17px;" type="button" id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</a>
+                </div>
+            </div>
+            </div>
+        }
+        <div class="col-md-2"></div>
+        </div>
 
-
-<div class="row mx-3 mb-5" style=" position: absolute; width: 100%; bottom: 0; color: white;">
-    <div class="col-md-2"></div>
-    @for (int i = 0; i < 2; i++)
+} else {
+    for (int i = 0; i < Model.Count(); i++)
     {
-
-    <div class="col-md-4 col-sm-4">
-        <div class="row p-3">
-            <div class="col-9 col-md-9 col-sm-9 text-center body-coupon">
-            <p style="font-size: 17px; font-weight: 400;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">10% Off by using coupon code</p>
-            <p style="font-size: 17px; font-weight: 600;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon">BEATRICE101X</p>
+        var temp2 = Model.ToList();
+        var discount2 = temp2[i];
+        <div id="disc-@i" class="row mt-3 m-0 disc-div" style="line-height: 15px; font-size: 12px; text-align: center; ">
+            <div style="display: grid; align-items: center; width: 65%; height: 80px; border-left: 1px solid #707070; border-bottom: 1px solid #707070; border-top: 1px solid #707070;">
+                <p class="m-0 p-0" style="font-size: 13px">@Convert.ToInt32(discount2.DiscountPercentage)% Off by using coupon code</p>
+                <b id="copy-coupon-@i" class="m-0 p-0" style="font-size: 15px">@discount2.CouponCode</b>
+                <p class="m-0 p-0" style="font-size: 9px">*T&C: one voucher per transaction</p>
+            </div>
+            <div id="apply-disc-@i" onclick="copyCouponCode(@i)" class="d-flex justify-content-center align-items-center" style="width: 35%; border: 1px solid #707070; cursor: pointer;">
+                APPLY
+            </div>
         </div>
-        <div class="col-3 col-md-3 col-sm-3 text-center d-flex justify-content-center align-items-center body-coupon" style="cursor: pointer;">
-            <a style="font-size: 17px;" onclick="copyCouponCode()" type="button" id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</a>
-        </div>
-    </div>
-</div>}
-    <div class="col-md-2"></div>
-</div>
-
-<script>function copyCouponCode()
-{
-
-    var dummy = document.createElement('input'),
-       text = $("#copy-coupon").text();
-    document.body.appendChild(dummy);
-    dummy.value = text;
-    dummy.select();
-    document.execCommand('copy');
-    document.body.removeChild(dummy);
-
-
     }
+}
+
+
+<script>
+    async function copyCouponCode(value)
+    {
+        var dummy = document.createElement('input'),
+        text = $("#copy-coupon-"+value).text();
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+
+        $(".disc-div").each(function() {
+            let id_content =parseInt($(this).attr("id").replace("disc-", ""), 10);
+            if (value == id_content) {
+                $(this).css("background-color", "#CECECE");
+                $("#apply-disc-"+id_content).text("APPLIED");
+                $("#button-disc").text("REMOVE");
+                $("#disc-text").val(text);
+            } else {
+                $(this).css("background-color", "transparent");
+                $("#apply-disc-"+id_content).text("APPLY");
+            }
+        });
+
+        try {
+            var fetch_data = await FetchAjax("post", "/shoppingcart/ApplyCoupon", {discountcouponcode : text});
+            alert(fetch_data.Message);
+            if (fetch_data.IsApplied) {
+                UpdateOrderTotal()
+                checkout_obj.discount_code = text;
+            }
+        } catch (err) {
+          console.log(err)
+        }
+    }
+    function copyCouponCodeHome (id) {
+        var dummy = document.createElement('input'),
+        text = $("#copy-coupon-"+id).text();
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+        
+        $("#copy-"+id).text("Copied")
+        setTimeout(() => {
+        $("#copy-"+id).text("Copy")
+        }, 1000)
+        
+    }
+    var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	//console.log(model);    
 </script>

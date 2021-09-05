@@ -1,0 +1,445 @@
+﻿@using Nop.Web.Models.Flitts.FlashSale
+@model IEnumerable<FlashSaleViewModel>
+
+
+@{
+    ViewBag.Title = "Flash Sale";
+    string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
+    var styleDivCenterDesktop = "position: absolute; top: 0; left: 0; height: 100%; width: 100%; right: 0; bottom: 0;";
+    var styleContentCenterDeskopFlashSale = "font-size: 40px; color: white; display: flex; justify-content: center; align-items: center; height: 100%;";
+}
+
+
+<div class="row d-none d-md-block carousel" style="margin: 15px 0; margin-bottom: 0; position: relative;"> 
+  <img class="d-block w-100" src="@String.Format("/Content/Images/uploaded/categories/flashsale.jpg")"> 
+  <div class="text-center" style="@styleDivCenterDesktop">
+    <h1 style="@styleContentCenterDeskopFlashSale">Flash Sale</h1>
+  </div>
+</div>
+
+<div class="row d-block d-md-none carousel" style="position: relative;"> 
+  <img style="left: 50%; position: relative; transform: translateX(-50%);" class="d-block" src="@String.Format("/Content/Images/uploaded/categories/flashsale.jpg")"> 
+  <div class="text-center" style="@styleDivCenterDesktop">
+    <h1 style="@styleContentCenterDeskopFlashSale">Flash Sale</h1>
+  </div>
+</div>
+
+<div class="row p-0 m-0 mb-5" style="background-color: #9D3131; width: 120%; margin-left: -10% !important;">
+  <div class="col-md-1 col-sm-1"></div>
+  <div class="col-12 col-md-5 col-sm-5 time-flash-sale"> 
+    <ul class="nav nav-pills-clock" id="pills-tab" role="tablist">
+      @{
+        for (int i = 0; i < Model.Count(); i++)
+        {
+            var temp = Model.ToList();
+            var fs = temp[i];
+
+            <li class="nav-item" style="margin-right: 15px;">
+              <a style="color: white; font-size: 20px;" class="worksans-medium nav-link-clock @(@i == 0 ? "active" : "") " id="pills-id-@i" data-toggle="pill" href="#pills-@i" role="tab" aria-controls="pills-@i" aria-selected="true">
+                @fs.start_time
+              </a>
+            </li>
+        }
+      }
+    </ul>
+  </div>
+  <div class="col-md-5 col-sm-5 countdown-flash-sale"> 
+    <div class="tab-content" id="pills-tabContent">
+      @for (int z = 0; z < Model.Count(); z++)
+      {
+        <div class="tab-pane fade @(@z == 0 ? "show active" : "")" id="pills-@z" role="tabpanel" aria-labelledby="pills-id-@z">
+          <span class="worksans-reg" style="font-style: italic; color: white; font-size: 19px;" id="demo-@z" />
+        </div>
+      }
+    </div>
+  </div>
+  <div class="col-md-1 col-sm-1"></div>
+</div>
+
+@if (Model.Any())
+{
+  <div class="row m-0" style="padding: 5% 5% 10px;">
+    <div class="col-1 col-sm-8 col-md-8 p-0" style="display: flex; justify-content: flex-start; align-items: center;">
+    </div>
+
+    <div class="col-11 col-sm-4 col-md-4 p-0" style="display: flex; justify-content: flex-end; align-items: center; ">
+      <span class="text-view-hover" name="sortpageview" id="all">VIEW ALL</span>
+      <span style="font-size: 16px; color: #525252; margin-left: 20px;">SHOW:</span>
+      <span class="text-view-hover" name="sortpageview" id="15">15</span>
+      <span class="text-view-hover" name="sortpageview" id="30">30</span>
+      <span class="text-view-hover" name="sortpageview" id="45">45</span>
+    </div>
+  </div>
+  <hr class="d-block d-md-none" />
+
+  for (int p = 0; p < Model.Count(); p++)
+  {
+    var temp2 = Model.ToList();
+    var products = temp2[p].Products;
+    var style_display = p == 0 ? "display: block" : "display: none";
+    if (products.Count() > 0) {
+      
+      
+      <div class="list-products-class" style="@style_display; padding: 0 5% 0; position: relative; background-color: white;" id="list-products-@p">
+        <div class="row" id="sortnormal">
+          @{
+            var productnormal = products;
+            var index_productnormal = 0;
+            foreach (var item in productnormal)
+            {
+              var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+              <div data-number="@index_productnormal" class="@colCss catalog-line allproducts" id="normal-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+                @Html.Partial("_ProductBox", item)
+              </div>
+              index_productnormal++; 
+            }
+          }
+        </div>
+
+        <div class="row" style="display: none;" id="sortascending">
+          @{
+            var productasc = products.OrderBy(x => x.ProductPrice.PriceValue);
+            var index_productasc = 0;
+            foreach (var item in productasc)
+            {
+              var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+              <div data-number="@index_productasc" class="@colCss catalog-line allproducts" id="asc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+                @Html.Partial("_ProductBox", item)
+              </div>
+              index_productasc++; 
+            }
+          }
+        </div>
+
+        <div class="row" style="display: none;" id="sortdescending">
+          @{
+            var productdsc = products.OrderByDescending(x => x.ProductPrice.PriceValue);
+            var index_productdsc = 0;
+            foreach (var item in productdsc)
+            {
+              var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+              <div data-number="@index_productdsc" class="@colCss catalog-line allproducts" id="desc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+                @Html.Partial("_ProductBox", item)
+              </div>
+              index_productdsc++; 
+            }
+          }
+        </div>
+
+        <div class="row" style="display: none;" id="sortaz">
+          @{
+            var productaz = products.OrderBy(x => x.Name).ToList();
+            var index_productaz = 0;
+            foreach (var item in productaz)
+            {
+              var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+              <div data-number="@index_productaz" class="@colCss catalog-line allproducts" id="az-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+                @Html.Partial("_ProductBox", item)
+              </div>
+              index_productaz++; 
+            }
+          }
+        </div>
+        
+        <div class="row" style="display: none;" id="sortza">
+          @{
+            var productza = products.OrderByDescending(x => x.Name).ToList();
+            var index_productza = 0;
+            foreach (var item in productza)
+            {
+              var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+              <div data-number="@index_productza" class="@colCss catalog-line allproducts" id="za-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+                @Html.Partial("_ProductBox", item)
+              </div>
+              index_productza++; 
+            }
+          }
+        </div>
+
+        <div class="row mt-5" style="display: none;" id="emptyproduct">
+          <div class="col-12 col-md-12 col-sm-12 text-center">
+            <h2>We're still preparing the flash sale product. Please stay tuned.</h2>
+          </div>
+        </div>
+      </div>
+    } else {
+      <div class="list-products-class row" style="@style_display; padding: 10% 5% 0; position: relative; background-color: white;" id="list-products-none-@p">
+        <div class="col-main-slim text-center" style="max-height: 200px !important;"><h2>We're still preparing the flash sale @temp2[p].start_time. Please stay tuned.</h2></div>
+      </div>
+    }
+  }
+} else {
+  <div class="row" style="padding: 10% 5% 0; position: relative; background-color: white;">
+    <div class="col-main-slim text-center" style="max-height: 200px !important;"><h2>We're still preparing the flash sale product. Please stay tuned.</h2></div>
+  </div>
+}
+
+@*sticky thumbnail*@
+<script src="~/Themes/v1/Scripts/jquery.sticky.js"></script>
+<script>
+	$('.nav-item a').click(function(){
+    $(this).tab('show')
+    var name = $(this).attr('href').substr(1)
+    $('#pills-tabContent2').children().each(function(el) {
+      if (name === $(this).attr('id')) {
+        $(this).addClass('active show')
+      } else {
+        $(this).removeClass('active show')
+      }
+    })
+  })
+
+  var arr = [null, null, null, null, null, null, null], arr_multi_color = [], arr_multi_brand = [];
+  var all_arr = [], arr_none_cat = [], arr_none_color = [], arr_none_brand = [],arr_none_avail = [], arr_none_price = [], arr_none_new = [];
+  
+  $("[name=sortpageview]").click(function(){
+    var id = String(this.id, 10);
+    arr[4] = id;
+    startfilter();
+    all_arr = [];
+    $("[name=sortpageview]").each(function() {
+      var normal_id = String(this.id, 10);
+      if (normal_id == id) {
+        $(this).css("cssText", "color: #E1C2A4 !important");
+      } else {
+        $(this).css("cssText", "color: #525252 !important");
+      }
+    });
+  });
+  
+  $("[name=sortcatalog]").click(function(){
+    var id = String(this.id, 10);
+    arr[5] = id;
+    startfilter();
+    all_arr = [];
+    $("[name=sortcatalog]").each(function() {
+      var normal_id = String(this.id, 10);
+      if (normal_id == id) {
+        $(this).css("cssText", "color: #E1C2A4 !important");
+      } else {
+        $(this).css("cssText", "color: #525252 !important");
+      }
+    });
+  });
+
+  // remove sort product
+  $('#removesort').click(function(){
+    if (document.querySelector('input[name="sortcatalog"]:checked')) {
+      document.querySelector('input[name="sortcatalog"]:checked').checked = false;
+      displaysortproduct("flex", "none", "none", "none", "none")
+      arr[5] = null
+      removesortnew();
+    }
+    startfilter();
+  });
+  
+  //CHANGE TAB FLASH SALE
+  $('.nav-link-clock').click(function(){
+    let id = parseInt($(this).attr("id").replace("pills-id-", ""), 10);
+    $(".list-products-class").each(function() {
+      let id_content = parseInt($(this).attr("id").replace("list-products-", ""), 10) == 0 ? 0 : 
+      parseInt($(this).attr("id").replace("list-products-", ""), 10) ? parseInt($(this).attr("id").replace("list-products-", ""), 10) : 
+      parseInt($(this).attr("id").replace("list-products-none-", ""), 10) == 0 ? 0 : 
+      parseInt($(this).attr("id").replace("list-products-none-", ""), 10) ? parseInt($(this).attr("id").replace("list-products-none-", ""), 10) : null;
+      if (id == id_content) {
+        $(this).css("display", "block");
+      } else {
+        $(this).css("display", "none");
+      }
+      //window.location.search = jQuery.query.set("rows", 10);
+    });
+  });
+
+  function removesortnew () {
+    //remove display using id
+     if (arr_none_new.length > 0) {
+      for (let i = 0; i < arr_none_new.length; i++) {
+        let temp = arr_none_new[i];
+        displayproduct(temp, "block");
+      }
+      arr_none_new = [];
+     }
+  }
+  
+  function getallarray () {
+    // get all arr
+    $(".allproducts").each(function() {
+      var normal_id = parseInt(this.id.replace("normal-", ""), 10);
+      if (normal_id) {
+        all_arr.push(parseInt(normal_id))
+      }
+    });
+  }
+
+  function startfilter () {
+    getallarray();
+
+    var ih = 0; 
+    var il = 0; 
+    var ia= 0; 
+    var iz = 0; 
+    var inr = 0; 
+    var iw = 0;
+    // start to filter the product
+    $(".allproducts").each(function(index) {
+      var product_id =  parseInt($(this).attr("id").replace("normal-", ""), 10);
+      var page_view_number = $(this).attr("data-number");
+
+      if (product_id) {
+        for (let i = 0; i < arr.length; i++) {
+
+          if (i == 4 && arr[i] && !arr[5]) {
+            displaypageview(arr[4], inr);
+            inr++;
+          }
+          // filter logic hightolow
+          if (i == 5 && arr[i]) {
+            if (arr[i].length > 0) {
+              if (arr[i] == "hightolow") {
+                displaysortproduct("none", "none", "flex", "none")
+                removesortnew();
+                displaypageview(arr[4], ih);
+                ih++;
+              } else if (arr[i] == "lowtohigh") {
+                displaysortproduct("none", "flex", "none", "none", "none")
+                displaypageview(arr[4], il);
+                il++;
+              } else if (arr[i] == "az") {
+                displaysortproduct("none", "none", "none", "flex", "none")
+                removesortnew();
+                displaypageview(arr[4], ia);
+                ia++;
+              } else if (arr[i] == "za") {
+                displaysortproduct("none", "none", "none", "none", "flex")
+                removesortnew();
+                displaypageview(arr[4], iz);
+                iz++;
+              } else if (arr[i] == "whatnew") {
+                var marknew = $(this).attr("data-new");
+                if (marknew == "True") {
+                  if (all_arr.find(element => parseInt(element) == parseInt(product_id))) {
+                    if (arr[4] == `all` || !arr[4]) {
+                      displayproduct(product_id, "block");
+                    } else if (arr[4]){
+                      displaypageview(arr[4], product_id, true, iw);
+                    }
+                  }
+                  iw++;
+                } else {
+                  if (all_arr.find(element => parseInt(element) == parseInt(product_id))) {
+                    all_arr = all_arr.filter(id => parseInt(id) !== parseInt(product_id));
+                    arr_none_new.push(parseInt(product_id));
+                    arr_none_new = [...new Set(arr_none_new)];
+                    displayproduct(product_id, "none");
+                  }
+                }
+              }
+            }
+          } 
+        }
+      }
+    });
+
+    if (all_arr.length == 0) {
+      $('#emptyproduct').css("display", "block");
+    } else {
+      $('#emptyproduct').css("display", "none");
+    }
+  }
+
+  function displaysortproduct (normal, asc, desc, az, za) {
+    $("#sortnormal").css("display", normal);
+    $("#sortascending").css("display", asc);
+    $("#sortdescending").css("display", desc);
+    $("#sortaz").css("display", az);
+    $("#sortza").css("display", za);
+  }
+  
+  function displayproductpageview (number, value) {
+    $('div[data-number='+number+']').css("display", value);
+  }
+  
+  function displaypageview(page, index, newin, newindex) {
+    if (page) {
+      if (page == "all" && !newin) displayproductpageview(index, "block");
+      else if (index < parseInt(page) && !newin) displayproductpageview(index, "block");
+      else if (!newin) displayproductpageview(index, "none");
+
+      if (page == "all" && newin) displayproduct(index, "block");
+      else if (newindex < parseInt(page) && newin) displayproduct(index, "block");
+      else if (newin) displayproduct(index, "none");
+      
+    }
+  }
+
+  function displayproduct (id, value) {
+    $('#normal-'+id).css("display", value);
+    $('#asc-'+id).css("display", value);
+    $('#desc-'+id).css("display", value);
+    $('#az-'+id).css("display", value);
+    $('#za-'+id).css("display", value);
+  }
+
+  function blockproduct (data) {
+    for (let i = 0; i < data.length; i++) {
+      let temp = data[i];
+      displayproduct(temp, "block");
+    }
+  };
+
+	//console.log(`Flash sale`);
+	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	console.log(model);
+
+  if (model.length > 0) {
+    let today = new Date();
+    let date_today = new Date(`${today.getFullYear()}, ${today.getMonth()}, ${today.getDate()}`);
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+      for (let i = 0; i < model.length; i++) {
+        let data = model[i];
+
+        let start_day = data && data.start_date ? new Date(data.start_date).getDate() : null;
+        let start_month = data && data.start_date ? new Date(data.start_date).getMonth() : null;
+        let start_year = data && data.start_date ? new Date(data.start_date).getFullYear() : null;
+        
+        let end_day = data && data.end_date ? new Date(data.end_date).getDate() : null;
+        let end_month = data && data.end_date ? new Date(data.end_date).getMonth() : null;
+        let end_year = data && data.end_date ? new Date(data.end_date).getFullYear() : null;
+
+        let start_date = data && data.start_date ? `${start_month+1}/${start_day}/${start_year} ${data.start_time}:00` : null;
+        let end_date = data && data.end_date ? `${end_month+1}/${end_day}/${end_year} ${data.end_time}:00` : null;
+        let only_start_date = data && data.start_date ? new Date(`${start_year}, ${start_month}, ${start_day}`) : null;
+        let only_end_date = data && data.end_date ? new Date(`${end_year}, ${end_month}, ${end_day}`) : null;
+
+        // Set the date we're counting down 
+        var countDownDate = new Date(end_date).getTime();
+        // Get today's date and time
+        var now = new Date().getTime();
+          
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+          
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (data && date_today.getTime() == only_start_date.getTime() && new Date(start_date).getTime() > today.getTime() && new Date(end_date).getTime() > today.getTime()) {
+          document.getElementById("demo-"+i).innerHTML = "Available in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
+        } else if (data && date_today.getTime() == only_start_date.getTime() && new Date(start_date).getTime() < today.getTime() && new Date(end_date).getTime() > today.getTime()){
+          document.getElementById("demo-"+i).innerHTML = "Ends in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
+        }
+        else if (data && date_today.getTime() == only_start_date.getTime() && new Date(start_date).getTime() < today.getTime() && new Date(end_date).getTime() < today.getTime()) {
+          document.getElementById("demo-"+i).innerHTML = "Ended";
+        }
+
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("demo-"+i).innerHTML = "Ended";
+        }
+      }
+    }, 1000);
+  }
+</script>

@@ -4,26 +4,30 @@
 @using Nop.Core.Infrastructure;
 @using Nop.Web.Models.Catalog;
 
+@{
+  DateTime d1 = Model.PreviewEndDateTimeUtc.Value;
+  DateTime d3 = Model.PreviewStartDateTimeUtc.Value;
+  DateTime d2 = DateTime.Now;
+  bool open = d1 > d2 ? true : false;
+  string date1 = d1.ToString("yyyyMMddHHmmss"); 
+  string date2 = d3.ToString("yyyyMMddHHmmss"); 
 
-
-
-
-<div class="row p-0 m-0 mb-5" style="background-color: #D8C7BD;">
-  <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
-    <h1 class="text-white text-title-demo" style="font-size: 38px;">Spring Summer 2021s</h1> 
-  </div>
-  <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
-    <span class="worksans-reg text-white text-demo" style="font-size: 24px;" id="demo2" />
-  </div>
-  <div class="col-md-6 col-sm-6 d-flex justify-content-end align-items-center"> 
-    <button class="d-none d-md-block hidden-xs hidden-sm flash-sale-btn" onclick="location.href='/coming-soon';" >
-      <p class="m-0" style="color: #9D5D3E; font-size: 16px;">View All</p>
-    </button>
-  </div>
-</div>
-
-@if (Model.Products.Any())
+}
+@if (Model.Products.Any() && open)
 {
+  <div class="row p-0 m-0 mb-5" style="background-color: #D8C7BD;">
+    <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
+      <h1 class="text-white text-title-demo" style="font-size: 38px;">@Model.Name</h1> 
+    </div>
+    <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
+      <span class="worksans-reg text-white text-demo" style="font-size: 24px;" id="demo-coming-soon" />
+    </div>
+    <div class="col-md-6 col-sm-6 d-flex justify-content-end align-items-center"> 
+      <button class="d-none d-md-block hidden-xs hidden-sm flash-sale-btn" onclick="location.href='/catalog/comingsoon?type=coming-soon&start_date=@date2&end_date=@date1';" >
+        <p class="m-0" style="color: #9D5D3E; font-size: 16px;">View All</p>
+      </button>
+    </div>
+  </div>
   @* Best Seller Desktop *@
   <div class="position-relative d-none d-md-block hidden-xs hidden-sm">
     <div class="row m-0 p-0">
@@ -33,7 +37,7 @@
           <div class="col-12">
             <div class="row" style="padding: 0 3rem;">
               <div style="position: relative;">
-                <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", date= "02-09-2021T18:00:00"})">
+                <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type = "coming-soon", start_date= @date2, end_date = @date1 })">
                 @* <a href="/valen-dress?type=coming-soon&date=02-09-2021T18:00:00"> *@
                   <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block"> 
                   </img>
@@ -44,12 +48,12 @@
               </div>
             </div>
             <div class="row mt-2" style="padding: 0 3rem;">
-              <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", date= "02-09-2021T18:00:00"})" class="clean" style="text-decoration: none;">
+              <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", start_date= @date2, end_date = @date1 })" class="clean" style="text-decoration: none;">
                 <p class="worksans-medium" style="font-size: 20px; color: #525252" class="m-0">@temp.Name</p>
               </a>
             </div>
             <div class="row" style="padding: 0 3rem;">
-              <p class="worksans-reg" style="font-size: 20px; color: #BCBCBC" class="m-0">IDR ???.000</p>
+              <p id="price-cs-@temp.Id" class="worksans-reg" style="font-size: 20px; color: #BCBCBC" class="m-0">@temp.ProductPrice.Price</p>
             </div>
           </div>
         }
@@ -81,7 +85,7 @@
           <div class="col-12 col-md-12 col-sm-12">
             <div class="row px-4" style="display: flex; justify-content: center; align-items: center;">
               <div style="position: relative;">
-                <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", date= "02-09-2021T18:00:00"})">
+                <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", start_date= @date2, end_date = @date1 })">
                   <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block" />
                   <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
                     <p class="m-0 text-center" style="color: #9D5D3E; height: 100%; font-size: 17px;">COMING SOON</p>
@@ -91,12 +95,12 @@
             </div>
             
             <div class="row px-4" style="font-size: 15px; line-height: 19px; margin-top: 10px;">
-              <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", date= "02-09-2021T18:00:00"})" class="clean" style="text-decoration: none;">
+              <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", start_date= @date2, end_date = @date1 })" class="clean" style="text-decoration: none;">
                 <p class="worksans-medium" style="font-size: 15px; color: #525252;">@temp.Name</p>
               </a>
             </div>
             <div class="row px-4" style="margin-top: -10px; font-size: 14px;">
-              <p class="worksans-reg" style="font-size: 15px; color: #525252;">IDR ???.000</p>
+              <p id="price-cs-@temp.Id" class="worksans-reg" style="font-size: 15px; color: #525252;">@temp.ProductPrice.Price</p>
             </div>
           </div>
         }
@@ -119,7 +123,7 @@
     </div>
   </div>
 } else {
-  @* Best Seller Desktop *@
+  @* <!-- Best Seller Desktop -->
   <div class="position-relative d-none d-md-block hidden-xs hidden-sm">
     <div class="row m-0 p-0">
       <div class="carouseldesktop coming-soon" style="padding-left: 2%; padding-right: 2%;">
@@ -142,7 +146,7 @@
               </a>
             </div>
             <div class="row" style="padding: 0 3rem;">
-              <p class="worksans-reg" style="font-size: 20px; color: #BCBCBC" class="m-0">IDR ???.000</p>
+              <p id="price-cs-@temp.Id" class="worksans-reg" style="font-size: 20px; color: #BCBCBC" class="m-0">@temp.ProductPrice.Price</p>
             </div>
           </div>
         }
@@ -165,7 +169,7 @@
     </div>
   </div>
 
-  @* Best Seller Mobile *@
+  <!-- Best Seller Mobile -->
   <div class="row d-block d-md-none hidden-md hidden-xl position-relative">
     <div class="row mb-5" id="carouselExampleControlsBestItems">
       <div class="carouselmobile coming-soon hidden-sm m-0">
@@ -210,14 +214,71 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> *@
 
 }
 
 <script>
-	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	console.log(`coming soon`);  
-	console.log(model);  
+	var model_cs = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	//console.log(`coming soon`);  
+	//console.log(model_cs);  
+  let today_cs = new Date();
+  let date_today_cs = new Date(`${today_cs.getFullYear()}, ${today_cs.getMonth()}, ${today_cs.getDate()}`);
+  var x = setInterval(function() {
+    let data = model_cs;
+
+    let start_day = data && data.PreviewStartDateTimeUtc ? new Date(data.PreviewStartDateTimeUtc).getDate() : null;
+    let start_month = data && data.PreviewStartDateTimeUtc ? new Date(data.PreviewStartDateTimeUtc).getMonth() : null;
+    let start_year = data && data.PreviewStartDateTimeUtc ? new Date(data.PreviewStartDateTimeUtc).getFullYear() : null;
+    
+    let end_day = data && data.PreviewEndDateTimeUtc ? new Date(data.PreviewEndDateTimeUtc).getDate() : null;
+    let end_month = data && data.PreviewEndDateTimeUtc ? new Date(data.PreviewEndDateTimeUtc).getMonth() : null;
+    let end_year = data && data.PreviewEndDateTimeUtc ? new Date(data.PreviewEndDateTimeUtc).getFullYear() : null;
+
+    let start_date = data && data.PreviewStartDateTimeUtc ? data.PreviewStartDateTimeUtc : null;
+    let end_date = data && data.PreviewEndDateTimeUtc ? data.PreviewEndDateTimeUtc : null;
+    let only_start_date = data && data.PreviewStartDateTimeUtc ? new Date(`${start_year}, ${start_month}, ${start_day}`) : null;
+    let only_end_date = data && data.PreviewEndDateTimeUtc ? new Date(`${end_year}, ${end_month}, ${end_day}`) : null;
+
+    var countDownDate = new Date(end_date).getTime();
+    var countDownStartDate = new Date(start_date).getTime();
+    var now = new Date().getTime();
+      
+    var distance = countDownDate - now;
+    var distance_start = countDownStartDate - now;
+      
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    var days_start = Math.floor(distance_start / (1000 * 60 * 60 * 24));
+    var hours_start = Math.floor((distance_start % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes_start = Math.floor((distance_start % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds_start = Math.floor((distance_start % (1000 * 60)) / 1000);
+
+    let result_time = `${days} : ${hours} : ${minutes} : ${days} : ${seconds}`;
+    let result_time_start = `${days_start} : ${hours_start} : ${minutes_start} : ${seconds_start}`;
+
+    if (data && distance < 0 && distance_start < 0) {
+      clearInterval(x);
+      @* document.getElementById("demo-coming-soon").innerHTML = "Ended"; *@
+    } else {
+      if (data && distance_start > 0) {
+        document.getElementById("demo-coming-soon").innerHTML = "Available in  " + result_time_start ;
+        for (let i = 0; i < model_cs.Products.length; i++) {
+          $("#price-cs-"+model_cs.Products[i].Id).text("IDR ???.000");
+        }
+      } else if (data && distance_start < 0){
+        document.getElementById("demo-coming-soon").innerHTML = "Ends in  " + result_time;
+        for (let i = 0; i < model_cs.Products.length; i++) {
+          $("#price-cs-"+model_cs.Products[i].Id).text(model_cs.Products[i].ProductPrice.Price);
+        }
+      } 
+    }
+
+    
+  }, 1000);
 </script>
 
 

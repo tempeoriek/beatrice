@@ -9,7 +9,7 @@
     var absolutepath = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
     var query_type = "";
     var price_flashsale_type = "font-size: 20px; color: #525252;";
-    if (!String.IsNullOrEmpty(HttpUtility.ParseQueryString(absolutepath.Query).Get("type"))) {
+    if (!String.IsNullOrEmpty(HttpUtility.ParseQueryString(absolutepath.Query).Get("type")) && HttpUtility.ParseQueryString(absolutepath.Query).Get("type") == "flash-sale") {
         price_flashsale_type = "font-size: 20px; color: #9D3131;";
         query_type = HttpUtility.ParseQueryString(absolutepath.Query).Get("type").ToLower();
     }
@@ -53,7 +53,7 @@
         if (query_type.Equals("flash-sale"))
         {
             <div class="old-product-price text-center">
-                <span style="text-decoration:line-through; font-size: 18px; color: #BCBCBC;">IDR 389.000</span>
+                <span style="text-decoration:line-through; font-size: 18px; color: #BCBCBC;">@Model.Price</span>
             </div>
         }
 
@@ -71,7 +71,7 @@
 
             @*render price*@
             <p>
-                <span class="worksans-medium text-product-price" style="@price_flashsale_type" @if (String.IsNullOrWhiteSpace(Model.PriceWithDiscount)) { <text> itemprop="price" class="price-value-@(Model.ProductId)" </text> }>
+                <span id="text-price-change" class="worksans-medium text-product-price" style="@price_flashsale_type" @if (String.IsNullOrWhiteSpace(Model.PriceWithDiscount)) { <text> itemprop="price" class="price-value-@(Model.ProductId)" </text> }>
                     @Html.Raw(Model.Price)
                 </span>
             </p>

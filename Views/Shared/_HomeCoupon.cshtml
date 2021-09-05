@@ -6,10 +6,10 @@
       <div class="row p-3">
         <div class="col-9 col-md-9 col-sm-9 text-center body-coupon">
           <p style="font-size: 17px; font-weight: 400;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">10% Off by using coupon code</p> 
-          <p style="font-size: 17px; font-weight: 600; margin-top: -30px !important;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon">BEATRICE101X</p> 
+          <p style="font-size: 17px; font-weight: 600; margin-top: -30px !important;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon-@i">BEATRICE101X-@i</p> 
         </div>
-        <div class="col-3 col-md-3 col-sm-3 text-center d-flex justify-content-center align-items-center body-coupon" style="cursor: pointer;">
-          <a style="font-size: 17px;" onclick="copyCouponCode()" type="button" id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</a>
+        <div onclick="copyCouponCode(@i)" class="col-3 col-md-3 col-sm-3 text-center d-flex justify-content-center align-items-center body-coupon" style="cursor: pointer;">
+          <a style="font-size: 17px;" type="button" id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</a>
         </div>
       </div>
     </div>
@@ -18,15 +18,19 @@
 </div>
 
 <script>
-  function copyCouponCode () {
+  function copyCouponCode (id) {
     var dummy = document.createElement('input'),
-       text = $("#copy-coupon").text();
+       text = $("#copy-coupon-"+id).text();
     document.body.appendChild(dummy);
     dummy.value = text;
     dummy.select();
     document.execCommand('copy');
     document.body.removeChild(dummy);
     
+    $("#copy-"+id).text("Copied")
+    setTimeout(() => {
+      $("#copy-"+id).text("Copy")
+    }, 1000)
     
   }
 </script>

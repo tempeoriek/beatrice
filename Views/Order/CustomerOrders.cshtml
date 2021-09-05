@@ -47,7 +47,7 @@
                     <div class="row m-0 p-0" id="order-@order.Id">
                         @* desktop *@
                         <div class="mr-4 d-none d-md-block" style="width: 132px;">
-                            <img src="~/Themes/v1/Content/images/order-history.jpg" style="width: 100%;" />
+                            <img src="@order.Thumbnail.ImageUrl" style="width: 100%;" />
                         </div>
                         <div class="d-none d-md-block" style="width: 220px;">
                             <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Order ID: #@order.Id</p> 
@@ -75,13 +75,16 @@
                     <hr style="margin-bottom: 30px; margin-top: 30px;" id="hr-@order.Id"/>
 
                     <div id="orderdetail-@order.Id" class="m-0 p-0" style="display: none;">
-                        <p class="p-0 m-0" style="color: #525252; font-size: 16px; font-weight: 600">Order #@order.Id is @order.OrderStatus</p>
+                        <div class="row m-0 p-0 d-flex" style="justify-content: space-between;">
+                            <p class="p-0 m-0" style="color: #525252; font-size: 16px; font-weight: 600;">Order #@order.Id is @order.OrderStatus</p>
+                            <p class="p-0 m-0" style="color: #525252; font-size: 16px; cursor: pointer" onclick="detailOpen(@order.Id, true)">x</p>
+                        </div>
                         <hr style="margin-bottom: 10px; margin-top: 10px;"/>
                         <div class="row m-0 p-0">
                             <div class="mr-4" style="width: 122px;">
-                                <img src="~/Themes/v1/Content/images/order-history.jpg" style="width: 100%;" />
+                                <img src="@order.Thumbnail.ImageUrl" style="width: 100%;" />
                             </div>
-                            <div style="width: 220px;">
+                            <div style="width: 235px;">
                                 <p class="p-0 m-0" style="color: #525252; font-size: 16px; font-weight: 600;">Name Product</p> 
                                 <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Variant 1</p>
                                 <p class="p-0 m-0" style="color: #525252; font-size: 16px;">Variant 2</p>
@@ -151,14 +154,22 @@
     $('#setting-menu').attr("href", `${urlMenu}`);
     $('#setting-menu').text(`${menuName}`);
 
-    function detailOpen(id) {
-        $(`#orderdetail-${id}`).css("cssText", 'display: block;');
-        $(`#hr-${id}`).css("cssText", 'display: none;');
-        $(`#order-${id}`).css("cssText", 'display: none;');
-        $('#page-title-desktop').text('Order Details');
-        $('#page-title-mobile').text('Order Details');
+    function detailOpen(id, close) {
+        if (close) {
+            $(`#orderdetail-${id}`).css("cssText", 'display: none;');
+            $(`#hr-${id}`).css("cssText", 'display: flex;');
+            $(`#order-${id}`).css("cssText", 'display: flex;');
+            $('#page-title-desktop').text('Order History');
+            $('#page-title-mobile').text('Order History');
+        } else {
+            $(`#orderdetail-${id}`).css("cssText", 'display: block;');
+            $(`#hr-${id}`).css("cssText", 'display: none;');
+            $(`#order-${id}`).css("cssText", 'display: none;');
+            $('#page-title-desktop').text('Order Details');
+            $('#page-title-mobile').text('Order Details');
+        }
     }
 
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	//console.log(model);    
+	console.log(model);    
 </script>
