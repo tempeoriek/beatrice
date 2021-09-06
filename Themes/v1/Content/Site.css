@@ -329,6 +329,11 @@ label { font-weight: normal; margin-bottom: 0; color: black; text-transform: cap
     justify-content: flex-start; 
     align-items: center;
 }
+.flash-sale-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
 .countdown-flash-sale {
     height: 55px; 
     display: flex; 
@@ -1492,8 +1497,8 @@ a.link-nav {
     position:fixed;
 	width:60px;
 	height:60px;
-	bottom:40px;
-	right:40px;
+	bottom:50px;
+	right:65px;
 	border-radius:50px;
 	text-align:center;
 	box-shadow: 2px 2px 3px #999;
@@ -2731,6 +2736,13 @@ a.dropdown-item {
         margin-bottom: 1%;
         text-align: center;
         text-transform: uppercase;
+    }
+
+    .flash-sale-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
     }
 
 

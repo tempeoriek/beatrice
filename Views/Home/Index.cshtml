@@ -64,6 +64,10 @@
         </div>
 
         @Html.Action("ShowOnHomepage", "FlashSale")
+        @Html.Action("Comingsoon", "Catalog", new { isPartial = true })
+        <hr class="mb-5"/>
+        @Html.Action("HomepageProducts", "Product", new { categoryId = 2 })
+        
         @* @Html.Partial("_HomeFlashSale") *@
         
       }
@@ -127,7 +131,6 @@
         Partial view: /views/catalog/_UpcomingCollection.cshtml    
     *@
 
-    @Html.Action("Comingsoon", "Catalog", new { isPartial = true })
 
     @*@Html.Partial("_HomeComingSoon")*@
 
@@ -135,10 +138,8 @@
 
 
 
-<hr class="mb-5"/>
 
 @* @Html.Partial("_HomeBestSeller") *@
-@Html.Action("HomepageProducts", "Product", new { categoryId = 2 })
 
 <section>
   <div class="row" style="margin-top: 5%;">

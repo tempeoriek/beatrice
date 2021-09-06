@@ -84,6 +84,7 @@
             <div class="form-group">
               @Html.PasswordFor(m => m.Password, new { @class = "form_signin pb-2", placeholder = "Password" })
               @Html.ValidationMessageFor(m => m.Password)
+              <input type="checkbox" onclick="showPassword()">&nbsp;Show Password
             </div>
             <div class="form-group">
               <span class="psw" style="font-weight: bold;">
@@ -165,6 +166,14 @@
       }
     }
 
+    function showPassword() {
+      var x = document.getElementById("Password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
     function reqfailed() {
       $("#pnlfailure").html("Sorry, an error occured.");
     }
