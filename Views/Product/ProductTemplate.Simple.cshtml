@@ -261,6 +261,9 @@
   <link href="~/Themes/v1/Content/homepage.css" rel="stylesheet" />
   <script src="~/Scripts/app/slick/slick.js" type="text/javascript" charset="utf-8"></script>
   <script>
+    function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
     $(document).ready(function () {
       $('.carouselhero').slick({
         slidesToShow: 1,
@@ -335,13 +338,30 @@
     
     let today_cs = new Date();
     let searchParams = new URLSearchParams(window.location.search);
-    let query_date = searchParams.has('end_date') && searchParams.get('type') == 'coming-soon' ? moment(searchParams.get('end_date'), 'YYYY-MM-DD HH:mm:ss Z').toDate()  :
-      searchParams.has('end_date') && searchParams.get('type') == 'flash-sale' ? moment(searchParams.get('end_date'), 'MM-DD-YYYY HH:mm:ss Z').toDate() : null;
-    let query_date_start = searchParams.has('start_date') && searchParams.get('type') == 'coming-soon' ? moment(searchParams.get('start_date'), 'YYYY-MM-DD HH:mm:ss Z').toDate()  :
-      searchParams.has('start_date') && searchParams.get('type') == 'flash-sale' ? moment(searchParams.get('start_date'), 'MM-DD-YYYY HH:mm:ss Z').toDate() : null;
+
+    //for flash sale count down
+    let start_day = model && model.FlashsaleStart_date ? new Date(model.FlashsaleStart_date).getDate() : null;
+    let start_month = model && model.FlashsaleStart_date ? new Date(model.FlashsaleStart_date).getMonth() : null;
+    let start_year = model && model.FlashsaleStart_date ? new Date(model.FlashsaleStart_date).getFullYear() : null;
+    
+    let end_day = model && model.FlashsaleEnd_date ? new Date(model.FlashsaleEnd_date).getDate() : null;
+    let end_month = model && model.FlashsaleEnd_date ? new Date(model.FlashsaleEnd_date).getMonth() : null;
+    let end_year = model && model.FlashsaleEnd_date ? new Date(model.FlashsaleEnd_date).getFullYear() : null;
+
+    let start_date_flashsale = model && model.FlashsaleStart_date && model.FlashsaleStart_time? `${start_month+1}/${start_day}/${start_year} ${model.FlashsaleStart_time}:00` : null;
+    let end_date_flashsale = model && model.FlashsaleEnd_date && model.FlashsaleEnd_time ? `${end_month+1}/${end_day}/${end_year} ${model.FlashsaleEnd_time}:00` : null;
+
+    let query_date = end_date_flashsale && searchParams.get('type') == 'flash-sale' ? end_date_flashsale : 
+      searchParams.has('end_date') && searchParams.get('type') == 'coming-soon' ? moment(searchParams.get('end_date'), 'YYYY-MM-DD HH:mm:ss Z').toDate() : null;
+    let query_date_start = start_date_flashsale && searchParams.get('type') == 'flash-sale' ? start_date_flashsale : 
+      searchParams.has('start_date') && searchParams.get('type') == 'coming-soon' ? moment(searchParams.get('start_date'), 'YYYY-MM-DD HH:mm:ss Z').toDate() : null;
 
     if (searchParams.get('type') == 'coming-soon') {
       $("#text-price-change").text("IDR ???.000");
+    } else if (searchParams.get('type') == 'flash-sale'){
+      var price_flashsale = `IDR ${numberWithCommas(model.FlashsalePrice)}`;
+      $("#text-price-change").text(price_flashsale);
+      
     }
 
     var countDownDate = new Date(`${query_date}`).getTime();

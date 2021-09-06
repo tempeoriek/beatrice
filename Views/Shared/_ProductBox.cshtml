@@ -60,7 +60,7 @@
   </div>
 
   <div class="description">
-    <p class="d-flex m-0" style="line-height: 1.5em; justify-content: space-between; align-items: center;">
+    <p class="d-flex m-0  justify-content-start align-items-center" style="line-height: 1.5em; justify-content: space-between; align-items: center; height: 56px;">
       <a class="clean worksans-reg text-product-box worksans-medium" href="@Url.RouteUrl("Product", new { SeName = Model.SeName, start_date= @query_start, end_date = @query_end, type = @query_type })">
         @Model.Name
       </a>
@@ -85,7 +85,7 @@
         if (Model.FlashsaleStatus == "coming soon") {
           <div class="price text-product-box worksans-reg" style="color: #9D3131 !important;">IDR ???.000</div>
         } else {
-          <div class="price text-product-box worksans-reg" style="color: #9D3131 !important;">@Model.FlashSalePrice</div>
+          <div class="price text-product-box worksans-reg" style="color: #9D3131 !important;">IDR @String.Format( "{0:#,##0.##}", Model.FlashSalePrice )</div>
         }
 
       } else {
