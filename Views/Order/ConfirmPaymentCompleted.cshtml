@@ -36,7 +36,8 @@
         @{
             if (Model.Guest < 1)
             {
-                <text> You can check the status of your order in <a class="alt" href="@Url.RouteUrl("OrderDetails", new { orderID=Html.AttributeEncode(Model.Id)})">Order History</a></text>
+                <text> You can check the status of your order in <a class="alt" href="/order/history">Order History</a></text>
+                @* <text> You can check the status of your order in <a class="alt" href="@Url.RouteUrl("OrderDetails", new { orderID=Html.AttributeEncode(Model.Id)})">Order History</a></text> *@
 
             }
             else
