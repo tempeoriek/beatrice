@@ -356,14 +356,6 @@
     let query_date_start = start_date_flashsale && searchParams.get('type') == 'flash-sale' ? start_date_flashsale : 
       searchParams.has('start_date') && searchParams.get('type') == 'coming-soon' ? moment(searchParams.get('start_date'), 'YYYY-MM-DD HH:mm:ss Z').toDate() : null;
 
-    if (searchParams.get('type') == 'coming-soon') {
-      $("#text-price-change").text("IDR ???.000");
-    } else if (searchParams.get('type') == 'flash-sale'){
-      var price_flashsale = `IDR ${numberWithCommas(model.FlashsalePrice)}`;
-      $("#text-price-change").text(price_flashsale);
-      
-    }
-
     var countDownDate = new Date(`${query_date}`).getTime();
     var countDownDateStart = new Date(`${query_date_start}`).getTime();
     var x = setInterval(function() {
@@ -390,11 +382,18 @@
       } else {
         if (model && distance_start > 0) {
           document.getElementById("demo").innerHTML = "Available in  " + result_time_start ;
-          $("#text-price-change").text("IDR ???.000");
+          @* $("#text-price-change").text("IDR ???.000"); *@
         } else if (model && distance_start < 0){
           document.getElementById("demo").innerHTML = "Ends in  " + result_time;
-          $("#text-price-change").text(model.ProductPrice.Price);
+          @* $("#text-price-change").text(model.ProductPrice.Price); *@
         } 
+      }
+
+      if (searchParams.get('type') == 'coming-soon') {
+        $("#text-price-change").text("IDR ???.000");
+      } else if (searchParams.get('type') == 'flash-sale'){
+        var price_flashsale = `IDR ${numberWithCommas(model.FlashsalePrice)}`;
+        $("#text-price-change").text(price_flashsale);
       }
     }, 1000);
 

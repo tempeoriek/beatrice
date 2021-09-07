@@ -15,19 +15,19 @@
             var temp = Model.ToList();
             var discount = temp[i];
             <div class="col-md-4 col-sm-4">
-            <div class="row p-3">
-                <div class="col-9 col-md-9 col-sm-9 text-center body-coupon">
-                <p style="font-size: 17px; font-weight: 400;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
-                <p style="font-size: 17px; font-weight: 600; margin-top: -30px !important;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon-@i">@discount.CouponCode</p> 
+                <div class="row p-3">
+                    <div class="col-9 col-md-9 col-sm-9 text-center body-coupon">
+                        <p style="font-size: 17px; font-weight: 400;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
+                        <p style="font-size: 17px; font-weight: 600; margin-top: -30px !important;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon-@i">@discount.CouponCode</p> 
+                    </div>
+                    <div onclick="copyCouponCodeHome(@i)" class="col-3 col-md-3 col-sm-3 text-center d-flex justify-content-center align-items-center body-coupon" style="cursor: pointer;">
+                        <a class="copy-voucher-@i" style="font-size: 17px; color: white; text-decoration: none;" type="button" id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</a>
+                    </div>
                 </div>
-                <div onclick="copyCouponCodeHome(@i)" class="col-3 col-md-3 col-sm-3 text-center d-flex justify-content-center align-items-center body-coupon" style="cursor: pointer;">
-                <a style="font-size: 17px;" type="button" id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</a>
-                </div>
-            </div>
             </div>
         }
         <div class="col-md-2"></div>
-        </div>
+    </div>
 
 } else {
     for (int i = 0; i < Model.Count(); i++)
@@ -96,8 +96,10 @@
         document.body.removeChild(dummy);
         
         $("#copy-"+id).text("Copied")
+        $(".copy-voucher-"+id).text("Copied")
         setTimeout(() => {
-        $("#copy-"+id).text("Copy")
+            $(".copy-voucher-"+id).text("Copy")
+            $("#copy-"+id).text("Copy")
         }, 1000)
         
     }
