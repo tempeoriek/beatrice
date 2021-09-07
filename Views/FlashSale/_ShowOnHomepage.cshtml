@@ -23,7 +23,7 @@
         end_date = null;
         <div class="row p-0 m-0 mb-5" style="background-color: #9D3131;">
           <div class="col-12 col-md-4 col-sm-4 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
-            <h1 class="text-white text-title-demo" style="font-size: 38px;">@session.Name </h1> 
+            <h1 class="text-white text-title-demo" style="font-size: 38px; text-transform: capitalize; ">@session.Name.ToLower() </h1> 
           </div>
           <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;">
             <span class="worksans-reg text-white text-demo" style="font-size: 24px;" id="demo" />
@@ -44,8 +44,10 @@
               var temp = session.Products[i];
               @* var offset_flash = session.Products.Count() == 1 && i == 0 ? "offset-md-4 offset-sm-5" :
                 session.Products.Count() == 2 && i == 0 ? "offset-md-3 offset-sm-3" : ""; *@
-              var status_prod = temp.StockFlashSaleRemaining / temp.StockFlashSale * 100 < 40 ? "Low in Stocks" : "Available";
-
+              var devide = Decimal.Divide(temp.StockFlashSaleRemaining, temp.StockFlashSale);
+              var times = devide * 100;
+              var status_prod = times < 40 ? "Low in Stocks" : "Available";
+              var progress_bar = temp.StockFlashSale - temp.StockFlashSaleRemaining;
               <div class="col-6 col-sm-3 col-md-3 mt-3">
                 <div class="flash-sale-pad" style="width: 100%;">
                   <div class="row m-0 p-0" style="width: inherit;">
@@ -67,7 +69,7 @@
                     <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #9D3131;">IDR @String.Format( "{0:#,##0.##}", temp.FlashSalePrice )</p>
                   </div>
                   <div class="row mb-2 m-0 p-0" style="width: inherit;">
-                    <progress id="@i-product" value="@temp.StockFlashSaleRemaining" max="@temp.StockFlashSale" style="width: 100%; height: 8px;"/>
+                    <progress id="@i-product" value="@progress_bar" max="@temp.StockFlashSale" style="width: 100%; height: 8px;"/>
                   </div>
                   <div class="row m-0 p-0" style="width: inherit;">
                     <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #525252;">@status_prod</p>
@@ -82,7 +84,10 @@
           <div class="row mx-3">
             @for(var i = 0; i < session.Products.Count() ; i++) {
               var temp = session.Products[i];
-              var status_prod = temp.StockFlashSaleRemaining / temp.StockFlashSale * 100 < 40 ? "Low in Stocks" : "Available";
+              var devide = Decimal.Divide(temp.StockFlashSaleRemaining, temp.StockFlashSale);
+              var times = devide * 100;
+              var status_prod = times < 40 ? "Low in Stocks" : "Available";
+              var progress_bar = temp.StockFlashSale - temp.StockFlashSaleRemaining;
 
               <div class="col-6 col-sm-4 col-md-4 mt-4">
                 <div class="flash-sale-pad" style="width: 100%;">
@@ -105,7 +110,7 @@
                     <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 13px !important; color: #9D3131;">IDR @String.Format( "{0:#,##0.##}", temp.FlashSalePrice )</p>
                   </div>
                   <div class="row mb-2 m-0 p-0" style="width: inherit;">
-                    <progress id="@i-product" value="@temp.StockFlashSaleRemaining" max="@temp.StockFlashSale" style="width: 100%; height: 8px;"/>
+                    <progress id="@i-product" value="@progress_bar" max="@temp.StockFlashSale" style="width: 100%; height: 8px;"/>
                   </div>
                   <div class="row m-0 p-0" style="width: inherit;">
                     <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 13px !important; color: #525252;">@status_prod</p>
