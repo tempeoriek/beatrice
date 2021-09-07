@@ -7,20 +7,21 @@
     string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
     var styleDivCenterDesktop = "position: absolute; top: 0; left: 0; height: 100%; width: 100%; right: 0; bottom: 0;";
     var styleContentCenterDeskopFlashSale = "font-size: 40px; color: white; display: flex; justify-content: center; align-items: center; height: 100%;";
+    var title_flashsale = Model.Count() > 0 ? Model.ToList()[0].Name : "Flash Sale";
 }
 
 
 <div class="row d-none d-md-block carousel" style="margin: 15px 0; margin-bottom: 0; position: relative;"> 
   <img class="d-block w-100" src="@String.Format("/Content/Images/uploaded/categories/flashsale.jpg")"> 
   <div class="text-center" style="@styleDivCenterDesktop">
-    <h1 style="@styleContentCenterDeskopFlashSale">Flash Sale</h1>
+    <h1 style="@styleContentCenterDeskopFlashSale">@title_flashsale</h1>
   </div>
 </div>
 
 <div class="row d-block d-md-none carousel" style="position: relative;"> 
   <img style="left: 50%; position: relative; transform: translateX(-50%);" class="d-block" src="@String.Format("/Content/Images/uploaded/categories/flashsale.jpg")"> 
   <div class="text-center" style="@styleDivCenterDesktop">
-    <h1 style="@styleContentCenterDeskopFlashSale">Flash Sale</h1>
+    <h1 style="@styleContentCenterDeskopFlashSale">@title_flashsale</h1>
   </div>
 </div>
 
