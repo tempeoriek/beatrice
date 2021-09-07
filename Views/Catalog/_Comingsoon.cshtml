@@ -272,7 +272,8 @@
           $("#price-cs-"+model_cs.Products[i].Id).text("IDR ???.000");
         }
       } else if (data && distance_start < 0){
-        document.getElementById("demo-coming-soon").innerHTML = "Ends in  " + result_time;
+        document.getElementById("demo-coming-soon").innerHTML = "Available Now";
+        @* document.getElementById("demo-coming-soon").innerHTML = "Ends in  " + result_time; *@
         for (let i = 0; i < model_cs.Products.length; i++) {
           $("#price-cs-"+model_cs.Products[i].Id).text(model_cs.Products[i].ProductPrice.Price);
         }
