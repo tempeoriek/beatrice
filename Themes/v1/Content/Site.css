@@ -1664,12 +1664,18 @@ a.dropdown-item {
     border: 1px solid #9D5D3E;
 }
 .button_google {
-    width: 95%;
+    width: 97%;
     height: 100%;
     color: #DE4D31;
     background-color: white;
     border: 1px solid #DE4D31;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+.button_google:hover {
+    cursor: pointer;
+  }
 .button_facebook {
     width: 95%;
     height: 100%;
@@ -1677,6 +1683,17 @@ a.dropdown-item {
     background-color: white;
     border: 1px solid #3A579E;
 }
+#customBtn {
+    width: 95%;
+    height: 100%;
+    color: #3A579E;
+    background-color: white;
+    border: 1px solid #3A579E;
+    
+  }
+  #customBtn:hover {
+    cursor: pointer;
+  }
 
 .login-form {
     display: flex;
@@ -2607,7 +2624,7 @@ a.dropdown-item {
         font-size: 27px !important;
     }
     .heigth-devider-menu{
-        height: 50px !important;
+        height: 35px !important;
     }
 
     .hero {

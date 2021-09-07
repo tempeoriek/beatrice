@@ -26,7 +26,7 @@
                 <a class="address-setting" href="~/customer/addressAdd" style="color: #525252; font-size: 16px;">Address</a><br/>
                 <a class="order-setting" href="@Url.RouteUrl("CustomerOrders")" style="color: #525252; font-size: 16px;">Order History</a><br/>
                 <a class="wishlist-setting" href="@Url.RouteUrl("Wishlist")" style="color: #525252; font-size: 16px;">Wishlist</a><br/>
-                <a class="logout-setting" href="@Url.RouteUrl("Logout")" style="color: #525252; font-size: 16px;">Logout</a><br/>
+                <a onclick="signOut();" class="logout-setting" href="@Url.RouteUrl("Logout")" style="color: #525252; font-size: 16px;">Logout</a><br/>
             </div>
         </div>
         <div class="col-12 col-sm-9 col-md-9">

@@ -122,7 +122,7 @@
                 }
               }
 
-              if (totalstock == 0) {
+              if (totalstock <= 0) {
                 <p class="text-center" style="color: #9D3131; font-weight: bold; font-size: 16px;">
                   Out of stock
                 </p>
@@ -146,7 +146,7 @@
                   </div>
                 }
                 
-                @if (totalstock == 0) {
+                @if (totalstock <= 0) {
                     <button disabled type="button"class="btn-addcart-disabled">
                       <span>Add to Shopping Bag</span>
                     </button>
@@ -183,7 +183,7 @@
                 </div>
               </div>
 
-              if (totalstock == 0) {
+              if (totalstock <= 0) {
                 <div class="d-flex justify-content-start align-items-center">
                   <span class="worksans-reg" style="font-size: 14px; color: #9D5D3E;">Get an alert when the product is in stock:</span>
                 </div>
@@ -334,7 +334,7 @@
     }
     //console.log(`PRODUCT DETAIL`);
     var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-    //console.log(model);    
+    console.log(model);    
     
     let today_cs = new Date();
     let searchParams = new URLSearchParams(window.location.search);

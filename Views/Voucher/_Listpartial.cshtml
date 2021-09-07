@@ -8,7 +8,7 @@
 }
 
 @if (homepage) {
-    <div class="row mx-3 mb-5" style=" position: absolute; width: 100%; bottom: 0; color: white;">
+    <div class="row mx-3 mb-5" style=" position: absolute; width: 100%; bottom: -35px; color: white;">
         <div class="col-md-2"></div>
         @for (int i = 0; i < Model.Count(); i++)
         {
@@ -17,11 +17,11 @@
             <div class="col-md-4 col-sm-4">
                 <div class="row p-3">
                     <div class="col-9 col-md-9 col-sm-9 text-center body-coupon">
-                        <p style="font-size: 17px; font-weight: 400;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
+                        <p style="font-size: 17px; font-weight: 400; line-height: 20px;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
                         <p style="font-size: 17px; font-weight: 600; margin-top: -30px !important;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon-@i">@discount.CouponCode</p> 
                     </div>
                     <div onclick="copyCouponCodeHome(@i)" class="col-3 col-md-3 col-sm-3 text-center d-flex justify-content-center align-items-center body-coupon" style="cursor: pointer;">
-                        <a class="copy-voucher-@i" style="font-size: 17px; color: white; text-decoration: none;" type="button" id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</a>
+                        <a class="copy-voucher-@i" style="font-size: 17px; color: white; text-decoration: none;"  id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</a>
                     </div>
                 </div>
             </div>

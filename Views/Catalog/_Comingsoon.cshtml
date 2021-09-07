@@ -15,15 +15,15 @@
 }
 @if (Model.Products.Any() && open)
 {
-  <div class="row p-0 m-0 my-5" style="background-color: #D8C7BD;">
-    <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
+  <div class="row p-0 m-0 mb-5" style="background-color: #D8C7BD;">
+    <div class="col-12 col-md-4 col-sm-4 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
       <h1 class="text-white text-title-demo" style="font-size: 38px;">@Model.Name</h1> 
     </div>
     <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
       <span class="worksans-reg text-white text-demo" style="font-size: 24px;" id="demo-coming-soon" />
     </div>
-    <div class="col-md-6 col-sm-6 d-flex justify-content-end align-items-center"> 
-      <button class="d-none d-md-block hidden-xs hidden-sm flash-sale-btn" onclick="location.href='/catalog/comingsoon?type=coming-soon&start_date=@date2&end_date=@date1';" >
+    <div class="col-md-5 col-sm-5 flash-sale-container"> 
+      <button class="flash-sale-btn" onclick="location.href='/catalog/comingsoon?type=coming-soon&start_date=@date2&end_date=@date1';" >
         <p class="m-0" style="color: #9D5D3E; font-size: 16px;">View All</p>
       </button>
     </div>

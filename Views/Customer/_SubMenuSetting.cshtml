@@ -7,7 +7,7 @@
 <a class="address-setting" href="~/customer/addressAdd" style="color: #525252; font-size: 16px;">Address</a><br/>
 <a class="order-setting" href="@Url.RouteUrl("CustomerOrders")" style="color: #525252; font-size: 16px;">Order History</a><br/>
 <a class="wishlist-setting" href="@Url.RouteUrl("Wishlist")" style="color: #525252; font-size: 16px;">Wishlist</a><br/>
-<a class="logout-setting" href="@Url.RouteUrl("Logout")" style="color: #525252; font-size: 16px;">Logout</a><br/>
+<a onclick="signOut();" class="logout-setting" href="@Url.RouteUrl("Logout")" style="color: #525252; font-size: 16px;">Logout</a><br/>
 
 
 <script>
@@ -19,5 +19,5 @@
         window.location.pathname == `/customer/wishlist` ? ".wishlist-setting" : null;
     $(`${changeColor}`).css("cssText", 'color: #E1C2A4 !important; font-size: 16px;');
     $(`${changeColor}`).attr("href", `#`);
-
+   
 </script>

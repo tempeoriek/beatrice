@@ -7,7 +7,7 @@
 
 @if (Model != null)
 {
-  <div class="">
+  <div class="mb-5">
     @if (data_flash_sale.Any()) {
       foreach (var session in data_flash_sale)
       {
@@ -22,14 +22,14 @@
         start_date = null;
         end_date = null;
         <div class="row p-0 m-0 mb-5" style="background-color: #9D3131;">
-          <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
+          <div class="col-12 col-md-4 col-sm-4 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
             <h1 class="text-white text-title-demo" style="font-size: 38px;">@session.Name </h1> 
           </div>
           <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;">
             <span class="worksans-reg text-white text-demo" style="font-size: 24px;" id="demo" />
           </div>
 
-          <div class="col-md-6 col-sm-6 flash-sale-container"> 
+          <div class="col-md-5 col-sm-5 flash-sale-container"> 
             <button class="flash-sale-btn" onclick="location.href='/flashsale/show?type=flash-sale';">
             @* <button class="d-none d-md-block hidden-xs hidden-sm flash-sale-btn" onclick="location.href='/flashsale/show?type=flash-sale&start_date=@start_date&end_date=@end_date';"> *@
               <p class="m-0" style="color: #9D3131; font-size: 16px;">View All</p>
@@ -97,18 +97,18 @@
                   </div>
                   <div class="row m-0 p-0 my-2" style="width: inherit;">
                     <a href="/@temp.SeName?type=flash-sale" class="clean" style="text-decoration: none;">
-                      <p class="m-0 p-0 worksans-medium text-demo" style="height: 56px; font-size: 20px; color: #525252;">@temp.Name</p>
+                      <p class="m-0 p-0 worksans-medium text-demo  d-flex justify-content-center align-items-center" style="height: 30px; font-size: 16px !important; color: #525252;">@temp.Name</p>
                     </a>
                   </div>
                   <div class="row mb-2 m-0 p-0" style="width: inherit;">
-                    <p class="m-0 p-0 worksans-reg text-demo" style="text-decoration:line-through; font-size: 20px; color: #BCBCBC;">@temp.ProductPrice.Price</p> &nbsp;
-                    <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #9D3131;">IDR @String.Format( "{0:#,##0.##}", temp.FlashSalePrice )</p>
+                    <p class="m-0 p-0 worksans-reg text-demo" style="text-decoration:line-through; font-size: 13px !important; color: #BCBCBC;">@temp.ProductPrice.Price</p> &nbsp;
+                    <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 13px !important; color: #9D3131;">IDR @String.Format( "{0:#,##0.##}", temp.FlashSalePrice )</p>
                   </div>
                   <div class="row mb-2 m-0 p-0" style="width: inherit;">
                     <progress id="@i-product" value="@temp.StockFlashSaleRemaining" max="@temp.StockFlashSale" style="width: 100%; height: 8px;"/>
                   </div>
                   <div class="row m-0 p-0" style="width: inherit;">
-                    <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #525252;">@status_prod</p>
+                    <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 13px !important; color: #525252;">@status_prod</p>
                   </div>
                 </div>
               </div>
