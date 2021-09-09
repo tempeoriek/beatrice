@@ -19,10 +19,10 @@
     <div class="col-12 col-md-4 col-sm-4 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
       <h1 class="text-white text-title-demo" style="font-size: 38px;">@Model.Name</h1> 
     </div>
-    <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
+    <div class="col-12 col-md-4 col-sm-4 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
       <span class="worksans-reg text-white text-demo" style="font-size: 24px;" id="demo-coming-soon" />
     </div>
-    <div class="col-md-5 col-sm-5 flash-sale-container"> 
+    <div class="col-md-4 col-sm-4 flash-sale-container"> 
       <button class="flash-sale-btn" onclick="location.href='/catalog/comingsoon?type=coming-soon&start_date=@date2&end_date=@date1';" >
         <p class="m-0" style="color: #9D5D3E; font-size: 16px;">View All</p>
       </button>
@@ -42,7 +42,7 @@
                   <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block"> 
                   </img>
                   <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
-                    <p class="m-0 text-center" style="color: #9D5D3E; height: 100%; font-size: 17px;">COMING SOON</p>
+                    <p class="m-0 text-center status-product-cs" style="color: #9D5D3E; height: 100%; font-size: 17px;">COMING SOON</p>
                   </div>
                 </a>
               </div>
@@ -273,6 +273,7 @@
         }
       } else if (data && distance_start < 0){
         document.getElementById("demo-coming-soon").innerHTML = "Available Now";
+        $(".status-product-cs").text("NEW ARRIVAL");
         @* document.getElementById("demo-coming-soon").innerHTML = "Ends in  " + result_time; *@
         for (let i = 0; i < model_cs.Products.length; i++) {
           $("#price-cs-"+model_cs.Products[i].Id).text(model_cs.Products[i].ProductPrice.Price);

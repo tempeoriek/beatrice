@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="~/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="32x32" href="~/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="~/favicon/favicon-16x16.png">
-    <meta name="google-signin-client_id" content="703594743624-ck1a2hbupr2pt329dtbqksg9r3l4h284.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="703594743624-late9iovnmf8lk9617e8uateg6u7k5bi.apps.googleusercontent.com">
     <link rel="manifest" href="~/favicon/manifest.json">
     <link rel="mask-icon" href="~/favicon/safari-pinned-tab.svg" color="#FFFFFF">
     <meta name="theme-color" content="#FFFFFF">
@@ -109,44 +109,47 @@
 
 
     <script>
+        //FOR GOOGLE LOGIN
+        var id_fb;
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            if (profile.getEmail()) {
+                console.log(`Success Login with email ${profile.getEmail()}, id ${profile.getId()}, id ${profile.getName()}`); 
+                @* window.location.href =  "https://fed1-2405-8180-201-1722-7070-5038-db4e-e5ac.ngrok.io"; *@
+            }
         }
          async function signOut() {
-            var auth2 = await gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-            });
-            
-            FB.logout(function(response) {
-                console.log('FB User signed out');
-                // user is now logged out
-            });
+             if (id_fb) {
+                FB.logout(function(response) {
+                    console.log('FB User signed out');
+                });
+             } else {
+                var auth2 = await gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                });
+             }
         }
         function onLoad() {
             gapi.load('auth2', function() {
                 gapi.auth2.init();
             });
         }
-        function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
-            console.log('statusChangeCallback');
-            console.log(response);                   // The current login status of the person.
-            if (response.status === 'connected') {   // Logged into your webpage and Facebook.
-                testAPI();  
-            } else {                                 // Not logged into your webpage or we are unable to tell.
-                @* ocument.getElementById('status').innerHTML = 'Please log ' +
-                'into this webpage.'; *@
+
+        //FOR FACEBOOK
+        function statusChangeCallback(response, after_login) {
+            @* console.log('statusChangeCallback'); *@
+            @* console.log(response);                  *@
+            if (response.status === 'connected') { 
+                testAPI(after_login);  
             }
         }
 
 
-        function checkLoginState() {               // Called when a person is finished with the Login Button.
-            FB.getLoginStatus(function(response) {   // See the onlogin handler
-                statusChangeCallback(response);
+        function checkLoginState() {               
+            console.log("Login Facebook")
+            FB.getLoginStatus(function(response) {   
+                statusChangeCallback(response, true);
             });
         }
 
@@ -154,25 +157,29 @@
         window.fbAsyncInit = function() {
             FB.init({
                 appId      : '547140193170948',
-                cookie     : true,                     // Enable cookies to allow the server to access the session.
-                xfbml      : true,                     // Parse social plugins on this webpage.
-                version    : 'v11.0'           // Use this Graph API version for this call.
+                cookie     : true,                     
+                xfbml      : true,                     
+                version    : 'v11.0'           
             });
 
 
-            FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
-                statusChangeCallback(response);        // Returns the login status.
+            FB.getLoginStatus(function(response) {   
+                statusChangeCallback(response, false);        
             });
         };
         
-        function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
-            console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me', function(response) {
-                console.log('Successful login for: ' + response.name);
-                @* document.getElementById('status').innerHTML =
-                    'Thanks for logging in, ' + response.name + '!'; *@
+        function testAPI(after_login) {
+            
+            FB.api('/me?fields=email,name', function(response) {
+                console.log(`Success Login with email ${response.email}, id ${response.id}, name ${response.name}`); 
+                id_fb = response.email;
+                if (after_login) {
+                    window.location.href =  "https://fed1-2405-8180-201-1722-7070-5038-db4e-e5ac.ngrok.io";
+                }
+                
             });
         }
+
         $('.signin').hover(function () {
             //$(this).find('.dropmenu').stop(true, true).delay(200).fadeIn(500);
             $('.myaccount-menu').fadeIn("slow", function () {

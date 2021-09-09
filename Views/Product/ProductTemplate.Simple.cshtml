@@ -78,10 +78,10 @@
           if (type_detail) {
             @* FOR FLASH SALE *@
             <div class="row" style="@count_style">
-              <div class="col-6 d-flex justify-content-start align-items-center">
-                <span class="worksans-medium" style="color: white; font-size: 16px;">@count_text</span>
+              <div class="col-5 d-flex justify-content-start align-items-center">
+                <span id="text-status-change" class="worksans-medium" style="color: white; font-size: 16px;">@count_text</span>
               </div>
-              <div class="col-6 d-flex justify-content-center align-items-center m-0 p-0">
+              <div class="col-7 d-flex justify-content-end align-items-center">
                 <span class="worksans-reg" style="font-style: italic; color: white; font-size: 16px;" id="demo" />
               </div>
             </div>
@@ -91,21 +91,6 @@
             <h1 class="worksans-medium text-product-detail" itemprop="name">
               @Model.Name
             </h1>
-            @{
-              var dataDictPrice = new ViewDataDictionary();
-              dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
-              
-              if (Model.AddToCart.AvailableForPreOrder) {
-                <div class="description" style="color: black;">
-                  PRE-ORDER
-                </div>
-              } else {
-                <div class="d-flex justify-content-center align-items-center">
-                  @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
-                </div>
-              }
-            }
-
 
             @{
               //notify me if oos
@@ -113,19 +98,31 @@
               if (Model.ProductAttributeCombinations.Count() == 0) {
                 totalstock = 1;
               } else {
-                foreach (var pa in Model.ProductAttributes)
+                foreach (var pa in Model.ProductAttributeCombinations)
                 {
-                  foreach (var s in pa.Values)
-                  {
-                    totalstock += s.VariantStockQuantity;
-                  }
+                  totalstock += pa.StockQuantity;
                 }
               }
+
+              totalstock = Model.FlashsaleStatus != null ? Model.FlashsaleRemainingStock : totalstock;
 
               if (totalstock <= 0) {
                 <p class="text-center" style="color: #9D3131; font-weight: bold; font-size: 16px;">
                   Out of stock
                 </p>
+              } else {
+                var dataDictPrice = new ViewDataDictionary();
+                dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
+                
+                if (Model.AddToCart.AvailableForPreOrder) {
+                  <div class="description" style="color: black;">
+                    PRE-ORDER
+                  </div>
+                } else {
+                  <div class="d-flex justify-content-center align-items-center">
+                    @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
+                  </div>
+                }
               }
             
               
@@ -174,8 +171,10 @@
                   </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
-                  <div style="font-size: 16px; color: #525252;" class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    @Html.Raw(Model.FullDescription)
+                  <div style="font-size: 16px; color: #525252;" class="tab-pane fade show active no-style" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div>
+                      @Html.Raw(Model.FullDescription)
+                    </div>
                   </div>
                   <div style="font-size: 16px; color: #525252;" class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     @Model.ShortDescription
@@ -334,7 +333,7 @@
     }
     //console.log(`PRODUCT DETAIL`);
     var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-    console.log(model);    
+    //console.log(model);    
     
     let today_cs = new Date();
     let searchParams = new URLSearchParams(window.location.search);
@@ -382,16 +381,16 @@
       } else {
         if (model && distance_start > 0) {
           document.getElementById("demo").innerHTML = "Available in  " + result_time_start ;
-          @* $("#text-price-change").text("IDR ???.000"); *@
+          if (searchParams.get('type') == 'coming-soon') $("#text-price-change").text("IDR ???.000");
         } else if (model && distance_start < 0){
-          document.getElementById("demo").innerHTML = "Ends in  " + result_time;
-          @* $("#text-price-change").text(model.ProductPrice.Price); *@
+          let demo_text = searchParams.get('type') == 'coming-soon' ? "Available Now" : "Ends in  " + result_time;
+          document.getElementById("demo").innerHTML = demo_text;
+          if (searchParams.get('type') == 'coming-soon') $("#text-status-change").text("NEW ARRIVAL");
+          if (searchParams.get('type') == 'coming-soon') $("#text-price-change").text(model.ProductPrice.Price);
         } 
       }
 
-      if (searchParams.get('type') == 'coming-soon') {
-        $("#text-price-change").text("IDR ???.000");
-      } else if (searchParams.get('type') == 'flash-sale'){
+      if (searchParams.get('type') == 'flash-sale'){
         var price_flashsale = `IDR ${numberWithCommas(model.FlashsalePrice)}`;
         $("#text-price-change").text(price_flashsale);
       }

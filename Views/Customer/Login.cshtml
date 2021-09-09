@@ -32,16 +32,16 @@
   <div class="mt-5 d-none d-md-block hidden-sm hidden-xs"></div>
 
   <div class="form-login">
-    <div class="text-center" style="margin: 0 80px;">
+    <div class="text-center" style="margin: 0 70px;">
       <h2 class="abhaye mb-4" id="title" style="font-size: 30px;">Sign In</h2>
 
-      <div id="login-thirdparty" class="row mb-4" style="height: 50px;">
-        <div class="col-6 p-1">
+      <div id="login-thirdparty" class="row" style="height: 50px;">
+        <div class="col-12 col-md-6 col-sm-6 p-2 d-flex justify-content-center" style="align-self: center;">
           @* <button type="submit" class="button_google">Google</button> *@
-          <div class="g-signin2 button_google" data-width="170" data-height="50" data-onsuccess="onSignIn"></div>
+          <div class="g-signin2" data-width="170" data-height="50" data-onsuccess="onSignIn"></div>
           
         </div>
-        <div class="col-6 p-1">
+        <div class="col-12 col-md-6 col-sm-6 p-2" style="align-self: center; left: 3%">
           @* <button type="submit" class="button_facebook">Facebook</button> *@
           @* <fb:login-button class="fb_button" length="long" size="large" scope="public_profile,email" onlogin="checkLoginState();">
               <span style= "margin-right: 10px;">Facebook</span>
@@ -51,18 +51,17 @@
           </button> *@
           <div 
             class="fb-login-button" 
-            data-width="170" 
-            data-height="50"
-            data-size="medium" 
+            data-size="large" 
+            scope="email"
             data-button-type="login_with" 
             data-layout="default" 
             data-auto-logout-link="false" 
-            data-use-continue-as="false"></div>
-
+            data-use-continue-as="false"
+            onlogin="checkLoginState()"></div>
         </div>
       </div>
 
-      <p id="subtitle" style="font-size: 14px;">Already a member?</p>
+      <p id="subtitle" style="font-size: 14px; margin-top: 50px;">Already a member?</p>
     </div>
 
     <div class="tab-content">
@@ -100,7 +99,7 @@
               }
             </div>
             <div class="form-group">
-              @Html.PasswordFor(m => m.Password, new { @class = "form_signin pb-2", placeholder = "Password" })
+              @Html.PasswordFor(m => m.Password, new { @class = "form_signin pb-2", placeholder = "Password", id="PasswordLogin" })
               @Html.ValidationMessageFor(m => m.Password)
               <input type="checkbox" onclick="showPassword()">&nbsp;Show Password
             </div>

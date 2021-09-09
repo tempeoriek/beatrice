@@ -420,7 +420,7 @@
   if (!String.IsNullOrEmpty(pictureAttributeScripts.ToString()))
   {
     <script type="text/javascript">
-
+      //console.log("masuk juga")
       //Picture adjustment table
       var @(pictureAdjustmentTableName) = new Array();
       //Picture adjustment table initialize
@@ -495,5 +495,5 @@
   });
   //console.log(`HOME`);
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	//console.log(model);    
+	console.log(model);    
 </script>
