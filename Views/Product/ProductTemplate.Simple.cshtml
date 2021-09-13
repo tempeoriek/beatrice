@@ -104,7 +104,7 @@
                 }
               }
 
-              totalstock = Model.FlashsaleStatus != null ? Model.FlashsaleRemainingStock : totalstock;
+              totalstock = Model.FlashsaleStatus != null && totalstock > 0 ? Model.FlashsaleRemainingStock : totalstock;
 
               if (totalstock <= 0) {
                 <p class="text-center" style="color: #9D3131; font-weight: bold; font-size: 16px;">

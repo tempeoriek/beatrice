@@ -36,15 +36,23 @@
           var temp = Model.Products[i];
           <div class="col-12">
             <div class="row" style="padding: 0 3rem;">
-              <div style="position: relative;">
-                <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type = "coming-soon", start_date= @date2, end_date = @date1 })">
-                @* <a href="/valen-dress?type=coming-soon&date=02-09-2021T18:00:00"> *@
-                  <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block"> 
-                  </img>
-                  <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
-                    <p class="m-0 text-center status-product-cs" style="color: #9D5D3E; height: 100%; font-size: 17px;">COMING SOON</p>
-                  </div>
-                </a>
+              <div class="ori-product-img">
+                <div style="position: relative;">
+                  <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type = "coming-soon", start_date= @date2, end_date = @date1 })" class="clean">
+                    <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
+                    <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
+                      <p class="m-0 text-center status-product-cs" style="color: #9D5D3E; height: 100%; font-size: 17px;">COMING SOON</p>
+                    </div>
+                  </a>
+                </div>
+                
+                @if (temp.Quantity == 0 ) {
+                  <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type = "coming-soon", start_date= @date2, end_date = @date1 })" class="clean">
+                    <div class="d-flex justify-content-center align-items-center backdrop-product">
+                      <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
+                    </div>
+                  </a>
+                }
               </div>
             </div>
             <div class="row mt-2" style="padding: 0 3rem;">
@@ -84,13 +92,32 @@
           var temp = Model.Products[i];
           <div class="col-12 col-md-12 col-sm-12">
             <div class="row px-4" style="display: flex; justify-content: center; align-items: center;">
-              <div style="position: relative;">
+              @* <div style="position: relative;">
                 <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", start_date= @date2, end_date = @date1 })">
                   <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block" />
                   <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
                     <p class="m-0 text-center" style="color: #9D5D3E; height: 100%; font-size: 17px;">COMING SOON</p>
                   </div>
                 </a>
+              </div> *@
+              
+              <div class="ori-product-img">
+                <div style="position: relative;">
+                  <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", start_date= @date2, end_date = @date1 })" class="clean">
+                    <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
+                    <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
+                    <p class="m-0 text-center" style="color: #9D5D3E; height: 100%; font-size: 17px;">COMING SOON</p>
+                  </div>
+                  </a>
+                </div>
+                
+                @if (temp.Quantity == 0 ) {
+                  <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", start_date= @date2, end_date = @date1 })" class="clean">
+                    <div class="d-flex justify-content-center align-items-center backdrop-product">
+                      <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
+                    </div>
+                  </a>
+                }
               </div>
             </div>
             
@@ -223,7 +250,7 @@
 <script>
 	var model_cs = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
 	//console.log(`coming soon`);  
-	//console.log(model_cs);  
+	console.log(model_cs);  
   let today_cs = new Date();
   let date_today_cs = new Date(`${today_cs.getFullYear()}, ${today_cs.getMonth()}, ${today_cs.getDate()}`);
   var x = setInterval(function() {

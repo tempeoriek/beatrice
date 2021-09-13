@@ -640,13 +640,19 @@ input[type="checkbox"]:checked + label span::before,
 input[type="radio"]:checked + label span::before {
     content: " ";
     color: #534D4C;
-    text-align: center;
-    padding-left: 16px;
-    border-radius: 15px;
-    padding-top: 9px;
     border: 1px solid;
+    /* text-align: center;
+    padding-left: 16px;
     padding-right: 5px;
-    margin-left: -2px;
+    padding-top: 9px;
+    border-radius: 15px;
+    margin-left: -2px; */
+    position: absolute;
+    border-radius: 220px;
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
 }
 
 

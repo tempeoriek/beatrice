@@ -415,11 +415,13 @@
 
         // Set the date we're counting down 
         var countDownDate = new Date(end_date).getTime();
+        var countDownDateStart = new Date(start_date).getTime();
         // Get today's date and time
         var now = new Date().getTime();
           
         // Find the distance between now and the count down date
         var distance = countDownDate - now;
+        var distance_start = countDownDateStart - now;
           
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -427,16 +429,11 @@
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        if (data && date_today.getTime() == only_start_date.getTime() && new Date(start_date).getTime() > today.getTime() && new Date(end_date).getTime() > today.getTime()) {
+        if (data && distance_start > 0 && distance > 0) {
           document.getElementById("demo-"+i).innerHTML = "Available in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
-        } else if (data && date_today.getTime() == only_start_date.getTime() && new Date(start_date).getTime() < today.getTime() && new Date(end_date).getTime() > today.getTime()){
+        } else if (data && distance > 0 && distance_start < 0){
           document.getElementById("demo-"+i).innerHTML = "Ends in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
-        }
-        else if (data && date_today.getTime() == only_start_date.getTime() && new Date(start_date).getTime() < today.getTime() && new Date(end_date).getTime() < today.getTime()) {
-          document.getElementById("demo-"+i).innerHTML = "Ended";
-        }
-
-        if (distance < 0) {
+        } else if (distance < 0) {
           clearInterval(x);
           document.getElementById("demo-"+i).innerHTML = "Ended";
         }

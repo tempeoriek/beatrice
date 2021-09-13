@@ -25,15 +25,13 @@
               <h1 class="text-white text-title-demo" style="font-size: 38px; text-transform: capitalize; ">@session.Name.ToLower() </h1> 
             </div>
             <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;">
-              <span class="worksans-reg text-white text-demo" style="font-size: 24px;" id="demo" />
+              <span class="worksans-reg text-white text-demo text-center" style="width:100%; font-size: 24px;" id="demo-flashsale" ></span>
             </div>
 
             <div class="col-md-5 col-sm-5 flash-sale-container"> 
               <button class="flash-sale-btn" onclick="location.href='/flashsale/show?type=flash-sale';">
-              @* <button class="d-none d-md-block hidden-xs hidden-sm flash-sale-btn" onclick="location.href='/flashsale/show?type=flash-sale&start_date=@start_date&end_date=@end_date';"> *@
                 <p class="m-0" style="color: #9D3131; font-size: 16px;">View All</p>
               </button>
-              
             </div>
           </div>
 
@@ -50,13 +48,41 @@
                 <div class="col-6 col-sm-3 col-md-3 mt-3">
                   <div class="flash-sale-pad" style="width: 100%;">
                     <div class="row m-0 p-0" style="width: inherit;">
-                      <a href="/@temp.SeName?type=flash-sale" class="clean" style="width: inherit;">
-                      @* <a href="/anika-short?type=flash-sale&date=26-08-2021T18:00:00" class="clean" style="width: inherit;"> *@
+                      @* <a href="/@temp.SeName?type=flash-sale" class="clean" style="width: inherit;">
                         <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block" style="position: relative; width: 100%"/>
-                        <div style="top: 0; position: absolute; height: 10%; width: 15%; background-color: #9D3131;">
-                          <p class="m-0 flash-sale-text" style="font-size: 20px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">@temp.DiscountPercentage% <br> OFF</p>
+                        @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
+                          <a href="/@temp.SeName?type=flash-sale" class="clean">
+                            <div class="d-flex justify-content-center align-items-center backdrop-product">
+                              <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
+                            </div>
+                          </a>
+                        } else {
+                          <div style="top: 0; position: absolute; height: 10%; width: 15%; background-color: #9D3131;">
+                            <p class="m-0 flash-sale-text" style="font-size: 20px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">@temp.DiscountPercentage% <br> OFF</p>
+                          </div>
+                        }
+                      </a> *@
+                      <div class="ori-product-img">
+                        <div style="position: relative;">
+                          <a href="/@temp.SeName?type=flash-sale" class="clean">
+                            <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
+                          </a>
+                   
+                          <div style="top: 0; position: absolute; height: 15%; width: 20%; background-color: #9D3131;">
+                            <p class="m-0 flash-sale-text" style="font-size: 20px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">
+                              @temp.DiscountPercentage% <br> OFF
+                            </p>
+                          </div>
                         </div>
-                      </a>
+                        
+                        @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
+                          <a href="/@temp.SeName?type=flash-sale" class="clean">
+                            <div class="d-flex justify-content-center align-items-center backdrop-product">
+                              <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
+                            </div>
+                          </a>
+                        }
+                      </div>
                     </div>
                     <div class="row my-2 m-0 p-0" style="width: inherit;">
                       <a href="/@temp.SeName?type=flash-sale" class="clean" style="text-decoration: none;">
@@ -91,13 +117,39 @@
                 <div class="col-6 col-sm-4 col-md-4 mt-4">
                   <div class="flash-sale-pad" style="width: 100%;">
                     <div class="row m-0 p-0" style="width: inherit;">
-                      <a href="/@temp.SeName?type=flash-sale" class="clean" style="width: inherit;">
-                      @* <a href="/anika-short?type=flash-sale&date=26-08-2021T18:00:00" class="clean" style="width: inherit;"> *@
+                      @* <a href="/@temp.SeName?type=flash-sale" class="clean" style="width: inherit;">
                         <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block" style="position: relative; width: 100%"/>
-                        <div style="top: 0; position: absolute; height: 10%; width: 16%; background-color: #9D3131;">
-                          <p class="m-0 flash-sale-text" style="font-size: 12px; line-height: 17px;">@temp.DiscountPercentage% OFF</p>
+                        @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
+                          <a href="/@temp.SeName?type=flash-sale" class="clean">
+                            <div class="d-flex justify-content-center align-items-center backdrop-product">
+                              <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
+                            </div>
+                          </a>
+                        } else {
+                          <div style="top: 0; position: absolute; height: 10%; width: 16%; background-color: #9D3131;">
+                            <p class="m-0 flash-sale-text" style="font-size: 12px; line-height: 17px;">@temp.DiscountPercentage% OFF</p>
+                          </div>
+                        }
+                      </a> *@
+                      <div class="ori-product-img">
+                        <div style="position: relative;">
+                          <a href="/@temp.SeName?type=flash-sale" class="clean">
+                            <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
+                          </a>
+                   
+                          <div style="top: 0; position: absolute; height: 13%; width: 20%; background-color: #9D3131;">
+                            <p class="m-0 flash-sale-text" style="font-size: 12px; line-height: 17px;">@temp.DiscountPercentage% OFF</p>
+                          </div>
                         </div>
-                      </a>
+                        
+                        @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
+                          <a href="/@temp.SeName?type=flash-sale" class="clean">
+                            <div class="d-flex justify-content-center align-items-center backdrop-product">
+                              <p class="worksans-reg" style="margin: 0; color: white; font-size: 14px; text-transform: capitalize;">Out of stock</p>
+                            </div>
+                          </a>
+                        }
+                      </div>
                     </div>
                     <div class="row m-0 p-0 my-2" style="width: inherit;">
                       <a href="/@temp.SeName?type=flash-sale" class="clean" style="text-decoration: none;">
@@ -201,48 +253,64 @@
   let date_today = new Date(`${today.getFullYear()}, ${today.getMonth()}, ${today.getDate()}`);
   let data = model.filter(mf => mf.status == `on going`).length > 0 ? model.filter(mf => mf.status == `on going`)[0] : null;
   //console.log(data)
-  let start_day = data && data.start_date ? new Date(data.start_date).getDate() : null;
-  let start_month = data && data.start_date ? new Date(data.start_date).getMonth() : null;
-  let start_year = data && data.start_date ? new Date(data.start_date).getFullYear() : null;
-  
-  let end_day = data && data.end_date ? new Date(data.end_date).getDate() : null;
-  let end_month = data && data.end_date ? new Date(data.end_date).getMonth() : null;
-  let end_year = data && data.end_date ? new Date(data.end_date).getFullYear() : null;
+  if (data) {
+    let start_day = data.start_date ? new Date(data.start_date).getDate() : null;
+    let start_month = data.start_date ? new Date(data.start_date).getMonth() : null;
+    let start_year = data.start_date ? new Date(data.start_date).getFullYear() : null;
+    
+    let end_day = data.end_date ? new Date(data.end_date).getDate() : null;
+    let end_month = data.end_date ? new Date(data.end_date).getMonth() : null;
+    let end_year = data.end_date ? new Date(data.end_date).getFullYear() : null;
 
-  let start_date = data && data.start_date ? `${start_month+1}/${start_day}/${start_year} ${data.start_time}:00` : null;
-  let end_date = data && data.end_date ? `${end_month+1}/${end_day}/${end_year} ${data.end_time}:00` : null;
-  let only_start_date = data && data.start_date ? new Date(`${start_year}, ${start_month}, ${start_day}`) : null;
-  let only_end_date = data && data.end_date ? new Date(`${end_year}, ${end_month}, ${end_day}`) : null;
-
-  if (data && date_today.getTime() == only_start_date.getTime() && new Date(end_date).getTime() > today.getTime()) {
-    // Set the date we're counting down 
+    let start_date = data.start_date ? `${start_month+1}/${start_day}/${start_year} ${data.start_time}:00` : null;
+    let end_date = data.end_date ? `${end_month+1}/${end_day}/${end_year} ${data.end_time}:00` : null;
+    let only_start_date = data.start_date ? new Date(`${start_year}, ${start_month}, ${start_day}`) : null;
+    let only_end_date = data.end_date ? new Date(`${end_year}, ${end_month}, ${end_day}`) : null;
     var countDownDate = new Date(end_date).getTime();
 
-    // Update the count down every 1 second
-    var x = setInterval(function() {
-      // Get today's date and time
+    var x2 = setInterval(function() {
       var now = new Date().getTime();
         
-      // Find the distance between now and the count down date
       var distance = countDownDate - now;
         
-      // Time calculations for days, hours, minutes and seconds
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      // Output the result in an element with id="demo"
-      document.getElementById("demo").innerHTML = "Ends in   " + days + " : " + hours + " : " + minutes + " : " + seconds ;
-        
-      // If the count down is over, write some text 
-      if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("demo").innerHTML = "EXPIRED";
+      if (distance > 0) {
+        var text_count = `Ends in ${days} : ${hours} : ${minutes} : ${seconds}`;
+        document.getElementById("demo-flashsale").innerHTML = text_count;
+      } else if (distance < 0) {
+        clearInterval(x2);
+        document.getElementById("demo-flashsale").innerHTML = "EXPIRED";
       }
     }, 1000);
-  } else if (data && date_today.getTime() == only_start_date.getTime() && new Date(end_date).getTime() < today.getTime()) {
-    document.getElementById("demo").innerHTML = "EXPIRED";
+
+    @* if (date_today.getTime() == only_start_date.getTime() && new Date(end_date).getTime() > today.getTime()) {
+      var countDownDate = new Date(end_date).getTime();
+
+      var x2 = setInterval(function() {
+        var now = new Date().getTime();
+          
+        var distance = countDownDate - now;
+          
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        var text_count = `Ends in ${days} : ${hours} : ${minutes} : ${seconds}`;
+        document.getElementById("demo-flashsale").innerHTML = text_count;
+          
+        if (distance < 0) {
+          clearInterval(x2);
+          document.getElementById("demo-flashsale").innerHTML = "EXPIRED";
+        }
+      }, 1000);
+    } else if (date_today.getTime() == only_start_date.getTime() && new Date(end_date).getTime() < today.getTime()) {
+      document.getElementById("demo-flashsale").innerHTML = "EXPIRED";
+    } *@
   }
 	
 </script>

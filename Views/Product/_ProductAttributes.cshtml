@@ -170,11 +170,11 @@
                     <ul class="list-unstyled list-inline color-squares" style="height: 100%; display: inline-flex;" id="color-squares-@(attribute.Id)">
                       @foreach (var pvaValue in attribute.Values)
                       {
-                        <li @(pvaValue.IsPreSelected ? @Html.Raw(" class=\"selected-value\"") : null)>
+                        <li id="@pvaValue.PictureModel.ImageUrl" @(pvaValue.IsPreSelected ? @Html.Raw("class=\"selected-value color-sqr\"") : @Html.Raw("class=\"color-sqr\""))>
                           <div class="radio-default" style="display: flex; justify-content: center; align-items: center; height: 100%;">
                             <input id="@(controlId)_@(pvaValue.Id)" type="radio" name="@(controlId)" value="@pvaValue.Id" checked="@pvaValue.IsPreSelected" />
                             <label for="@(controlId)_@(pvaValue.Id)" style="display: flex; justify-content: center; align-items: center;">
-                              <span class="color" style="border: 1px solid lightgray; border-radius: 22px; background-color:@(pvaValue.ColorSquaresRgb);">&nbsp;</span>
+                              <span class="color" style="border: 1px solid lightgray; border-radius: 22px; position: relative; background-color:@(pvaValue.ColorSquaresRgb);">&nbsp;</span>
                             </label>
                           </div>
                         </li>
@@ -197,11 +197,28 @@
                   }
                 </ul>*/
                 <script type="text/javascript">
+
                   $(document).ready(function() {
-                      $('.attributes #color-squares-@(attribute.Id)').delegate('input', 'click', function(event) {
-                          $('.attributes #color-squares-@(attribute.Id)').find('li').removeClass('selected-value');
-                          $(this).closest('li').addClass('selected-value');
+                    $("li.color-sqr").click(function() {    
+                      var text = $(this).attr('id');
+                      var img_num = text.substring(text.indexOf("_"), text.indexOf("bs/")+3);
+                      $("img").filter(function(index) {
+                        if ($(this).attr("src").match(img_num)) {
+                          if ($(this).attr("id")) {
+                            var id = parseInt(this.id.replace("prodimg-", ""), 10);
+                            $("div[id^='product-image-']").each(function() {
+                                $(this).removeClass("active");
+                            });
+                            $("#product-image-"+id).addClass("active");
+                          }
+                        }
                       });
+                    });
+
+                    $('.attributes #color-squares-@(attribute.Id)').delegate('input', 'click', function(event) {
+                      $('.attributes #color-squares-@(attribute.Id)').find('li').removeClass('selected-value');
+                      $(this).closest('li').addClass('selected-value');
+                    });
                   });
                 </script>
               }
@@ -495,5 +512,5 @@
   });
   //console.log(`HOME`);
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	console.log(model);    
+	//console.log(model);    
 </script>
