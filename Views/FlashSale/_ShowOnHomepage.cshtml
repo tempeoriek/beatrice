@@ -22,10 +22,10 @@
           end_date = null;
           <div class="row p-0 m-0 mb-5" style="background-color: #9D3131;">
             <div class="col-12 col-md-4 col-sm-4 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
-              <h1 class="text-white text-title-demo" style="font-size: 38px; text-transform: capitalize; ">@session.Name.ToLower() </h1> 
+              <h1 class="text-white text-title-demo" style="font-size: 35px; text-transform: capitalize; ">@session.Name.ToLower() </h1> 
             </div>
             <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;">
-              <span class="worksans-reg text-white text-demo text-center" style="width:100%; font-size: 24px;" id="demo-flashsale" ></span>
+              <span class="worksans-reg text-white text-demo text-center" style="width:100%; font-size: 20px;" id="demo-flashsale" ></span>
             </div>
 
             <div class="col-md-5 col-sm-5 flash-sale-container"> 
@@ -58,7 +58,7 @@
                           </a>
                         } else {
                           <div style="top: 0; position: absolute; height: 10%; width: 15%; background-color: #9D3131;">
-                            <p class="m-0 flash-sale-text" style="font-size: 20px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">@temp.DiscountPercentage% <br> OFF</p>
+                            <p class="m-0 flash-sale-text" style="font-size: 18px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">@temp.DiscountPercentage% <br> OFF</p>
                           </div>
                         }
                       </a> *@
@@ -69,7 +69,7 @@
                           </a>
                    
                           <div style="top: 0; position: absolute; height: 15%; width: 20%; background-color: #9D3131;">
-                            <p class="m-0 flash-sale-text" style="font-size: 20px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">
+                            <p class="m-0 flash-sale-text" style="font-size: 18px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">
                               @temp.DiscountPercentage% <br> OFF
                             </p>
                           </div>
@@ -78,7 +78,7 @@
                         @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
                           <a href="/@temp.SeName?type=flash-sale" class="clean">
                             <div class="d-flex justify-content-center align-items-center backdrop-product">
-                              <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
+                              <p class="worksans-reg" style="margin: 0; color: white; font-size: 20px; text-transform: capitalize;">Out of stock</p>
                             </div>
                           </a>
                         }
@@ -86,18 +86,18 @@
                     </div>
                     <div class="row my-2 m-0 p-0" style="width: inherit;">
                       <a href="/@temp.SeName?type=flash-sale" class="clean" style="text-decoration: none;">
-                        <p class="m-0 p-0 worksans-medium text-demo d-flex justify-content-center align-items-center" style="height: 56px; font-size: 20px; color: #525252;">@temp.Name</p>
+                        <p class="m-0 p-0 worksans-medium text-demo d-flex justify-content-center align-items-center" style="height: 45px; font-size: 18px; color: #525252;">@temp.Name</p>
                       </a>
                     </div>
                     <div class="row mb-2 m-0 p-0" style="width: inherit;">
-                      <p class="m-0 p-0 worksans-reg text-demo" style="text-decoration:line-through; font-size: 20px; color: #BCBCBC;">@temp.ProductPrice.Price</p> &nbsp;
-                      <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #9D3131;">IDR @String.Format( "{0:#,##0.##}", temp.FlashSalePrice )</p>
+                      <p class="m-0 p-0 worksans-reg text-demo" style="text-decoration:line-through; font-size: 18px; color: #BCBCBC;">@temp.ProductPrice.Price</p> &nbsp;
+                      <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #9D3131;">IDR @String.Format( "{0:#,##0.##}", temp.FlashSalePrice )</p>
                     </div>
                     <div class="row mb-2 m-0 p-0" style="width: inherit;">
                       <progress id="@i-product" value="@progress_bar" max="@temp.StockFlashSale" style="width: 100%; height: 8px;"/>
                     </div>
                     <div class="row m-0 p-0" style="width: inherit;">
-                      <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #525252;">@status_prod</p>
+                      <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #525252;">@status_prod</p>
                     </div>
                   </div>
                 </div>
@@ -183,23 +183,23 @@
                   <a href="/anika-short?type=flash-sale&date=26-08-2021T18:00:00" class="clean" style="width: inherit;">
                     <img src="~/Themes/v1/Content/images/flashsale/show.jpg" class="img-fluid center-block" style="position: relative; width: 100%"/>
                     <div style="top: 0; position: absolute; height: 10%; width: 16%; background-color: #9D3131;">
-                      <p class="m-0 flash-sale-text" style="font-size: 20px; display: flex !important; justify-content: center; align-items: center;">10% <br> OFF</p>
+                      <p class="m-0 flash-sale-text" style="font-size: 18px; display: flex !important; justify-content: center; align-items: center;">10% <br> OFF</p>
                     </div>
                   </a>
                 </div>
                 <div class="row m-0 p-0 my-2" style="width: inherit;">
                   <a href="/anika-short?type=flash-sale&date=26-08-2021T18:00:00" class="clean" style="text-decoration: none;">
-                    <p class="m-0 p-0 worksans-medium text-demo" style="font-size: 20px; color: #525252;">Valen Dress</p>
+                    <p class="m-0 p-0 worksans-medium text-demo" style="font-size: 18px; color: #525252;">Valen Dress</p>
                   </a>
                 </div>
                 <div class="row m-0 p-0 mb-2" style="width: inherit;">
-                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #525252;">IDR 224.000</p>
+                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #525252;">IDR 224.000</p>
                 </div>
                 <div class="row m-0 p-0 mb-2" style="width: inherit;">
                   <progress id="@i-product" value="32" max="100" style="width: 100%; height: 8px;"/>
                 </div>
                 <div class="row m-0 p-0" style="width: inherit;">
-                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #525252;">Available</p>
+                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #525252;">Available</p>
                 </div>
               </div>
             </div>
@@ -222,17 +222,17 @@
                 </div>
                 <div class="row m-0 p-0 my-2" style="width: inherit;">
                   <a href="/anika-short?type=flash-sale&date=26-08-2021T18:00:00" class="clean" style="text-decoration: none;">
-                    <p class="m-0 p-0 worksans-medium text-demo" style="font-size: 20px; color: #525252;">Valen Dress</p>
+                    <p class="m-0 p-0 worksans-medium text-demo" style="font-size: 18px; color: #525252;">Valen Dress</p>
                   </a>
                 </div>
                 <div class="row m-0 p-0 mb-2" style="width: inherit;">
-                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #525252;">IDR 224.000</p>
+                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #525252;">IDR 224.000</p>
                 </div>
                 <div class="row m-0 p-0 mb-2" style="width: inherit;">
                   <progress id="@i-product" value="32" max="100" style="width: 100%; height: 8px;"/>
                 </div>
                 <div class="row m-0 p-0" style="width: inherit;">
-                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 20px; color: #525252;">Available</p>
+                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #525252;">Available</p>
                 </div>
               </div>
             </div>

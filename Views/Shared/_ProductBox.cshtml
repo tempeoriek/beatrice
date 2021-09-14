@@ -32,7 +32,7 @@
           } else if (type_url == "flash-sale" && Model.FlashsaleStatus == "on going") {
             <div class="d-none d-md-block hidden-xs hidden-sm">
               <div style="top: 0; position: absolute; height: 15%; width: 20%; background-color: #9D3131;">
-                <p class="m-0 flash-sale-text" style="font-size: 20px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">@Model.DiscountPercentage% <br> OFF</p>
+                <p class="m-0 flash-sale-text" style="font-size: 18px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">@Model.DiscountPercentage% <br> OFF</p>
               </div>
             </div>
                       
@@ -52,32 +52,32 @@
       @if (Model.Quantity == 0) {
         <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName, start_date= @query_start, end_date = @query_end, type = @query_type })" class="clean">
           <div class="d-flex justify-content-center align-items-center backdrop-product">
-            <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
+            <p class="worksans-reg" style="margin: 0; color: white; font-size: 20px; text-transform: capitalize;">Out of stock</p>
           </div>
         </a>
       }
   </div>
 
   <div class="description">
-    <p class="d-flex m-0  justify-content-start align-items-center" style="line-height: 1.5em; justify-content: space-between; align-items: center; height: 56px;">
+    <p class="d-flex m-0  justify-content-start align-items-center" style="line-height: 1.5em; justify-content: space-between; align-items: center; height: 45px;">
       <a class="clean worksans-reg text-product-box worksans-medium" href="@Url.RouteUrl("Product", new { SeName = Model.SeName, start_date= @query_start, end_date = @query_end, type = @query_type })">
         @Model.Name
       </a>
       @if (modified_product_box && type_url == "new-arrival") {
-        <span class="text-out-of-stock worksans-reg d-none d-md-block hidden-xs hidden-sm" style="color: #9D5D3E; font-size: 20px; text-transform: capitalize !important;">New Arrival</span>
+        <span class="text-out-of-stock worksans-reg d-none d-md-block hidden-xs hidden-sm" style="color: #9D5D3E; font-size: 18px; text-transform: capitalize !important;">New Arrival</span>
       }
     </p>
 
     <div class="prices text-left" style="line-height: 1.5em; padding-top: 0;">
       @if (Model.Quantity == 0 && !modified_product_box) {
-        <div class="text-out-of-stock price worksans-reg" style="color: #9D5D3E; font-size: 20px; text-transform: capitalize;">Out of stock</div>
+        <div class="text-out-of-stock price worksans-reg" style="color: #9D5D3E; font-size: 18px; text-transform: capitalize;">Out of stock</div>
       } else if (Model.ProductPrice.AvailableForPreOrder) {
         <div class="price worksans-reg">Request A Quote</div>
       } else if (type_url == "coming-soon") {
-        <div id="price-cs-@Model.Id" class="worksans-reg prices" style="color: #454545; text-transform: initial; font-size: 20px;">@strInfoNewArrivals</div>
+        <div id="price-cs-@Model.Id" class="worksans-reg prices" style="color: #454545; text-transform: initial; font-size: 18px;">@strInfoNewArrivals</div>
       } else if (type_url == "flash-sale" && Model.FlashsaleStatus != "finished") {
         <div class="price old--price">
-          <span class="worksans-reg old--price" style="text-decoration:line-through; font-size: 20px; color: #BCBCBC;">
+          <span class="worksans-reg old--price" style="text-decoration:line-through; font-size: 18px; color: #BCBCBC;">
             @Model.ProductPrice.Price
           </span>
         </div>
@@ -94,7 +94,7 @@
             {
 
                 <div class="price old--price">
-                  <span class="worksans-reg old--price" style="text-decoration:line-through; font-size: 20px; color: #525252;">
+                  <span class="worksans-reg old--price" style="text-decoration:line-through; font-size: 18px; color: #525252;">
                     @Model.ProductPrice.OldPrice
                   </span>
                 </div>
@@ -109,7 +109,7 @@
       }
     </div>
     @* @if (Model.Quantity > 0) {
-      <div class="text-out-of-stock worksans-reg" style="color: #9D3131; text-transform: initial; font-size: 20px;">@strInfo</div>
+      <div class="text-out-of-stock worksans-reg" style="color: #9D3131; text-transform: initial; font-size: 18px;">@strInfo</div>
     } *@
     @if (modified_product_box && type_url == "flash-sale" && Model.FlashsaleStatus != "coming soon" && Model.FlashsaleStatus != "finished") {
       var devide = Decimal.Divide(Model.StockFlashSaleRemaining, Model.StockFlashSale);
@@ -125,7 +125,7 @@
       <div class="price text-product-box worksans-reg" style="color: #9D3131 !important">Available with normal price</div>
     }
     @if (modified_product_box && type_url == "new-arrival") {
-        <span class="text-out-of-stock worksans-reg d-block d-md-none hidden-md hidden-lg" style="color: #9D5D3E; font-size: 20px; text-transform: capitalize !important;">New Arrival</span>
+        <span class="text-out-of-stock worksans-reg d-block d-md-none hidden-md hidden-lg" style="color: #9D5D3E; font-size: 18px; text-transform: capitalize !important;">New Arrival</span>
       }
     
   </div>

@@ -17,10 +17,10 @@
 {
   <div class="row p-0 m-0 mb-5" style="background-color: #D8C7BD;">
     <div class="col-12 col-md-4 col-sm-4 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
-      <h1 class="text-white text-title-demo" style="font-size: 38px;">@Model.Name</h1> 
+      <h1 class="text-white text-title-demo" style="font-size: 35px;">@Model.Name</h1> 
     </div>
     <div class="col-12 col-md-4 col-sm-4 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
-      <span class="worksans-reg text-white text-demo" style="font-size: 24px;" id="demo-coming-soon" />
+      <span class="worksans-reg text-white text-demo" style="font-size: 20px;" id="demo-coming-soon" />
     </div>
     <div class="col-md-4 col-sm-4 flash-sale-container"> 
       <button class="flash-sale-btn" onclick="location.href='/catalog/comingsoon?type=coming-soon&start_date=@date2&end_date=@date1';" >
@@ -57,11 +57,11 @@
             </div>
             <div class="row mt-2" style="padding: 0 3rem;">
               <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", start_date= @date2, end_date = @date1 })" class="clean" style="text-decoration: none;">
-                <p class="worksans-medium" style="font-size: 20px; color: #525252" class="m-0">@temp.Name</p>
+                <p class="worksans-medium" style="font-size: 18px; color: #525252" class="m-0">@temp.Name</p>
               </a>
             </div>
             <div class="row" style="padding: 0 3rem;">
-              <p id="price-cs-@temp.Id" class="worksans-reg" style="font-size: 20px; color: #BCBCBC" class="m-0">@temp.ProductPrice.Price</p>
+              <p id="price-cs-@temp.Id" class="worksans-reg" style="font-size: 18px; color: #BCBCBC" class="m-0">@temp.ProductPrice.Price</p>
             </div>
           </div>
         }
@@ -114,7 +114,7 @@
                 @if (temp.Quantity == 0 ) {
                   <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", start_date= @date2, end_date = @date1 })" class="clean">
                     <div class="d-flex justify-content-center align-items-center backdrop-product">
-                      <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
+                      <p class="worksans-reg" style="margin: 0; color: white; font-size: 20px; text-transform: capitalize;">Out of stock</p>
                     </div>
                   </a>
                 }
@@ -171,11 +171,11 @@
             </div>
             <div class="row mt-2" style="padding: 0 3rem;">
               <a href="/valen-dress?type=coming-soon&date=02-09-2021T18:00:00" class="clean" style="text-decoration: none;">
-                <p class="worksans-medium" style="font-size: 20px; color: #525252" class="m-0">Valen Dress</p>
+                <p class="worksans-medium" style="font-size: 18px; color: #525252" class="m-0">Valen Dress</p>
               </a>
             </div>
             <div class="row" style="padding: 0 3rem;">
-              <p id="price-cs-@temp.Id" class="worksans-reg" style="font-size: 20px; color: #BCBCBC" class="m-0">@temp.ProductPrice.Price</p>
+              <p id="price-cs-@temp.Id" class="worksans-reg" style="font-size: 18px; color: #BCBCBC" class="m-0">@temp.ProductPrice.Price</p>
             </div>
           </div>
         }

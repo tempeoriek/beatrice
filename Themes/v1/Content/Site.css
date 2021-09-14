@@ -243,7 +243,7 @@ label { font-weight: normal; margin-bottom: 0; color: black; text-transform: cap
 
 .text-product-box {
     line-height: 1.5em; 
-    font-size: 20px; 
+    font-size: 18px; 
     color: #525252;
     text-transform: capitalize !important;
 }
@@ -1288,7 +1288,7 @@ a.link-nav {
 
 .text-sort-hover {
     cursor: pointer; 
-    font-size: 16px; 
+    font-size: 14px; 
     color: #525252; 
     margin-right: 20px;
 }
@@ -1297,7 +1297,7 @@ a.link-nav {
 }
 .text-view-hover {
     cursor: pointer; 
-    font-size: 16px; 
+    font-size: 14px; 
     color: #525252; 
     margin-left: 20px;
 }
