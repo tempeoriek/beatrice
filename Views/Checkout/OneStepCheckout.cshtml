@@ -31,50 +31,24 @@
                       <div class="card shipping-blog">
                         <div class="card-body">
                         <label for="billing-address-select" style="color: #707070;">Select a billing address from your address book or enter a new address</label>
-                        @* @Html.Action("OpcBillingForm", "Checkout") *@
                         <div class="opc_inputpanel">
-                          @if (Model.BillingAdress.ExistingAddresses.Count > 0)
-                          {
-                            <select name="billing_address_id" id="billing-address-select" class="form-control address-select" title="" onchange="ChooseAddress(this.value, 'Billing')">
-                              @for (var i = 0; i < Model.BillingAdress.ExistingAddresses.Count(); i++) {
-                                var item = Model.BillingAdress.ExistingAddresses[i];
-                                var bAddress = string.Format("{0} {1} - {2} {3}, {4}, {6} {5}, {7}", item.FirstName, item.LastName, item.Address1, item.Address2, item.City, item.ZipPostalCode, item.CountryName, item.StateProvinceName);
-                                <option value="@item.Id">@(bAddress)</option>
-                                if (i == Model.BillingAdress.ExistingAddresses.Count()-1) {
-                                  <option value="-1">New address</option>
+                            <select name="billing_address_id" id="billing-address-select" class="form-control address-select" title="" onchange="ChooseAddress(this.value, 'Billing', false)">
+                              @if (Model.BillingAdress.ExistingAddresses.Count > 0) {
+                                for (var i = 0; i < Model.BillingAdress.ExistingAddresses.Count(); i++) {
+                                  var item = Model.BillingAdress.ExistingAddresses[i];
+                                  var bAddress = string.Format("{0} {1} - {2} {3}, {4}, {6} {5}, {7}", item.FirstName, item.LastName, item.Address1, item.Address2, item.City, item.ZipPostalCode, item.CountryName, item.StateProvinceName);
+                                  <option value="@item.Id">@(bAddress)</option>
+                                  if (i == Model.BillingAdress.ExistingAddresses.Count()-1) {
+                                    <option value="-1">New address</option>
+                                  }
                                 }
+                              } else {
+                                <option value="default">Choose your billing address</option>
+                                <option value="-1">New address</option>
                               }
                             </select>
-                          }
                         </div>
 
-                        @* @if (Model.BillingAdress != null)
-                        {
-                          if (Model.BillingAdress.ExistingAddresses.Count > 0)
-                          {
-                            var isChecked = true;
-                            var indexB = 0;
-                            foreach (var item in Model.BillingAdress.ExistingAddresses)
-                            {
-                              var bAddress = string.Format("{0} {1} - {2} {3} {4} {5}, {7} {6}", item.FirstName, item.LastName, item.Address1, item.Address2, item.City, item.ZipPostalCode, item.CountryName, item.StateProvinceName);
-                              <div class="radio">
-                                <label>
-                                  @Html.RadioButton("BillingAdres", item.Id.ToString(), isChecked) @Html.Raw(bAddress)
-                                </label>
-                              </div>
-                              if (indexB == Model.BillingAdress.ExistingAddresses.Count()-1) {
-                                <div class="radio">
-                                  <label>
-                                    @Html.RadioButton("BillingAdres", "-1") New address
-                                  </label>
-                                </div>
-                              }
-                              isChecked = false;
-                              indexB++;
-                            }
-                          }
-                        } *@
-                      
                         <div id="billing-new-address-form" class="enter-address-body" style="display:none;">
 
                           @{ 
@@ -106,10 +80,10 @@
                           <div class="card-body">
                             <label for="billing-address-select" style="color: #707070;">Select a shipping address from your address book or enter a new address</label>
                             <div class="opc_inputpanel">
-                              @if (Model.ShippingAddress.ExistingAddresses.Count > 0)
-                              {
-                                <select name="shipping_address_id" id="shipping-address-select" class="form-control address-select" title="" onchange="ChooseAddress(this.value, 'Shipping')">
-                                  @for (var i = 0; i < Model.ShippingAddress.ExistingAddresses.Count(); i++) {
+                              <select name="shipping_address_id" id="shipping-address-select" class="form-control address-select" title="" onchange="ChooseAddress(this.value, 'Shipping', false)">
+                                @if (Model.ShippingAddress.ExistingAddresses.Count > 0)
+                                {
+                                  for (var i = 0; i < Model.ShippingAddress.ExistingAddresses.Count(); i++) {
                                     if (i == 0) {
                                       <option value="default">Choose your shipping address</option>
                                     }
@@ -120,41 +94,12 @@
                                       <option value="-1">New address</option>
                                     }
                                   }
-                                </select>
-                              }
-                            </div>
-                            @* @{
-                              if (Model.ShippingAddress != null)
-                              {
-
-                                if (Model.ShippingAddress.ExistingAddresses.Count > 0)
-                                {
-                                  var isChecked = true;
-                                  var index = 0;
-                                  foreach (var item in Model.ShippingAddress.ExistingAddresses)
-                                  {
-
-                                    var bAddress = string.Format("{0} {1} - {2} {3} {4} {5}, {7} {6}", item.FirstName, item.LastName, item.Address1, item.Address2, item.City, item.ZipPostalCode, item.CountryName, item.StateProvinceName);
-                                    <div class="radio">
-                                      <label>
-                                        @Html.RadioButton("ShippingAdres", item.Id.ToString(), isChecked) @Html.Raw(bAddress)
-                                      </label>
-                                    </div>
-
-                                    if (index == Model.ShippingAddress.ExistingAddresses.Count()-1) {
-                                      <div class="radio">
-                                        <label>
-                                          @Html.RadioButton("ShippingAdres", "-1") New address
-                                        </label>
-
-                                      </div>
-                                    }
-                                    isChecked = false;
-                                    index++;
-                                  }
+                                } else {
+                                  <option value="default">Choose your shipping address</option>
+                                  <option value="-1">New address</option>
                                 }
-                              }
-                            } *@
+                              </select>
+                            </div>
                             <div id="shipping-new-address-form" style="display:none;">
                               @{
                                 var validationSummary = Html.ValidationSummary(true);
@@ -171,6 +116,7 @@
                                 <input type="button" title="@T("Common.Continue")" class="btn btn-default new-address-next-step-button" onclick="SaveAddress('Shipping')" value="@T("Common.Continue")" />
                               </div>
                             </div>
+                            <input id="check-same-as" type="checkbox" onclick="SameAsBilling()">&nbsp;<span style="color: #707070">My Shipping Address is the same as my Billing Address</span>
                             <span class="please-wait" id="shipping-please-wait" style="display: none;">Please wait..</span>
 
                           </div>
@@ -206,31 +152,6 @@
                                 <option value="-1">Please Choose Shipping Method</option>
                               </select>
                             }
-
-
-                            @* @if (Model.ShippingMethod.ShippingMethods.Count > 0)
-                            {
-                              <div class="shipping-options">
-
-                                @for (int i = 0; i < Model.ShippingMethod.ShippingMethods.Count; i++)
-                                {
-                                  var shippingMethod = Model.ShippingMethod.ShippingMethods[i];
-                                  var shipp = string.Format("{0} ({1}) ", shippingMethod.Name, shippingMethod.Fee);
-
-                                  <div class="radio">
-                                    <label>
-                                      <input 
-                                        id="shippingoption_@(i)" 
-                                        type="radio" name="shippingoption" 
-                                        value="@(shippingMethod.Name)___@(shippingMethod.ShippingRateComputationMethodSystemName)" 
-                                        checked="@shippingMethod.Selected" />
-                                      @Html.Raw(shipp)
-
-                                    </label>
-                                  </div>
-                                }
-                              </div>
-                            } *@
                           </div>
                         </div>
                       </div>
@@ -256,34 +177,14 @@
                                     if (i == 0) {
                                       <option value="-1">Please Choose Payments Method</option>
                                     }
-                                    <option value="@paymentMethod.PaymentMethodSystemName">@paymentMethodName @paymentMethodFee</option>
+                                    <option value="@paymentMethod.PaymentMethodSystemName">@paymentMethodName</option>
+                                    @* <option value="@paymentMethod.PaymentMethodSystemName">@paymentMethodName @paymentMethodFee</option> *@
                                   }
                                 </select>
                               </div>
                               <span id="payment-method-please-wait" class="please-wait" style="display: none;"> Please wait..</span>
 
-                            }
-
-                            @* @if (Model.PaymentMethod.PaymentMethods.Count > 0)
-                            {
-
-                              <div class="method-lists">
-                                @for (int i = 0; i < Model.PaymentMethod.PaymentMethods.Count; i++)
-                                {
-                                  var paymentMethod = Model.PaymentMethod.PaymentMethods[i];
-                                  var paymentMethodName = paymentMethod.Name;
-                                  <div class="radio">
-                                    <label>
-                                      <input id="paymentmethod_@(i)" type="radio" name="paymentmethod" value="@(paymentMethod.PaymentMethodSystemName)" checked="@paymentMethod.Selected" /> 
-                                      @paymentMethod.Name
-                                    </label>
-                                  </div>
-                                }
-                              </div>
-
-                            } *@
-                            else
-                            {
+                            } else {
                               <div class="message-error">
                                 @T("Checkout.NoPaymentMethods")
                               </div>
@@ -336,265 +237,6 @@
   </div>
 </div>
 
-@* <div class="col-main mt-large">
-  <div class="row">
-    <div class="col-xs-12 text-center">
-      <h1>@ViewBag.Title</h1>
-    </div>
-  </div>
-
-  @using (Html.BeginForm())
-  {
-
-    <div class="row">
-      <div class="col-sm-6">
-        <!-- billing -->
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3>@T("Checkout.BillingAddress")</h3>
-          </div>
-          <div class="panel-body">
-            <div class="checkout-blox">
-              @if (Model.BillingAdress != null)
-                {
-                  {
-                    if (Model.BillingAdress.ExistingAddresses.Count > 0)
-                    {
-                      var isChecked = true;
-                      foreach (var item in Model.BillingAdress.ExistingAddresses)
-                      {
-                        var bAddress = string.Format("{0} {1}<br/>{2} {3}<br/>{4} {5}, {7}<br/>{6}", item.FirstName, item.LastName, item.Address1, item.Address2, item.City, item.ZipPostalCode, item.CountryName, item.StateProvinceName);
-                        <div class="radio">
-                          <label>
-                            @Html.RadioButton("BillingAdres", item.Id.ToString(), isChecked) @Html.Raw(bAddress)
-                          </label>
-                        </div>
-                        isChecked = false;
-
-                      }
-                    }
-
-                  }
-                }
-              
-
-              <div class="radio">
-                <label>
-                  @Html.RadioButton("BillingAdres", "-1") New address
-                </label>
-
-              </div>
-              <div id="billing-new-address-form" class="enter-address-body" style="display:none;">
-
-                @{ var billingDictAddress = new ViewDataDictionary();
-                 billingDictAddress.ModelState.Merge(ViewData.ModelState);
-                 billingDictAddress.TemplateInfo.HtmlFieldPrefix = "BillingNewAddress";
-
-                @Html.Partial("_CreateOrUpdateAddress", Model.BillingAdress.NewAddress, billingDictAddress)
-
-                }
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-      <!-- end billing -->
-
-      <div class="col-sm-6">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3>@T("Checkout.ShippingAddress")</h3>
-          </div>
-          <div class="panel-body">
-
-            <!-- shipping -->
-            <div class="checkout-blox">
-
-              @{
-                if (Model.ShippingAddress != null)
-                {
-
-                  if (Model.ShippingAddress.ExistingAddresses.Count > 0)
-                  {
-                    var isChecked = true;
-                    foreach (var item in Model.ShippingAddress.ExistingAddresses)
-                    {
-
-                      var bAddress = string.Format("{0} {1}<br/>{2} {3}<br/>{4} {5}, {7}<br/>{6}", item.FirstName, item.LastName, item.Address1, item.Address2, item.City, item.ZipPostalCode, item.CountryName, item.StateProvinceName);
-                      <div class="radio">
-                        <label>
-                          @Html.RadioButton("ShippingAdres", item.Id.ToString(), isChecked) @Html.Raw(bAddress)
-                        </label>
-
-                      </div>
-                      isChecked = false;
-                    }
-                  }
-                }
-
-
-              }
-              <div class="radio">
-                <label>
-                  @Html.RadioButton("ShippingAdres", "-1") New address
-                </label>
-
-              </div>
-
-              <div id="shipping-new-address-form" style="display:none;">
-                @{
-                  var validationSummary = Html.ValidationSummary(true);
-
-                  if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
-                  {
-                    <div class="message-error">@validationSummary</div>
-                  }
-
-
-                  var dataDictAddress = new ViewDataDictionary();
-
-                  dataDictAddress.ModelState.Merge(ViewData.ModelState);
-                  dataDictAddress.TemplateInfo.HtmlFieldPrefix = "ShippingNewAddress";
-
-                  @Html.Partial("_CreateOrUpdateAddress", Model.ShippingAddress.NewAddress, dataDictAddress)
-                }
-              </div>
-              <!-- end shipping adres -->
-            </div>
-
-          </div>
-        </div>
-
-
-
-
-
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-6">
-
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3>@T("Checkout.SelectShippingMethod")</h3>
-          </div>
-          <div class="panel-body">
-
-            <div class="checkout-blox">
-              <!-- shipping method-->
-              @if (Model.ShippingMethod.ShippingMethods.Count > 0)
-              {
-                <div class="shipping-options">
-
-                  @for (int i = 0; i < Model.ShippingMethod.ShippingMethods.Count; i++)
-                  {
-                    var shippingMethod = Model.ShippingMethod.ShippingMethods[i];
-
-                    <div class="radio">
-                      <label>
-                        <input id="shippingoption_@(i)" type="radio" name="shippingoption" value="@(shippingMethod.Name)___@(shippingMethod.ShippingRateComputationMethodSystemName)" checked="@shippingMethod.Selected" />
-                        @Html.Raw(shippingMethod.Name)
-
-                      </label>
-                    </div>
-                  }
-                </div>
-              }
-
-              <br />
-              Shipment fee will be calculated on the next page.
-              <br /><br />
-
-               
-            </div>
-
-
-          </div>
-        </div>
-
-      </div>
-      <div class="col-sm-6">
-        <div class="panel panel-info" style="margin-bottom:0;">
-          <div class="panel-heading">
-            <h3>@T("Checkout.SelectPaymentMethod")</h3>
-          </div>
-          <div class="panel-body">
-
-            <div class="checkout-blox">
-
-              @if (Model.PaymentMethod.PaymentMethods.Count > 0)
-              {
-
-                <div class="method-lists">
-                  @for (int i = 0; i < Model.PaymentMethod.PaymentMethods.Count; i++)
-                  {
-                    var paymentMethod = Model.PaymentMethod.PaymentMethods[i];
-                    var paymentMethodName = paymentMethod.Name;
-                    if (!String.IsNullOrEmpty(paymentMethod.Fee))
-                    {
-                      paymentMethodName = T("Checkout.SelectPaymentMethod.MethodAndFee", paymentMethodName, paymentMethod.Fee).Text;
-                    }
-
-
-                    <div class="radio">
-                      <label>
-                        <input id="paymentmethod_@(i)" type="radio" name="paymentmethod" value="@(paymentMethod.PaymentMethodSystemName)" checked="@paymentMethod.Selected" /> @paymentMethodName
-                      </label>
-                    </div>
-                  }
-                </div>
-
-              }
-              else
-              {
-                <div class="message-error">
-                  @T("Checkout.NoPaymentMethods")
-                </div>
-              }
-
-              <!-- end payment method -->
-
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-12">
-
-
-        <div class="panel panel-info">
-          <div class="panel-heading">
-          </div>
-          <div class="panel-body">
-            <div class="form-group">
-              <div class="buttons text-right">
-                <input type="submit" id="confirm-button" name="confirm-button" value="Review order" class="btn btn-default btn-primary quarter-width" />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-
-
-
-    </div>
-
-  }
-
-</div> *@
-
 
 @section Left{
   @*@Html.Partial("MenuStatic")*@
@@ -609,9 +251,9 @@
   <script>
     var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
     //console.log(`one step`);    
-    //console.log(model);
+    //console.log(model)
     let checkout_obj = {
-      billing_address: model.BillingAdress.ExistingAddresses[0].Id,
+      billing_address: model.BillingAdress && model.BillingAdress.ExistingAddresses.length > 0 ? model.BillingAdress.ExistingAddresses[0].Id : null,
       shipping_address: null,
       shipping_method: null,
       payment_method: null,
@@ -655,7 +297,6 @@
 
     async function applydisc() {
       $("#checkout-step-button").prop("disabled", true);
-      console.log("masuk nih")
       let disc = $("#disc-text").val();
       let button_text = $("#button-disc").text();
       if (button_text == `APPLY`) {
@@ -809,7 +450,20 @@
       });
     }
 
-    async function ChooseAddress(value, type) {
+    async function SameAsBilling() {
+      if (checkout_obj.billing_address) {
+        let temp_id = $('#check-same-as').is(':checked') ? checkout_obj.billing_address : "default";
+        ChooseAddress(temp_id, "Shipping", $('#check-same-as').is(':checked'));
+        $("#shipping-address-select").val(temp_id);
+      } else {
+        $('#check-same-as').prop('checked', false);
+        alert("Please choose billing address")
+      }
+    }
+
+    async function ChooseAddress(value, type, from_checkbox) {
+      $('#check-same-as').prop('checked', from_checkbox);
+
       let url_ajax = type == "Billing" ? "/checkout/SelectBillingAddressById" : "/checkout/SelectShippingAddressById";
       if (type == "Billing") {
         $("#billing-please-wait").css("display", "flex");
@@ -819,11 +473,13 @@
 
       if (value == "default") {
         checkout_obj.shipping_address = null;
+        CloseFormAddress(type);
       } else if (value < 1) {
         $('#'+type.toLowerCase()+'-new-address-form').slideToggle();
       } else if (value == 260995) {
         CloseFormAddress(type);
       } else {
+        CloseFormAddress(type);
         try {
           var fetch_data = await FetchAjax("post", url_ajax, {AddressId: parseInt(value)});
           if (value > 0 && type == "Shipping") {
@@ -848,7 +504,6 @@
           console.log('err')
           console.log(err)
         }
-        CloseFormAddress(type);
       }
       $("#billing-please-wait").css("display", "none");
       $("#shipping-please-wait").css("display", "none");
@@ -891,7 +546,6 @@
         StateProvinceName: $( "#"+type+"NewAddress_StateProvinceId option:selected" ).text() ? $( "#"+type+"NewAddress_StateProvinceId option:selected" ).text() : "",
         CountryName: $( "#"+type+"NewAddress_CountryId option:selected" ).text() ? $( "#"+type+"NewAddress_CountryId option:selected" ).text() : "",
       }
-
       try {
         var fetch_data = await FetchAjax("post", url_address, obj);
 
@@ -914,8 +568,8 @@
           if (fetch_data.ExistingAddresses.length > 0) {
             var new_address = fetch_data.ExistingAddresses[fetch_data.ExistingAddresses.length-1];
             var new_address_id = new_address.Id;
-            var new_address_text = new_address.FirstName ? `${new_address.FirstName} ${new_address.LastName} - ${new_address.Address1} ${new_address.Address2} ${new_address.City}, ${new_address.StateProvinceName} ${new_address.ZipPostalCode}, ${new_address.CountryName}` : 
-              `${obj["BillingNewAddress.FirstName"]} ${obj["BillingNewAddress.LastName"]}, ${obj["BillingNewAddress.Address1"]} ${obj["BillingNewAddress.Address2"]} ${extra_obj.CityName}, ${extra_obj.StateProvinceName} ${obj["BillingNewAddress.ZipPostalCode"]}, ${extra_obj.CountryName}`;
+            var new_address_text = new_address.FirstName ? `${new_address.FirstName} ${new_address.LastName} - ${new_address.Address1} ${new_address.Address2 != null ? new_address.Address2 : "" } ${new_address.City}, ${new_address.StateProvinceName} ${new_address.ZipPostalCode}, ${new_address.CountryName != null ? new_address.CountryName : extra_obj.CountryName}` : 
+              `${obj["BillingNewAddress.FirstName"]} ${obj["BillingNewAddress.LastName"]}, ${obj["BillingNewAddress.Address1"]} ${obj["BillingNewAddress.Address2"] != null ? obj["BillingNewAddress.Address2"] : ""} ${extra_obj.CityName}, ${extra_obj.StateProvinceName} ${obj["BillingNewAddress.ZipPostalCode"]}, ${extra_obj.CountryName}`;
             SetNewOptionAddress('#billing-address-select', new_address_id, new_address_text, 'billing_address');
           }
         }
@@ -927,6 +581,7 @@
       CloseFormAddress(type)
       $("#billing-please-wait").css("display", "none");
       $("#shipping-please-wait").css("display", "none");
+      location.reload();
     }
 
     async function ChooseShippingMethod(value) {
@@ -1005,7 +660,6 @@
     async function Checkout(e) {
       $("#checkout-step-button").prop("disabled", true);
       $("#confirm-order-please-wait").css("display", "flex");
-
       if (!checkout_obj.shipping_method || !checkout_obj.payment_method || !checkout_obj.shipping_address) {
          e.preventDefault(); 
         alert("Please complete the checkout")

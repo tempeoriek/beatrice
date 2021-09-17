@@ -172,8 +172,8 @@
                       {
                         <li id="@pvaValue.PictureModel.ImageUrl" @(pvaValue.IsPreSelected ? @Html.Raw("class=\"selected-value color-sqr\"") : @Html.Raw("class=\"color-sqr\""))>
                           <div class="radio-default" style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                            <input id="@(controlId)_@(pvaValue.Id)" type="radio" name="@(controlId)" value="@pvaValue.Id" checked="@pvaValue.IsPreSelected" />
-                            <label for="@(controlId)_@(pvaValue.Id)" style="display: flex; justify-content: center; align-items: center;">
+                            <input class="color-choose" id="@(controlId)_@(pvaValue.Id)" type="radio" name="@(controlId)" value="@pvaValue.Id" checked="@pvaValue.IsPreSelected" />
+                            <label class="color-choose" for="@(controlId)_@(pvaValue.Id)" style="display: flex; justify-content: center; align-items: center;">
                               <span class="color" style="border: 1px solid lightgray; border-radius: 22px; position: relative; background-color:@(pvaValue.ColorSquaresRgb);">&nbsp;</span>
                             </label>
                           </div>

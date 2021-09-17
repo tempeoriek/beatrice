@@ -641,18 +641,28 @@ input[type="radio"]:checked + label span::before {
     content: " ";
     color: #534D4C;
     border: 1px solid;
-    /* text-align: center;
+    text-align: center;
     padding-left: 16px;
     padding-right: 5px;
     padding-top: 9px;
     border-radius: 15px;
-    margin-left: -2px; */
+    margin-left: -2px;
+    
+}
+input.color-choose[type="radio"]:checked + label.color-choose span.color::before {
+    content: " ";
+    color: #534D4C;
+    margin: 0 !important;
+    text-align: unset !important;
+    padding: 0 !important;
+    border: 1px solid;
     position: absolute;
     border-radius: 220px;
     top: -2px;
     bottom: -2px;
     left: -2px;
     right: -2px;
+    
 }
 
 
