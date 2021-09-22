@@ -769,7 +769,7 @@
         appearance: none;
         border: none;
         color: #707070;
-        font-size:12.8px;
+        font-size:10px;
         margin-top:-10px;
     }
     #nieuwsbrief #mc-embedded-subscribe2 {
@@ -778,7 +778,7 @@
         appearance: none;
         border: none;
         color: #707070;
-        font-size:12.8px;
+        font-size:10px;
         margin-top:-10px;
     }
     #nieuwsbrief #mc-embedded-subscribe3 {
@@ -787,7 +787,7 @@
         appearance: none;
         border: none;
         color: #707070;
-        font-size:12.8px;
+        font-size:10px;
         margin-top:-10px;
     }
     #nieuwsbrief #mc-embedded-subscribe-mobile {
@@ -796,7 +796,7 @@
         appearance: none;
         border: none;
         color: #707070;
-        font-size:12.8px;
+        font-size:10px;
         margin-top:-10px;
     }
     #nieuwsbrief #mc-embedded-subscribe2-mobile {
@@ -805,7 +805,7 @@
         appearance: none;
         border: none;
         color: #707070;
-        font-size:12.8px;
+        font-size:10px;
         margin-top:-10px;
     }
     #nieuwsbrief #mc-embedded-subscribe3-mobile {
@@ -814,7 +814,7 @@
         appearance: none;
         border: none;
         color: #707070;
-        font-size:12.8px;
+        font-size:10px;
         margin-top:-10px;
     }
 /*end newsletter*/

@@ -8,7 +8,7 @@
   string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
 }
 
-<footer data-section-name="footer">
+<footer data-section-name="footer" id="for-footer">
   @* desktop *@
   <div class="d-none d-md-block hidden-sm hidden-xs">
     <hr style="color: lightgray; width: 96%; margin:0 2%">
@@ -175,6 +175,19 @@
    
 
 <script>
+  $(document).scroll(function() {
+      checkOffset();
+    });
+    function checkOffset() {
+      if($('#float-wa').offset().top + $('#float-wa').height() >= $('#for-footer').offset().top - 10) {
+        $('#float-wa').css('position', 'absolute');
+        $('#float-wa').css('bottom', '320px');
+      }
+      if($(document).scrollTop() + window.innerHeight < $('#for-footer').offset().top) {
+        $('#float-wa').css('position', 'fixed');
+        $('#float-wa').css('bottom', '50px');
+      }
+    }
   $("#mc-embedded-subscribe").click(function () {
     $("#nieuwsbrief").css("display", "none");
     $("#nieuwsbrief-msg").css("display", "block");
