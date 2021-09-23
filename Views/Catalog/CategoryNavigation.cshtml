@@ -129,7 +129,7 @@
 @*desktop - mousover type*@
 <div id="accordionCategory" class="position-absolute" style="width: 100%; z-index: -1;">
   <div class="row" style="height: 70px;">
-    <div class="col-12 col-md-12 col-sm-12 d-flex justify-content-center align-items-center">
+    <div class="col-12 col-md-12 col-sm-12 d-flex justify-content-center align-items-center" id="center-header-content">
       @{
         var issidebar = (ViewBag.isSidebar == null) ? false : Convert.ToBoolean(ViewBag.isSidebar);
 
@@ -323,20 +323,29 @@
 		});
 	}
   
-  //Close header
-  $( "#close-category-header" ).click(function() {
+  function showDropDownHeader(id, show) {
+    $("#dropdownMenuLink-" + id).css("display", show);
+  }
+
+  function scrollHeaderStyle(color1, color2, color3) {
     if (path == '/') {
       if($(window).scrollTop() > 50) {
-        $(".headertextcolor").attr('style', 'color: black !important');
+        $(".headertextcolor").attr('style', `color: ${color1} !important`);
       } else {
-        $(".headertextcolor").attr('style', 'color: white !important');
+        $(".headertextcolor").attr('style', `color: ${color2} !important`);
       }
     } else {
-      $(".headertextcolor").attr('style', 'color: white !important');
+      $(".headertextcolor").attr('style', `color: ${color3} !important`);
     }
+  }
+
+  //Close header
+  $( "#close-category-header" ).click(function() {
+    scrollHeaderStyle("black", "white", "white");
+    
     $("a[id^='headingCategory-']").each(function() {
       var id = parseInt(this.id.replace("headingCategory-", ""), 10);
-      $("#dropdownMenuLink-" + id).css("display", "none");
+      showDropDownHeader(id, "none");
       $("#headingCategory-" + id).css("text-decoration", "none");
     });
 
@@ -386,21 +395,13 @@
     function() {
       open_header = true;
       var id = parseInt(this.id.replace("headingCategory-", ""), 10);
-      $("#dropdownMenuLink-" + id).css("display", "flex");
-      if (path == '/') {
-          if($(window).scrollTop() > 50) {
-            $(".headertextcolor").attr('style', 'color: black !important');
-          } else {
-            $(".headertextcolor").attr('style', 'color: black !important');
-          }
-      } else {
-        $(".headertextcolor").attr('style', 'color: black !important');
-      }
+      showDropDownHeader(id, "flex");
+      scrollHeaderStyle("black", "black", "black");
 
       $("a[id^='headingCategory-']").each(function() {
         var id_drop = parseInt(this.id.replace("headingCategory-", ""), 10);
         if (id_drop != id) {
-          $("#dropdownMenuLink-" + id_drop).css("display", "none");
+          showDropDownHeader(id_drop, "none");
           $("#headingCategory-" + id_drop).css("text-decoration", "none");
         }
       });
@@ -408,48 +409,64 @@
     function() {
       open_header = false;
       var id_drop = parseInt(this.id.replace("headingCategory-", ""), 10);
-      $("#dropdownMenuLink-" + id_drop).css("display", "flex");
-      $("#headingCategory-" + id_drop).css("text-decoration", "underline");
-      $("a[id^='headingCategory-']").each(function() {
-        var id = parseInt(this.id.replace("headingCategory-", ""), 10);
-        if (id_drop != id) {
-          $("#dropdownMenuLink-" + id).css("display", "none");
-          $("#headingCategory-" + id).css("text-decoration", "none");
-        }
-      });
-
-      $( "#accordionCategory" ).mouseleave(function() {
-        $("a[id^='headingCategory-']").each(function() {
-          var id = parseInt(this.id.replace("headingCategory-", ""), 10);
-          $("#dropdownMenuLink-" + id).css("display", "none");
-          if (path == '/') {
-              if($(window).scrollTop() > 50) {
-                $(".headertextcolor").attr('style', 'color: black !important');
-              } else {
-                $(".headertextcolor").attr('style', 'color: white !important');
-              }
-          } else {
-            $(".headertextcolor").attr('style', 'color: black !important');
-          }
-          $("#headingCategory-" + id).css("text-decoration", "none");
-        });
-      });
-
-       $("div[id^='sub-subCategory-']").each(function() {
-        var id_drop = parseInt(this.id.replace("sub-subCategory-", ""), 10);
-        $("#sub-subcategory-" + id_drop).attr('style', 'display: none !important');
-        $("#sub-subCategory-" + id_drop).css("font-weight", "400");
-        $("#sub-subCategory-" + id_drop).css("text-decoration", "none");
-      });
+      showDropDownHeader(id_drop, "flex");
+      closeHeader(id_drop);
     }
   );
+
+  function closeHeader(new_id_drop) {
+    var flag = 0;
+    var new_id = new_id_drop;
+    $("#headingCategory-" + new_id_drop).css("text-decoration", "underline");
+    
+    $("a[id^='headingCategory-']").each(function() {
+      var id = parseInt(this.id.replace("headingCategory-", ""), 10);
+      if (new_id_drop != id) {
+        showDropDownHeader(id, "none");
+        $("#headingCategory-" + id).css("text-decoration", "none");
+      }
+    });
+
+    $( "#accordionCategory" ).mouseleave(function() {
+      $( "div[id^='dropdownMenuLink-']" ).mouseenter(function() {
+        flag++;
+      });
+
+      if (flag > 0) {
+        showDropDownHeader(2, "flex");
+      } 
+      closeHeaderContent()
+    });
+
+    $("div[id^='sub-subCategory-']").each(function() {
+      var id_drop_sub = parseInt(this.id.replace("sub-subCategory-", ""), 10);
+      $("#sub-subcategory-" + id_drop_sub).attr('style', 'display: none !important');
+      $("#sub-subCategory-" + id_drop_sub).css("font-weight", "400");
+      $("#sub-subCategory-" + id_drop_sub).css("text-decoration", "none");
+    });
+  };
+
+  function closeHeaderContent() {
+    setTimeout(() => {
+      $("a[id^='headingCategory-']").each(function() {
+        var id = parseInt(this.id.replace("headingCategory-", ""), 10);
+        showDropDownHeader(id, "none");
+        scrollHeaderStyle("black", "white", "black");
+        $("#headingCategory-" + id).css("text-decoration", "none");
+      });
+    }, 500);
+  };
+
+  $( "div[id^='dropdownMenuLink-']" ).mouseenter(function() {
+    var id = parseInt(this.id.replace("dropdownMenuLink-", ""), 10);
+    showDropDownHeader(id, "flex");
+  });
 
 
   $("div[id^='subCategoryPict-']").hover(
     function() {
       var pict = this.id.replace("subCategoryPict-", "");
       $(".header-img-hover").attr("src",pict);
-      //console.log(pict)
     },
     function() {
     }
