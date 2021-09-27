@@ -121,6 +121,10 @@
               </ul>
             </div>
             
+            <hr class="mt-0 pt-0">
+            <div class="d-flex justify-content-center align-items-center">
+              <input type="button" class="btn btn-default button_signin checkout-as-guest-button" onclick="location.href='@Url.RouteUrl("Checkout")'" value="@T("Account.Login.CheckoutAsGuest")" />
+            </div>
             @if (Model.DisplayCaptcha)
             {
               <div class="captcha-box">
