@@ -149,22 +149,7 @@
               }
               else
               {
-                if (category.SeName == "coming-soon") {
-                  DateTime d1, d2;
-                  string date1, date2;
-                  if (category.PreviewEndDateTimeUtc.Value != null && category.PreviewStartDateTimeUtc.Value != null ) {
-                    d1 = category.PreviewEndDateTimeUtc.Value;
-                    d2 = category.PreviewStartDateTimeUtc.Value;
-                    date1 = d1.ToString("yyyyMMddHHmmss"); 
-                    date2 = d2.ToString("yyyyMMddHHmmss"); 
-
-                    
-                    <a style="@text_header_color" class="category-item headertextcolor" href="/catalog/comingsoon?type=coming-soon&start_date=@date2&end_date=@date1">
-                      @category.Name.ToUpper()
-                    </a>
-                  }
-
-                } else {
+                if (category.SeName != "coming-soon") {
                   <a style="@text_header_color" class="category-item headertextcolor" href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
                     @category.Name.ToUpper() 
                   </a>
@@ -172,10 +157,29 @@
               }
 
               if (index == Model.Categories.Count() - 2) {
+                if (category.SeName == "coming-soon") {
+                  DateTime d1, d3;
+                  DateTime d2 = DateTime.Now;
+                  string date1, date2;
+                  if (category.PreviewEndDateTimeUtc.Value != null && category.PreviewStartDateTimeUtc.Value != null ) {
+                    d1 = category.PreviewEndDateTimeUtc.Value;
+                    d3 = category.PreviewStartDateTimeUtc.Value;
+                    bool open = d1 > d2 ? true : false;
+                    date1 = d1.ToString("yyyyMMddHHmmss"); 
+                    date2 = d3.ToString("yyyyMMddHHmmss"); 
+
+                    if (open) {
+                      <a  style="@text_header_color" class="category-item headertextcolor" href="/catalog/comingsoon?type=coming-soon&start_date=@date2&end_date=@date1">
+                        @category.Name.ToUpper()
+                      </a>
+                    }
+                  }
+
+                }
                 <a class="category-item headertextcolor" style="@text_header_color" href="/order/ConfirmPayments">
                   PAYMENT CONFIRMATION
                 </a>
-                <a class="category-item headertextcolor" style="@text_header_color" href="/flashsale/show">
+                <a id="flash-sale-header" class="category-item headertextcolor" style="@text_header_color" href="/flashsale/show">
                   FLASH SALE
                 </a>
               }
@@ -187,12 +191,6 @@
             </a>
             <a class="category-item headertextcolor" style="@text_header_color" href="/order/ConfirmPayments">
               PAYMENT CONFIRMATION
-            </a>
-            <a class="category-item headertextcolor" style="@text_header_color" href="/flashsale/show?type=flash-sale">
-              FLASH SALE
-            </a>
-            <a class="category-item headertextcolor" style="@text_header_color" href="/catalog/comingsoon?type=coming-soon">
-              COMING SOON
             </a>
           }
         } 

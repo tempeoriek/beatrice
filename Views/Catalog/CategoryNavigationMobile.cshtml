@@ -136,19 +136,51 @@
           <div data-parent="#accMobileHeader" id="collapseheader-@category.SeName" class="collapse" style="padding-left: 5%;" role="tabpanel" aria-labelledby="Headingheader-@category.SeName">
               @foreach (var subcat in category.SubCategories)
               {
-                if (subcat.SeName != "flash-sale" && subcat.SeName != "coming-soon") {
-                  <div class="mb-2 ml-3"><a style="line-height: initial; padding: 0; font-size: 16px;" href="@Url.RouteUrl("Category", new { SeName = subcat.SeName })">@subcat.Name</a></div>
-                }
+                <div class="mb-2 ml-3">
+                  <a style="line-height: initial; padding: 0; font-size: 16px;" href="@Url.RouteUrl("Category", new { SeName = subcat.SeName })">
+                    @subcat.Name
+                  </a>
+                </div>
               }
           </div>
         } else {
-          <div role="tab" id="Headingheader-@category.SeName">
-            <a href="/@category.SeName" style="font-size: 16px; text-transform: uppercase;">
-              @category.Name
-            </a>
-          </div>
+          if (category.SeName == "coming-soon") {
+            DateTime d1, d2;
+            DateTime d3 = DateTime.Now;
+            string date1, date2;
+            if (category.PreviewEndDateTimeUtc.Value != null && category.PreviewStartDateTimeUtc.Value != null ) {
+              d1 = category.PreviewEndDateTimeUtc.Value;
+              d2 = category.PreviewStartDateTimeUtc.Value;
+              bool open = d1 > d3 ? true : false;
+              date1 = d1.ToString("yyyyMMddHHmmss"); 
+              date2 = d2.ToString("yyyyMMddHHmmss"); 
+
+              if (open) {
+                <div class="mb-2 ml-3">
+                  <a style="line-height: initial; padding: 0; font-size: 16px;" href="/catalog/comingsoon?type=coming-soon&start_date=@date2&end_date=@date1">
+                    @category.Name
+                  </a>
+                </div>
+              }
+            }
+          } else {
+            <div role="tab" id="Headingheader-@category.SeName">
+              <a href="/@category.SeName" style="font-size: 16px; text-transform: uppercase;">
+                @category.Name
+              </a>
+            </div>
+          }
         }
       </div>
+        @if (j == Model.Categories.Count() -2) {
+          <div class="d-block d-md-none hidden-md hidden-lg" style="border-top: 1px solid lightgray; !important">
+            <div role="tab" id="Headingheader-flashsale">
+              <a href="/flashsale/show" style="font-size: 16px; text-transform: uppercase;">
+                FLASH SALE
+              </a>
+            </div>
+          </div>
+        }
     </div>
   }
 } else {
@@ -167,7 +199,7 @@
               </a>
             </div>
             <div class="mb-2 ml-3">
-              <a style="line-height: initial; padding: 0; font-size: 16px;" href="/coming-soon">
+              <a style="line-height: initial; padding: 0; font-size: 16px;" href="/new-arrival">
                 New Arrival
               </a>
             </div>

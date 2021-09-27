@@ -222,8 +222,8 @@
 						<div id="accMobileHeader" style="line-height: 1;">
 							@* category menu in navbar *@
 							@Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId, isMobile = true })
-							<a href="/sale" class="signin btn-login" style="font-size:16px; border-top: 1px solid lightgray;">SALE</a>
-							<a href="~/order/ConfirmPayments" class="signin btn-login" style="font-size:16px; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray;">CONFIRM PAYMENT</a>
+							@* <a href="/sale" class="signin btn-login" style="font-size:16px; border-top: 1px solid lightgray;">SALE</a> *@
+							<a href="~/order/ConfirmPayments" class="signin btn-login" style="font-size:16px; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray;">PAYMENT CONFIRMATION</a>
 							<div style="padding: 20px;">
 								<form action="~/search" autocomplete="on">
 									<div style="border-bottom: 1px solid lightgray; width: 70%;">

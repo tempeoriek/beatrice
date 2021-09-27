@@ -2,175 +2,165 @@
 @model IEnumerable<FlashSaleViewModel>
 
 @{
-  var data_flash_sale = Model.Where(c => c.status == "on going");
+  var data_flash_sale = Model.Where(c => c.status != "finished");
 }
 
 @if (Model != null)
 {
     if (data_flash_sale.Any()) {
       <div class="mb-5">
-        @foreach (var session in data_flash_sale)
+        @for (var k = 0; k < data_flash_sale.Count(); k++)
         {
-          List<string> date_start = session.start_date.Split(',').ToList();
-          List<string> date_time_start = session.start_time.Split(':').ToList();
-          List<string> date_end = session.end_date.Split(',').ToList();
-          List<string> date_time_end = session.end_time.Split(':').ToList();
-          string start_date = date_start[0] + date_time_start[0] + date_time_start[1];
-          string end_date = date_end[0] + date_time_end[0] + date_time_end[1];
+          if (k == 0) {
+            var session = data_flash_sale.ToList()[k];
+            List<string> date_start = session.start_date.Split(',').ToList();
+            List<string> date_time_start = session.start_time.Split(':').ToList();
+            List<string> date_end = session.end_date.Split(',').ToList();
+            List<string> date_time_end = session.end_time.Split(':').ToList();
+            string start_date = date_start[0] + date_time_start[0] + date_time_start[1];
+            string end_date = date_end[0] + date_time_end[0] + date_time_end[1];
 
-          start_date = null;
-          end_date = null;
-          <div class="row p-0 m-0 mb-5" style="background-color: #9D3131;">
-            <div class="col-12 col-md-4 col-sm-4 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
-              <h1 class="text-white text-title-demo" style="font-size: 35px; text-transform: capitalize; ">@session.Name.ToLower() </h1> 
-            </div>
-            <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;">
-              <span class="worksans-reg text-white text-demo text-center" style="width:100%; font-size: 20px;" id="demo-flashsale" ></span>
+            start_date = null;
+            end_date = null;
+            <div class="row p-0 m-0 mb-5" style="background-color: #9D3131;">
+              <div class="col-12 col-md-4 col-sm-4 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;"> 
+                <h1 class="text-white text-title-demo" style="font-size: 35px; text-transform: capitalize; ">@session.Name.ToLower() </h1> 
+              </div>
+              <div class="col-12 col-md-3 col-sm-3 d-flex justify-content-center align-items-center heigth-devider-menu" style="height: 80px;">
+                <span class="worksans-reg text-white text-demo text-center" style="width:100%; font-size: 20px;" id="demo-flashsale" ></span>
+              </div>
+
+              <div class="col-md-5 col-sm-5 flash-sale-container"> 
+                <button class="flash-sale-btn" onclick="location.href='/flashsale/show?type=flash-sale';">
+                  <p class="m-0" style="color: #9D3131; font-size: 16px;">View All</p>
+                </button>
+              </div>
             </div>
 
-            <div class="col-md-5 col-sm-5 flash-sale-container"> 
-              <button class="flash-sale-btn" onclick="location.href='/flashsale/show?type=flash-sale';">
-                <p class="m-0" style="color: #9D3131; font-size: 16px;">View All</p>
-              </button>
-            </div>
-          </div>
-
-          <div class="d-none d-md-block hidden-xs hidden-sm">
-            <div class="row mx-3">
-              @for(var i = 0; i < session.Products.Count() ; i++) {
-                var temp = session.Products[i];
-                @* var offset_flash = session.Products.Count() == 1 && i == 0 ? "offset-md-4 offset-sm-5" :
-                  session.Products.Count() == 2 && i == 0 ? "offset-md-3 offset-sm-3" : ""; *@
-                var devide = Decimal.Divide(temp.StockFlashSaleRemaining, temp.StockFlashSale);
-                var times = devide * 100;
-                var status_prod = times < 40 ? "Low in Stocks" : "Available";
-                var progress_bar = temp.StockFlashSale - temp.StockFlashSaleRemaining;
-                <div class="col-6 col-sm-3 col-md-3 mt-3">
-                  <div class="flash-sale-pad" style="width: 100%;">
-                    <div class="row m-0 p-0" style="width: inherit;">
-                      @* <a href="/@temp.SeName?type=flash-sale" class="clean" style="width: inherit;">
-                        <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block" style="position: relative; width: 100%"/>
-                        @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
-                          <a href="/@temp.SeName?type=flash-sale" class="clean">
-                            <div class="d-flex justify-content-center align-items-center backdrop-product">
-                              <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
+            <div class="d-none d-md-block hidden-xs hidden-sm">
+              <div class="row mx-3">
+                @for(var i = 0; i < session.Products.Count() ; i++) {
+                  var temp = session.Products[i];
+                  var divide= Decimal.Divide(temp.StockFlashSaleRemaining, temp.StockFlashSale);
+                  var times = divide* 100;
+                  var status_prod = times < 40 ? "Low in Stocks" : "Available";
+                  var progress_bar = temp.StockFlashSale - temp.StockFlashSaleRemaining;
+                  <div class="col-6 col-sm-3 col-md-3 mt-3">
+                    <div class="flash-sale-pad" style="width: 100%;">
+                      <div class="row m-0 p-0" style="width: inherit;">
+                        <div class="ori-product-img">
+                          <div style="position: relative;">
+                            <a href="/@temp.SeName?type=flash-sale" class="clean">
+                              <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
+                            </a>
+                    
+                            <div style="top: 0; position: absolute; height: 15%; width: 20%; background-color: #9D3131;">
+                              <p class="m-0 flash-sale-text" style="font-size: 18px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">
+                                @temp.DiscountPercentage% <br> OFF
+                              </p>
                             </div>
-                          </a>
-                        } else {
-                          <div style="top: 0; position: absolute; height: 10%; width: 15%; background-color: #9D3131;">
-                            <p class="m-0 flash-sale-text" style="font-size: 18px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">@temp.DiscountPercentage% <br> OFF</p>
                           </div>
-                        }
-                      </a> *@
-                      <div class="ori-product-img">
-                        <div style="position: relative;">
-                          <a href="/@temp.SeName?type=flash-sale" class="clean">
-                            <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
-                          </a>
-                   
-                          <div style="top: 0; position: absolute; height: 15%; width: 20%; background-color: #9D3131;">
-                            <p class="m-0 flash-sale-text" style="font-size: 18px; line-height: 20px; display: flex !important; justify-content: center; align-items: center;">
-                              @temp.DiscountPercentage% <br> OFF
-                            </p>
-                          </div>
+                          
+                          @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
+                            <a href="/@temp.SeName?type=flash-sale" class="clean">
+                              <div class="d-flex justify-content-center align-items-center backdrop-product">
+                                <p class="worksans-reg" style="margin: 0; color: white; font-size: 20px; text-transform: capitalize;">Out of stock</p>
+                              </div>
+                            </a>
+                          }
                         </div>
-                        
-                        @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
-                          <a href="/@temp.SeName?type=flash-sale" class="clean">
-                            <div class="d-flex justify-content-center align-items-center backdrop-product">
-                              <p class="worksans-reg" style="margin: 0; color: white; font-size: 20px; text-transform: capitalize;">Out of stock</p>
-                            </div>
-                          </a>
+                      </div>
+                      <div class="row my-2 m-0 p-0" style="width: inherit;">
+                        <a href="/@temp.SeName?type=flash-sale" class="clean" style="text-decoration: none;">
+                          <p class="m-0 p-0 worksans-medium text-demo d-flex justify-content-center align-items-center" style="height: 45px; font-size: 18px; color: #525252;">@temp.Name</p>
+                        </a>
+                      </div>
+                      <div class="row mb-2 m-0 p-0" style="width: inherit;">
+                        <p class="m-0 p-0 worksans-reg text-demo" style="text-decoration:line-through; font-size: 18px; color: #BCBCBC;">@temp.ProductPrice.Price</p> &nbsp;
+                        @{
+                          var price_for_flashsale = session.status == "coming soon" ? "???.000" : String.Format( "{0:#,##0.##}", temp.FlashSalePrice );
+                          @* var price_for_flashsale = session.status == "coming soon" ? temp.FlashSalePrice > 100000 ? temp.FlashSalePrice.ToString().Substring(0, 1) + "XX.XXX" : temp.FlashSalePrice.ToString().Substring(0, 1) + "X.XXX" : 
+                            String.Format( "{0:#,##0.##}", temp.FlashSalePrice ); *@
+                          <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #9D3131;">
+                            IDR @price_for_flashsale
+                          </p>
                         }
                       </div>
-                    </div>
-                    <div class="row my-2 m-0 p-0" style="width: inherit;">
-                      <a href="/@temp.SeName?type=flash-sale" class="clean" style="text-decoration: none;">
-                        <p class="m-0 p-0 worksans-medium text-demo d-flex justify-content-center align-items-center" style="height: 45px; font-size: 18px; color: #525252;">@temp.Name</p>
-                      </a>
-                    </div>
-                    <div class="row mb-2 m-0 p-0" style="width: inherit;">
-                      <p class="m-0 p-0 worksans-reg text-demo" style="text-decoration:line-through; font-size: 18px; color: #BCBCBC;">@temp.ProductPrice.Price</p> &nbsp;
-                      <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #9D3131;">IDR @String.Format( "{0:#,##0.##}", temp.FlashSalePrice )</p>
-                    </div>
-                    <div class="row mb-2 m-0 p-0" style="width: inherit;">
-                      <progress id="@i-product" value="@progress_bar" max="@temp.StockFlashSale" style="width: 100%; height: 8px;"/>
-                    </div>
-                    <div class="row m-0 p-0" style="width: inherit;">
-                      <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #525252;">@status_prod</p>
+
+                      @if (session.status == "on going") {
+                        <div class="row mb-2 m-0 p-0" style="width: inherit;">
+                          <progress id="@i-product" value="@progress_bar" max="@temp.StockFlashSale" style="width: 100%; height: 8px;"/>
+                        </div>
+                        <div class="row m-0 p-0" style="width: inherit;">
+                          <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #525252;">@status_prod</p>
+                        </div>
+                      }
                     </div>
                   </div>
-                </div>
-              }
+                }
+              </div>
             </div>
-          </div>
-          
-          <div class="d-block d-md-none hidden-md hidden-xl">
-            <div class="row mx-3">
-              @for(var i = 0; i < session.Products.Count() ; i++) {
-                var temp = session.Products[i];
-                var devide = Decimal.Divide(temp.StockFlashSaleRemaining, temp.StockFlashSale);
-                var times = devide * 100;
-                var status_prod = times < 40 ? "Low in Stocks" : "Available";
-                var progress_bar = temp.StockFlashSale - temp.StockFlashSaleRemaining;
+            
+            <div class="d-block d-md-none hidden-md hidden-xl">
+              <div class="row mx-3">
+                @for(var i = 0; i < session.Products.Count() ; i++) {
+                  var temp = session.Products[i];
+                  var divide= Decimal.Divide(temp.StockFlashSaleRemaining, temp.StockFlashSale);
+                  var times = divide* 100;
+                  var status_prod = times < 40 ? "Low in Stocks" : "Available";
+                  var progress_bar = temp.StockFlashSale - temp.StockFlashSaleRemaining;
 
-                <div class="col-6 col-sm-4 col-md-4 mt-4">
-                  <div class="flash-sale-pad" style="width: 100%;">
-                    <div class="row m-0 p-0" style="width: inherit;">
-                      @* <a href="/@temp.SeName?type=flash-sale" class="clean" style="width: inherit;">
-                        <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block" style="position: relative; width: 100%"/>
-                        @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
-                          <a href="/@temp.SeName?type=flash-sale" class="clean">
-                            <div class="d-flex justify-content-center align-items-center backdrop-product">
-                              <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
+                  <div class="col-6 col-sm-4 col-md-4 mt-4">
+                    <div class="flash-sale-pad" style="width: 100%;">
+                      <div class="row m-0 p-0" style="width: inherit;">
+                        <div class="ori-product-img">
+                          <div style="position: relative;">
+                            <a href="/@temp.SeName?type=flash-sale" class="clean">
+                              <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
+                            </a>
+                    
+                            <div style="top: 0; position: absolute; height: 13%; width: 20%; background-color: #9D3131;">
+                              <p class="m-0 flash-sale-text" style="font-size: 12px; line-height: 17px;">@temp.DiscountPercentage% OFF</p>
                             </div>
-                          </a>
-                        } else {
-                          <div style="top: 0; position: absolute; height: 10%; width: 16%; background-color: #9D3131;">
-                            <p class="m-0 flash-sale-text" style="font-size: 12px; line-height: 17px;">@temp.DiscountPercentage% OFF</p>
                           </div>
-                        }
-                      </a> *@
-                      <div class="ori-product-img">
-                        <div style="position: relative;">
-                          <a href="/@temp.SeName?type=flash-sale" class="clean">
-                            <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
-                          </a>
-                   
-                          <div style="top: 0; position: absolute; height: 13%; width: 20%; background-color: #9D3131;">
-                            <p class="m-0 flash-sale-text" style="font-size: 12px; line-height: 17px;">@temp.DiscountPercentage% OFF</p>
-                          </div>
+                          
+                          @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
+                            <a href="/@temp.SeName?type=flash-sale" class="clean">
+                              <div class="d-flex justify-content-center align-items-center backdrop-product">
+                                <p class="worksans-reg" style="margin: 0; color: white; font-size: 14px; text-transform: capitalize;">Out of stock</p>
+                              </div>
+                            </a>
+                          }
                         </div>
-                        
-                        @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
-                          <a href="/@temp.SeName?type=flash-sale" class="clean">
-                            <div class="d-flex justify-content-center align-items-center backdrop-product">
-                              <p class="worksans-reg" style="margin: 0; color: white; font-size: 14px; text-transform: capitalize;">Out of stock</p>
-                            </div>
-                          </a>
+                      </div>
+                      <div class="row m-0 p-0 my-2" style="width: inherit;">
+                        <a href="/@temp.SeName?type=flash-sale" class="clean" style="text-decoration: none;">
+                          <p class="m-0 p-0 worksans-medium text-demo  d-flex justify-content-center align-items-center" style="height: 30px; font-size: 16px !important; color: #525252;">@temp.Name</p>
+                        </a>
+                      </div>
+                      <div class="row mb-2 m-0 p-0" style="width: inherit;">
+                        <p class="m-0 p-0 worksans-reg text-demo" style="text-decoration:line-through; font-size: 13px !important; color: #BCBCBC;">@temp.ProductPrice.Price</p> &nbsp;
+                        @{
+                          var price_for_flashsale = session.status == "coming soon" ? "???.000" : String.Format( "{0:#,##0.##}", temp.FlashSalePrice );
+                          @*var price_for_flashsale = session.status == "coming soon" ? temp.FlashSalePrice > 100000 ? temp.FlashSalePrice.ToString().Substring(0, 1) + "XX.XXX" : temp.FlashSalePrice.ToString().Substring(0, 1) + "X.XXX" : 
+                            String.Format( "{0:#,##0.##}", temp.FlashSalePrice ); *@
+                          <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 13px !important; color: #9D3131;">IDR @price_for_flashsale</p>
                         }
                       </div>
-                    </div>
-                    <div class="row m-0 p-0 my-2" style="width: inherit;">
-                      <a href="/@temp.SeName?type=flash-sale" class="clean" style="text-decoration: none;">
-                        <p class="m-0 p-0 worksans-medium text-demo  d-flex justify-content-center align-items-center" style="height: 30px; font-size: 16px !important; color: #525252;">@temp.Name</p>
-                      </a>
-                    </div>
-                    <div class="row mb-2 m-0 p-0" style="width: inherit;">
-                      <p class="m-0 p-0 worksans-reg text-demo" style="text-decoration:line-through; font-size: 13px !important; color: #BCBCBC;">@temp.ProductPrice.Price</p> &nbsp;
-                      <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 13px !important; color: #9D3131;">IDR @String.Format( "{0:#,##0.##}", temp.FlashSalePrice )</p>
-                    </div>
-                    <div class="row mb-2 m-0 p-0" style="width: inherit;">
-                      <progress id="@i-product" value="@progress_bar" max="@temp.StockFlashSale" style="width: 100%; height: 8px;"/>
-                    </div>
-                    <div class="row m-0 p-0" style="width: inherit;">
-                      <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 13px !important; color: #525252;">@status_prod</p>
+                      @if (session.status == "on going") {
+                        <div class="row mb-2 m-0 p-0" style="width: inherit;">
+                          <progress id="@i-product" value="@progress_bar" max="@temp.StockFlashSale" style="width: 100%; height: 8px;"/>
+                        </div>
+                        <div class="row m-0 p-0" style="width: inherit;">
+                          <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 13px !important; color: #525252;">@status_prod</p>
+                        </div>
+                      }
                     </div>
                   </div>
-                </div>
-              }
-            </div>
-          </div>        
+                }
+              </div>
+            </div>        
+          }
         }
       </div>
     } else {
@@ -243,16 +233,14 @@
 }
 
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-  //console.log(`Flash sale`);
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	//console.log(model);
+  //console.log(model)
   let today = new Date();
   let date_today = new Date(`${today.getFullYear()}, ${today.getMonth()}, ${today.getDate()}`);
-  let data = model.filter(mf => mf.status == `on going`).length > 0 ? model.filter(mf => mf.status == `on going`)[0] : null;
-  //console.log(data)
+  let data = model.filter(mf => mf.status != `finished`).length > 0 ? model.filter(mf => mf.status != `finished`)[0] : null;
   if (data) {
     let start_day = data.start_date ? new Date(data.start_date).getDate() : null;
     let start_month = data.start_date ? new Date(data.start_date).getMonth() : null;
@@ -279,38 +267,16 @@
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       if (distance > 0) {
-        var text_count = `Ends in ${days} : ${hours} : ${minutes} : ${seconds}`;
+        var text_info = data.status == "on going" ? `Ended` : `Available`;
+        var text_count = `${text_info} in ${days} : ${hours} : ${minutes} : ${seconds}`;
         document.getElementById("demo-flashsale").innerHTML = text_count;
       } else if (distance < 0) {
         clearInterval(x2);
         document.getElementById("demo-flashsale").innerHTML = "EXPIRED";
       }
     }, 1000);
-
-    @* if (date_today.getTime() == only_start_date.getTime() && new Date(end_date).getTime() > today.getTime()) {
-      var countDownDate = new Date(end_date).getTime();
-
-      var x2 = setInterval(function() {
-        var now = new Date().getTime();
-          
-        var distance = countDownDate - now;
-          
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        var text_count = `Ends in ${days} : ${hours} : ${minutes} : ${seconds}`;
-        document.getElementById("demo-flashsale").innerHTML = text_count;
-          
-        if (distance < 0) {
-          clearInterval(x2);
-          document.getElementById("demo-flashsale").innerHTML = "EXPIRED";
-        }
-      }, 1000);
-    } else if (date_today.getTime() == only_start_date.getTime() && new Date(end_date).getTime() < today.getTime()) {
-      document.getElementById("demo-flashsale").innerHTML = "EXPIRED";
-    } *@
+  } else {
+    @* $('#flash-sale-header').addClass('display-header'); *@
   }
 	
 </script>

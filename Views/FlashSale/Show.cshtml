@@ -8,6 +8,8 @@
     var styleDivCenterDesktop = "position: absolute; top: 0; left: 0; height: 100%; width: 100%; right: 0; bottom: 0;";
     var styleContentCenterDeskopFlashSale = "font-size: 40px; color: white; display: flex; justify-content: center; align-items: center; height: 100%;";
     var title_flashsale = Model.Count() > 0 ? Model.ToList()[0].Name : "Flash Sale";
+    DateTime today = DateTime.Now;
+    var data_flash_sale = Model.Where(c =>  DateTime.Parse(c.start_date).Date == today.Date);
 }
 
 
@@ -30,9 +32,9 @@
   <div class="col-12 col-md-5 col-sm-5 time-flash-sale"> 
     <ul class="nav nav-pills-clock" id="pills-tab" role="tablist">
       @{
-        for (int i = 0; i < Model.Count(); i++)
+        for (int i = 0; i < data_flash_sale.Count(); i++)
         {
-            var temp = Model.ToList();
+            var temp = data_flash_sale.ToList();
             var fs = temp[i];
 
             <li class="nav-item" style="margin-right: 15px;">
@@ -46,7 +48,7 @@
   </div>
   <div class="col-md-5 col-sm-5 countdown-flash-sale"> 
     <div class="tab-content" id="pills-tabContent">
-      @for (int z = 0; z < Model.Count(); z++)
+      @for (int z = 0; z < data_flash_sale.Count(); z++)
       {
         <div class="tab-pane fade @(@z == 0 ? "show active" : "")" id="pills-@z" role="tabpanel" aria-labelledby="pills-id-@z">
           <span class="worksans-reg" style="font-style: italic; color: white; font-size: 19px;" id="demo-@z" />
@@ -57,7 +59,7 @@
   <div class="col-md-1 col-sm-1"></div>
 </div>
 
-@if (Model.Any())
+@if (data_flash_sale.Any())
 {
   <div class="row m-0" style="padding: 5% 5% 10px;">
     <div class="col-1 col-sm-8 col-md-8 p-0" style="display: flex; justify-content: flex-start; align-items: center;">
@@ -73,9 +75,9 @@
   </div>
   <hr class="d-block d-md-none" />
 
-  for (int p = 0; p < Model.Count(); p++)
+  for (int p = 0; p < data_flash_sale.Count(); p++)
   {
-    var temp2 = Model.ToList();
+    var temp2 = data_flash_sale.ToList();
     var products = temp2[p].Products;
     var style_display = p == 0 ? "display: block" : "display: none";
     if (products.Count() > 0) {
@@ -171,9 +173,10 @@
   }
 } else {
   <div class="row" style="padding: 10% 5% 0; position: relative; background-color: white;">
-    <div class="col-main-slim text-center" style="max-height: 200px !important;"><h2>We're still preparing the flash sale product. Please stay tuned.</h2></div>
+    <div class="col-main-slim text-center" style="max-height: 200px !important;"><h2>We're still preparing the flash sale product. Please stay tuned. @today</h2></div>
   </div>
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 @*sticky thumbnail*@
 <script src="~/Themes/v1/Scripts/jquery.sticky.js"></script>
@@ -389,17 +392,21 @@
   };
 
 	//console.log(`Flash sale`);
-	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+  let today_moment = moment().format("MM/DD/YYYY");
+	var model_temp = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	var model = model_temp.filter(mf => moment(new Date(mf.start_date)).format("MM/DD/YYYY") == today_moment);
 	//console.log(model);
-
   if (model.length > 0) {
     let today = new Date();
     let date_today = new Date(`${today.getFullYear()}, ${today.getMonth()}, ${today.getDate()}`);
+    
     // Update the count down every 1 second
-    var x = setInterval(function() {
       for (let i = 0; i < model.length; i++) {
         let data = model[i];
 
+        @* let filter_date = moment(new Date(data.start_date)).format("MM/DD/YYYY");
+        if (today_moment == filter_date)  {
+        } *@
         let start_day = data && data.start_date ? new Date(data.start_date).getDate() : null;
         let start_month = data && data.start_date ? new Date(data.start_date).getMonth() : null;
         let start_year = data && data.start_date ? new Date(data.start_date).getFullYear() : null;
@@ -409,35 +416,37 @@
         let end_year = data && data.end_date ? new Date(data.end_date).getFullYear() : null;
 
         let start_date = data && data.start_date ? `${start_month+1}/${start_day}/${start_year} ${data.start_time}:00` : null;
+
         let end_date = data && data.end_date ? `${end_month+1}/${end_day}/${end_year} ${data.end_time}:00` : null;
         let only_start_date = data && data.start_date ? new Date(`${start_year}, ${start_month}, ${start_day}`) : null;
         let only_end_date = data && data.end_date ? new Date(`${end_year}, ${end_month}, ${end_day}`) : null;
+        
+        var x = setInterval(function() {
+          // Set the date we're counting down 
+          var countDownDate = new Date(end_date).getTime();
+          var countDownDateStart = new Date(start_date).getTime();
+          // Get today's date and time
+          var now = new Date().getTime();
+            
+          // Find the distance between now and the count down date
+          var distance = countDownDate - now;
+          var distance_start = countDownDateStart - now;
+            
+          // Time calculations for days, hours, minutes and seconds
+          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Set the date we're counting down 
-        var countDownDate = new Date(end_date).getTime();
-        var countDownDateStart = new Date(start_date).getTime();
-        // Get today's date and time
-        var now = new Date().getTime();
-          
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;
-        var distance_start = countDownDateStart - now;
-          
-        // Time calculations for days, hours, minutes and seconds
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        if (data && distance_start > 0 && distance > 0) {
-          document.getElementById("demo-"+i).innerHTML = "Available in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
-        } else if (data && distance > 0 && distance_start < 0){
-          document.getElementById("demo-"+i).innerHTML = "Ends in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
-        } else if (distance < 0) {
-          clearInterval(x);
-          document.getElementById("demo-"+i).innerHTML = "Ended";
-        }
+          if (data && distance_start > 0 && distance > 0) {
+            document.getElementById("demo-"+i).innerHTML = "Available in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
+          } else if (data && distance > 0 && distance_start < 0){
+            document.getElementById("demo-"+i).innerHTML = "Ends in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
+          } else if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo-"+i).innerHTML = "Ended";
+          }
+        }, 1000);
       }
-    }, 1000);
   }
 </script>

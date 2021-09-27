@@ -81,6 +81,14 @@
                                     @Html.ValidationMessageFor(model => model.ConfirmPaymentDate)
                                 </div>
                             </div>
+                            
+                            @* <div class="form-fields">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(model => model.File1, new {type = "file", @class = "form-control", placeholder = "Upload Confrim Payment" })
+                                    @Html.ValidationMessageFor(model => model.File1)
+                                </div>
+                            </div> *@
+
 
                             <div class="buttons">
                                 <button type="submit" id="submit-button" name="submit-button" class="btn btn-default" data-loading-text="Processing...">Confirm payment</button>
