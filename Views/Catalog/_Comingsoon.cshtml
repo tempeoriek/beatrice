@@ -47,7 +47,7 @@
                 </div>
                 
                 @if (temp.Quantity == 0 ) {
-                  <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type = "coming-soon", start_date= @date2, end_date = @date1 })" class="clean">
+                  <a id="stock-desktop" href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type = "coming-soon", start_date= @date2, end_date = @date1 })" class="clean">
                     <div class="d-flex justify-content-center align-items-center backdrop-product">
                       <p class="worksans-reg" style="margin: 0; color: white; font-size: 23px; text-transform: capitalize;">Out of stock</p>
                     </div>
@@ -112,7 +112,7 @@
                 </div>
                 
                 @if (temp.Quantity == 0 ) {
-                  <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", start_date= @date2, end_date = @date1 })" class="clean">
+                  <a id="stock-mobile" href="@Url.RouteUrl("Product", new { SeName = temp.SeName, type =  "coming-soon", start_date= @date2, end_date = @date1 })" class="clean">
                     <div class="d-flex justify-content-center align-items-center backdrop-product">
                       <p class="worksans-reg" style="margin: 0; color: white; font-size: 20px; text-transform: capitalize;">Out of stock</p>
                     </div>
@@ -293,6 +293,8 @@
       clearInterval(x);
     } else {
       if (data && distance_start > 0) {
+        $("#stock-mobile").css("display", "none");
+        $("#stock-desktop").css("display", "none");
         document.getElementById("demo-coming-soon").innerHTML = "Available in  " + result_time_start ;
         for (let i = 0; i < model_cs.Products.length; i++) {
           $("#price-cs-"+model_cs.Products[i].Id).text("IDR ???.000");

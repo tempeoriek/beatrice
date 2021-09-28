@@ -49,8 +49,8 @@
         </a>
       }
       
-      @if (Model.Quantity == 0) {
-        <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName, start_date= @query_start, end_date = @query_end, type = @query_type })" class="clean">
+      @if (Model.Quantity == 0 && Model.FlashsaleStatus != "coming soon") {
+        <a id="out-of-stock-display" href="@Url.RouteUrl("Product", new { SeName = Model.SeName, start_date= @query_start, end_date = @query_end, type = @query_type })" class="clean">
           <div class="d-flex justify-content-center align-items-center backdrop-product">
             <p class="worksans-reg" style="margin: 0; color: white; font-size: 20px; text-transform: capitalize;">Out of stock</p>
           </div>

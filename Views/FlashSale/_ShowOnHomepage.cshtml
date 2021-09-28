@@ -61,12 +61,14 @@
                             </div>
                           </div>
                           
-                          @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
-                            <a href="/@temp.SeName?type=flash-sale" class="clean">
-                              <div class="d-flex justify-content-center align-items-center backdrop-product">
-                                <p class="worksans-reg" style="margin: 0; color: white; font-size: 20px; text-transform: capitalize;">Out of stock</p>
-                              </div>
-                            </a>
+                          @if (session.status != "coming soon") {
+                            if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
+                              <a href="/@temp.SeName?type=flash-sale" class="clean">
+                                <div class="d-flex justify-content-center align-items-center backdrop-product">
+                                  <p class="worksans-reg" style="margin: 0; color: white; font-size: 20px; text-transform: capitalize;">Out of stock</p>
+                                </div>
+                              </a>
+                            }
                           }
                         </div>
                       </div>
@@ -124,12 +126,14 @@
                             </div>
                           </div>
                           
-                          @if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
-                            <a href="/@temp.SeName?type=flash-sale" class="clean">
-                              <div class="d-flex justify-content-center align-items-center backdrop-product">
-                                <p class="worksans-reg" style="margin: 0; color: white; font-size: 14px; text-transform: capitalize;">Out of stock</p>
-                              </div>
-                            </a>
+                          @if (session.status != "coming soon") {
+                            if (temp.Quantity == 0 || temp.StockFlashSaleRemaining == 0) {
+                              <a href="/@temp.SeName?type=flash-sale" class="clean">
+                                <div class="d-flex justify-content-center align-items-center backdrop-product">
+                                  <p class="worksans-reg" style="margin: 0; color: white; font-size: 14px; text-transform: capitalize;">Out of stock</p>
+                                </div>
+                              </a>
+                            }
                           }
                         </div>
                       </div>

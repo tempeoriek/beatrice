@@ -59,7 +59,7 @@
 
 
 
-        <div class="pb-0 product--price @if (String.IsNullOrWhiteSpace(Model.PriceWithDiscount))
+        <div class="text-center w-100 pb-0 product--price @if (String.IsNullOrWhiteSpace(Model.PriceWithDiscount))
                     {<text>product-price</text>}
                     else
                     {<text>non-discounted-price</text>}" style="display:inline-block;">
@@ -109,3 +109,10 @@
          }
     }
 </div>
+
+<script>
+    $("#text-price-change").css("opacity", "0");
+    setTimeout(() => {
+        $("#text-price-change").css("opacity", "1");
+    },1000)
+</script>

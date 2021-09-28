@@ -393,6 +393,7 @@
       @* document.getElementById("demo").innerHTML = "Ended"; *@
     } else {
       if (data && distance_start > 0) {
+        $("#out-of-stock-display").css("display", "none")
         document.getElementById("demo").innerHTML = "Available in  " + result_time_start ;
         for (let i = 0; i < model.Products.length; i++) {
           $("#price-cs-"+model.Products[i].Id).text("IDR ???.000");

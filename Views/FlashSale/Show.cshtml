@@ -9,7 +9,9 @@
     var styleContentCenterDeskopFlashSale = "font-size: 40px; color: white; display: flex; justify-content: center; align-items: center; height: 100%;";
     var title_flashsale = Model.Count() > 0 ? Model.ToList()[0].Name : "Flash Sale";
     DateTime today = DateTime.Now;
-    var data_flash_sale = Model.Where(c =>  DateTime.Parse(c.start_date).Date == today.Date);
+    var temp_model = Model.Where(c => c.status != "finished");
+    var models = temp_model.ToList()[0];
+    var data_flash_sale = Model.Where(c =>  DateTime.Parse(models.start_date).Date == DateTime.Parse(c.start_date).Date);
 }
 
 
@@ -173,7 +175,7 @@
   }
 } else {
   <div class="row" style="padding: 10% 5% 0; position: relative; background-color: white;">
-    <div class="col-main-slim text-center" style="max-height: 200px !important;"><h2>We're still preparing the flash sale product. Please stay tuned. @today</h2></div>
+    <div class="col-main-slim text-center" style="max-height: 200px !important;"><h2>We're still preparing the flash sale product. Please stay tuned.</h2></div>
   </div>
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -394,7 +396,8 @@
 	//console.log(`Flash sale`);
   let today_moment = moment().format("MM/DD/YYYY");
 	var model_temp = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	var model = model_temp.filter(mf => moment(new Date(mf.start_date)).format("MM/DD/YYYY") == today_moment);
+	var models = model_temp.filter(mf => mf.status != "finished")[0];
+	var model = model_temp.filter(mf => moment(new Date(mf.start_date)).format("MM/DD/YYYY") == moment(new Date(models.start_date)).format("MM/DD/YYYY"));
 	//console.log(model);
   if (model.length > 0) {
     let today = new Date();
