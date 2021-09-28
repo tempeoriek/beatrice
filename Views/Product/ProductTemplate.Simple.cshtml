@@ -350,11 +350,14 @@
     let start_date_flashsale = model && model.FlashsaleStart_date && model.FlashsaleStart_time? `${start_month+1}/${start_day}/${start_year} ${model.FlashsaleStart_time}:00` : null;
     let end_date_flashsale = model && model.FlashsaleEnd_date && model.FlashsaleEnd_time ? `${end_month+1}/${end_day}/${end_year} ${model.FlashsaleEnd_time}:00` : null;
 
+    $( "#text-status-change" ).attr( "data-fs-status", model.FlashsaleStatus);
+    
     let query_date = end_date_flashsale && searchParams.get('type') == 'flash-sale' ? end_date_flashsale : 
       searchParams.has('end_date') && searchParams.get('type') == 'coming-soon' ? moment(searchParams.get('end_date'), 'YYYY-MM-DD HH:mm:ss Z').toDate() : null;
     let query_date_start = start_date_flashsale && searchParams.get('type') == 'flash-sale' ? start_date_flashsale : 
       searchParams.has('start_date') && searchParams.get('type') == 'coming-soon' ? moment(searchParams.get('start_date'), 'YYYY-MM-DD HH:mm:ss Z').toDate() : null;
 
+    
     var countDownDate = new Date(`${query_date}`).getTime();
     var countDownDateStart = new Date(`${query_date_start}`).getTime();
     var x = setInterval(function() {
@@ -391,7 +394,7 @@
       }
 
       if (searchParams.get('type') == 'flash-sale'){
-        var price_flashsale = `IDR ${numberWithCommas(model.FlashsalePrice)}`;
+        var price_flashsale = !model.FlashsaleStatus || model.FlashsaleStatus == "coming soon" ? "IDR ???.000" : `IDR ${numberWithCommas(model.FlashsalePrice)}`;
         $("#text-price-change").text(price_flashsale);
       }
     }, 1000);

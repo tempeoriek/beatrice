@@ -89,7 +89,6 @@
                                             <div class="row m-0 p-0 d-flex justify-content-center align-items-center">
                                                 @if (Model.DisplayAddToCart)
                                                 {
-                                                    <input type="checkbox" name="addtocart" value="@(item.Id)" style="margin-right: 5px"/>
                                                     <input 
                                                         style="width: 40%; height: 40px !important; margin-right: 8px;" 
                                                         type="submit" 
@@ -97,16 +96,17 @@
                                                         value="Add to bag" 
                                                         class="btn-addcart button_sare" 
                                                     />
+                                                    <input type="hidden" name="addtocart" value="@(item.Id)" style="margin-right: 5px"/>
                                                 }
                                                 @if (Model.IsEditable)
                                                 {
-                                                    <input type="checkbox" name="removefromcart" value="@(item.Id)" style="margin-right: 5px"/>
                                                     <input 
                                                         style="width: 40%; height: 40px !important;" 
                                                         type="submit" name="updatecart" 
                                                         value="Remove Item" 
                                                         class="btn-addcart button_sare"
                                                     />
+                                                    <input type="hidden" name="removefromcart" value="@(item.Id)" style="margin-right: 5px"/>
                                                 }
                                                 @* @if (Model.IsEditable && Model.EmailWishlistEnabled)
                                                 {

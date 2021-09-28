@@ -129,8 +129,10 @@
         var dataDictAddToWishlist = new ViewDataDictionary();
         dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.ProductId);
 
-        if (query_type.Equals("coming-soon")) {
-          @Html.Partial("_AddToWishlist", Model, dataDictAddToWishlist)
+        if (query_type.Equals("coming-soon") || query_type.Equals("flash-sale")) {
+          <div id="wishlist-button">
+            @Html.Partial("_AddToWishlist", Model, dataDictAddToWishlist)
+          </div>
         }
         <div id="add2cart-notification" title="@T("Common.Notification")" style="display:none;"></div>
       }
@@ -139,24 +141,40 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
-	//console.log(`ADD TO CART`);
+  $("#button-atc").css("display", "none");
+
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	//console.log(model);
   let searchParamsATC = new URLSearchParams(window.location.search);
+  let type_page = searchParamsATC.get("type");
   let query_date_startATC = searchParamsATC.has('start_date')  ? moment(searchParamsATC.get('start_date'), 'YYYY-MM-DD HH:mm:ss Z').toDate()  : null;
+  var fs_status;
 
-  var countDownDateStart = new Date(`${query_date_startATC}`).getTime();
-  var x = setInterval(function() {
-    var now = new Date().getTime();
-    
-    var distance_start = countDownDateStart - now;
+  if (!searchParamsATC.has('type')) {
+    $("#button-atc").css("display", "block");
+  }
+  setTimeout(() => {
+    fs_status = $("#text-status-change").attr("data-fs-status");
 
-    if (model && distance_start > 0) {
-      $("#button-atc").css("display", "none");
-    } else if (model && distance_start < 0){
-      $("#button-atc").css("display", "block");
-    } 
-  }, 1000);
+    var countDownDateStart = new Date(`${query_date_startATC}`).getTime();
+    var x = setInterval(function() {
+      var now = new Date().getTime();
+      
+      var distance_start = countDownDateStart - now;
+
+      if (type_page == "flash-sale" && (!fs_status || fs_status == "coming soon")) {
+        $("#button-atc").css("display", "none");
+      } else if (type_page == "flash-sale" && (fs_status || fs_status == "on going")) {
+        $("#wishlist-button").css("display", "none");
+        $("#button-atc").css("display", "block");
+      }
+
+      if (model && distance_start > 0) {
+        $("#button-atc").css("display", "none");
+      } else if (model && distance_start < 0){
+        $("#button-atc").css("display", "block");
+      } 
+    }, 1000);
+  }, 100)
 </script>
 
 

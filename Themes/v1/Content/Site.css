@@ -1682,24 +1682,20 @@ a.dropdown-item {
     border: 1px solid #9D5D3E;
 }
 .button_google {
-    width: 97%;
-    height: 100%;
-    color: #DE4D31;
-    background-color: white;
-    border: 1px solid #DE4D31;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: #DE4D31 !important;
+    background-color: white !important;
+    border: 1px solid #DE4D31 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 .button_google:hover {
     cursor: pointer;
   }
 .button_facebook {
-    width: 95%;
-    height: 100%;
-    color: #3A579E;
-    background-color: white;
-    border: 1px solid #3A579E;
+    color: #3A579E !important;
+    background-color: white !important;
+    border: 1px solid #3A579E !important;
 }
 #customBtn {
     width: 95%;

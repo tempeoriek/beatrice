@@ -38,18 +38,18 @@
       <div id="login-thirdparty" class="row" style="height: 50px;">
         <div class="col-12 col-md-6 col-sm-6 p-2 d-flex justify-content-center" style="align-self: center;">
           @* <button type="submit" class="button_google">Google</button> *@
-          <div class="g-signin2" data-width="170" data-height="50" data-onsuccess="onSignIn"></div>
+          <div class="g-signin2" data-width="163" data-height="39" data-onsuccess="onSignIn"></div>
           
         </div>
         <div class="col-12 col-md-6 col-sm-6 p-2" style="align-self: center; left: 3%">
           @* <button type="submit" class="button_facebook">Facebook</button> *@
-          @* <fb:login-button class="fb_button" length="long" size="large" scope="public_profile,email" onlogin="checkLoginState();">
+          <fb:login-button class="fb_button" size="xlarge" scope="public_profile,email" onlogin="checkLoginState();">
               <span style= "margin-right: 10px;">Facebook</span>
-          </fb:login-button> *@
+          </fb:login-button>
           @* <button id="customBtn" onclick="checkLoginState()">
             <span>Facebook</span>
           </button> *@
-          <div 
+          @* <div 
             class="fb-login-button" 
             data-size="large" 
             scope="email"
@@ -57,7 +57,7 @@
             data-layout="default" 
             data-auto-logout-link="false" 
             data-use-continue-as="false"
-            onlogin="checkLoginState()"></div>
+            onlogin="checkLoginState()"></div>*@
         </div>
       </div>
 
@@ -157,7 +157,11 @@
   @Scripts.Render("~/bundles/jqueryval")
   <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
   <script>
-    
+    setTimeout(function () {
+      $("span[id^='not_signed_']").text("Google");
+      $("span[id^='connected']").text("Google");
+      $(".abcRioButton").addClass("button_google");
+    }, 500);
 
     function loginCallback(data) {
 
