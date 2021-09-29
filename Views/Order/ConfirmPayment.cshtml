@@ -12,7 +12,7 @@
         @*@Html.Action("CustomerNavigation", "Customer", new { selectedTabId = CustomerNavigationEnum.ConfirmPayment, isMobile = true })*@
 
         <h1 class="text-center mb-5">Payment Confirmation</h1>
-        @using (Html.BeginForm("ConfirmPaymentCompleted", "Order", FormMethod.Post))
+        @using (Html.BeginForm("ConfirmPaymentCompleted", "Order", FormMethod.Post, new { id = "confirmPayment" }))
         {
             @Html.AntiForgeryToken()
 
@@ -159,7 +159,19 @@
 
 
 
-
+<script>
+    var form = document.getElementById("confirmPayment");
+    document.getElementById("confirmPayment").addEventListener("click", function (e) {
+        if (e.target.id == "submit-button") {
+            if (!$('#File1').val()) {
+                e.preventDefault();
+                alert('Please Upload File');
+            } else {
+                form.submit();
+            }
+        }
+    });
+</script>
 @section HeaderSection{
     <link href="~/Content/themes/base/datepicker.css" rel="stylesheet" />
 }
@@ -179,7 +191,7 @@
 
 
 <script type="text/javascript">
-
+    
     // create select wrapper and arrows
     function createSelectWrapper() {
         // select wrapper and arrows
