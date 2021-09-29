@@ -10,8 +10,8 @@
     var title_flashsale = Model.Count() > 0 ? Model.ToList()[0].Name : "Flash Sale";
     DateTime today = DateTime.Now;
     var temp_model = Model.Where(c => c.status != "finished");
-    var models = temp_model.ToList()[0];
-    var data_flash_sale = Model.Where(c =>  DateTime.Parse(models.start_date).Date == DateTime.Parse(c.start_date).Date);
+    var models = temp_model.ToList().Count() > 0 ? temp_model.ToList()[0] : null;
+    var data_flash_sale = models != null ? Model.Where(c =>  DateTime.Parse(models.start_date).Date == DateTime.Parse(c.start_date).Date) : null;
 }
 
 
@@ -29,40 +29,41 @@
   </div>
 </div>
 
-<div class="row p-0 m-0 mb-5" style="background-color: #9D3131; width: 120%; margin-left: -10% !important;">
-  <div class="col-md-1 col-sm-1"></div>
-  <div class="col-12 col-md-5 col-sm-5 time-flash-sale"> 
-    <ul class="nav nav-pills-clock" id="pills-tab" role="tablist">
-      @{
-        for (int i = 0; i < data_flash_sale.Count(); i++)
-        {
-            var temp = data_flash_sale.ToList();
-            var fs = temp[i];
 
-            <li class="nav-item" style="margin-right: 15px;">
-              <a style="color: white; font-size: 20px;" class="worksans-medium nav-link-clock @(@i == 0 ? "active" : "") " id="pills-id-@i" data-toggle="pill" href="#pills-@i" role="tab" aria-controls="pills-@i" aria-selected="true">
-                @fs.start_time
-              </a>
-            </li>
-        }
-      }
-    </ul>
-  </div>
-  <div class="col-md-5 col-sm-5 countdown-flash-sale"> 
-    <div class="tab-content" id="pills-tabContent">
-      @for (int z = 0; z < data_flash_sale.Count(); z++)
-      {
-        <div class="tab-pane fade @(@z == 0 ? "show active" : "")" id="pills-@z" role="tabpanel" aria-labelledby="pills-id-@z">
-          <span class="worksans-reg" style="font-style: italic; color: white; font-size: 19px;" id="demo-@z" />
-        </div>
-      }
-    </div>
-  </div>
-  <div class="col-md-1 col-sm-1"></div>
-</div>
-
-@if (data_flash_sale.Any())
+@if (data_flash_sale != null)
 {
+  <div class="row p-0 m-0 mb-5" style="background-color: #9D3131; width: 120%; margin-left: -10% !important;">
+    <div class="col-md-1 col-sm-1"></div>
+    <div class="col-12 col-md-5 col-sm-5 time-flash-sale"> 
+      <ul class="nav nav-pills-clock" id="pills-tab" role="tablist">
+        @{
+          for (int i = 0; i < data_flash_sale.Count(); i++)
+          {
+              var temp = data_flash_sale.ToList();
+              var fs = temp[i];
+
+              <li class="nav-item" style="margin-right: 15px;">
+                <a style="color: white; font-size: 20px;" class="worksans-medium nav-link-clock @(@i == 0 ? "active" : "") " id="pills-id-@i" data-toggle="pill" href="#pills-@i" role="tab" aria-controls="pills-@i" aria-selected="true">
+                  @fs.start_time
+                </a>
+              </li>
+          }
+        }
+      </ul>
+    </div>
+    <div class="col-md-5 col-sm-5 countdown-flash-sale"> 
+      <div class="tab-content" id="pills-tabContent">
+        @for (int z = 0; z < data_flash_sale.Count(); z++)
+        {
+          <div class="tab-pane fade @(@z == 0 ? "show active" : "")" id="pills-@z" role="tabpanel" aria-labelledby="pills-id-@z">
+            <span class="worksans-reg" style="font-style: italic; color: white; font-size: 19px;" id="demo-@z" />
+          </div>
+        }
+      </div>
+    </div>
+    <div class="col-md-1 col-sm-1"></div>
+  </div>
+
   <div class="row m-0" style="padding: 5% 5% 10px;">
     <div class="col-1 col-sm-8 col-md-8 p-0" style="display: flex; justify-content: flex-start; align-items: center;">
     </div>
@@ -396,8 +397,8 @@
 	//console.log(`Flash sale`);
   let today_moment = moment().format("MM/DD/YYYY");
 	var model_temp = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	var models = model_temp.filter(mf => mf.status != "finished")[0];
-	var model = model_temp.filter(mf => moment(new Date(mf.start_date)).format("MM/DD/YYYY") == moment(new Date(models.start_date)).format("MM/DD/YYYY"));
+	var models = model_temp.filter(mf => mf.status != "finished").length > 0 ? model_temp.filter(mf => mf.status != "finished")[0] : [];
+	var model = models.length > 0 ? model_temp.filter(mf => moment(new Date(mf.start_date)).format("MM/DD/YYYY") == moment(new Date(models.start_date)).format("MM/DD/YYYY")) : [];
 	//console.log(model);
   if (model.length > 0) {
     let today = new Date();

@@ -173,9 +173,9 @@
             FB.api('/me?fields=email,name', function(response) {
                 console.log(`Success Login with email ${response.email}, id ${response.id}, name ${response.name}`); 
                 id_fb = response.email;
-                if (after_login) {
+                @* if (after_login) {
                     window.location.href =  "https://fed1-2405-8180-201-1722-7070-5038-db4e-e5ac.ngrok.io";
-                }
+                } *@
                 
             });
         }

@@ -7,7 +7,7 @@
   bool modified_product_box = absolutepath.Equals("/coming-soon") || absolutepath.Equals("/catalog/comingsoon") || absolutepath.Equals("/flash-sale") || absolutepath.Equals("/flashsale/show") ? true : false;
   string type_url = absolutepath.Equals("/coming-soon") || absolutepath.Equals("/catalog/comingsoon") ? "coming-soon" : 
     absolutepath.Equals("/flash-sale") || absolutepath.Equals("/flashsale/show") ? "flash-sale" :
-    absolutepath.Equals("/new-arrival") ? "new-arrival" : null;
+    absolutepath.Equals("/new-arrivals") ? "new-arrivals" : null;
   string strInfoNewArrivals = absolutepath.Equals("/coming-soon") || absolutepath.Equals("/catalog/comingsoon") ? "IDR ???.000" : "";
   string query_type = !String.IsNullOrEmpty(HttpUtility.ParseQueryString(absolutepath2.Query).Get("type")) ? HttpUtility.ParseQueryString(absolutepath2.Query).Get("type").ToLower() : null;
   string query_start = !String.IsNullOrEmpty(HttpUtility.ParseQueryString(absolutepath2.Query).Get("start_date")) ? HttpUtility.ParseQueryString(absolutepath2.Query).Get("start_date").ToLower() : null;
@@ -17,6 +17,8 @@
     query_start = null;
     query_end = null;
   }
+
+  var style_text = absolutepath.Equals("/new-arrivals") ? "line-height: 1.5em; justify-content: space-between; height: 45px;" : "line-height: 1.5em; justify-content: start; height: 45px;";
 }
 <div class="product-item">
   <div class="ori-product-img">
@@ -59,12 +61,12 @@
   </div>
 
   <div class="description">
-    <p class="d-flex m-0  justify-content-start align-items-center" style="line-height: 1.5em; justify-content: space-between; align-items: center; height: 45px;">
+    <p class="d-flex m-0 align-items-center" style="@style_text">
       <a class="clean worksans-reg text-product-box worksans-medium" href="@Url.RouteUrl("Product", new { SeName = Model.SeName, start_date= @query_start, end_date = @query_end, type = @query_type })">
         @Model.Name
       </a>
-      @if (modified_product_box && type_url == "new-arrival") {
-        <span class="text-out-of-stock worksans-reg d-none d-md-block hidden-xs hidden-sm" style="color: #9D5D3E; font-size: 18px; text-transform: capitalize !important;">New Arrival</span>
+      @if (type_url == "new-arrivals") {
+        <span class="text-out-of-stock worksans-reg d-none d-md-block hidden-xs hidden-sm" style="color: #9D5D3E; font-size: 18px; text-transform: capitalize !important;">New Arrivals</span>
       }
     </p>
 
@@ -124,9 +126,9 @@
     } else if (Model.FlashsaleStatus == "finished") {
       <div class="price text-product-box worksans-reg" style="color: #9D3131 !important">Available with normal price</div>
     }
-    @if (modified_product_box && type_url == "new-arrival") {
-        <span class="text-out-of-stock worksans-reg d-block d-md-none hidden-md hidden-lg" style="color: #9D5D3E; font-size: 18px; text-transform: capitalize !important;">New Arrival</span>
-      }
+    @if (type_url == "new-arrivals") {
+      <span class="text-out-of-stock worksans-reg d-block d-md-none hidden-md hidden-lg" style="color: #9D5D3E; font-size: 18px; text-transform: capitalize !important;">New Arrivals</span>
+    }
     
   </div>
 </div>

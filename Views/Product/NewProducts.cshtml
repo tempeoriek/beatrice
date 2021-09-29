@@ -3,104 +3,367 @@
   Layout = "~/Views/Shared/_LayoutTwo.cshtml";
   //title
   Html.AddTitleParts(T("PageTitle.NewProducts").Text);
+  string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
+  var styleDivCenterDesktop = "position: absolute; top: 0; left: 0; height: 100%; width: 100%; right: 0; bottom: 0;";
+  var styleContentCenterDeskopFlashSale = "font-size: 40px; color: white; display: flex; justify-content: center; align-items: center; height: 100%;";
+  var styleContentCenterDeskop = "display: block; color: black; justify-content: center; align-items: center; height: 100%;";
 }
 @using Nop.Web.Models.Catalog;
 
+  @if (absolutepath.Equals("/new-arrivals")) {
+    <div class="row d-none d-md-block carousel" style="margin: 15px 0; margin-bottom: 0; position: relative;"> 
+      <img class="d-block w-100" src="@String.Format("/Content/Images/uploaded/categories/{0}.jpg", "new-arrivals")"> 
+      <div class="text-center" style="@styleDivCenterDesktop">
+        <h1 style="@styleContentCenterDeskopFlashSale">New Arrivals</h1>
+      </div>
+    </div>
 
-  <div class="container">
+    <div class="row d-block d-md-none carousel" style="position: relative;"> 
+      <img style="left: 50%; position: relative; transform: translateX(-50%);" class="d-block" src="@String.Format("/Content/Images/uploaded/categories/{0}.jpg", "new-arrivals")"> 
+      <div class="text-center" style="@styleDivCenterDesktop">
+        <h1 style="@styleContentCenterDeskopFlashSale">New Arrivals</h1>
+      </div>
+    </div>
+  } else {
+    <div class="row d-none d-md-block carousel" style="margin: 15px 0; margin-bottom: 0; position: relative;"> 
+      <img class="d-block w-100" src="@String.Format("/Content/Images/uploaded/categories/{0}.jpg", "new-arrivals")"> 
+      <div class="text-center" style="@styleDivCenterDesktop">
+      </div>
+    </div>
 
-    @if (Model.Count > 0)
-    {
-      var pg_i = 0;
+    <div class="row d-block d-md-none carousel" style="margin: 0 -30px 40px; position: relative;"> 
+      <div class="text-center" style="@styleDivCenterDesktop">
+        <h1 style="@styleContentCenterDeskop">New Arrivals</h1>
+      </div>
+    </div>
+  }
 
-      <div class="row">
-        <div class="col-md-3">
-          <div id="productgallery" class="left_menu d-none d-lg-block">
-            <div id="accordionLeftMenu">
-              @* breadcrumb *@
-              <div class="mb-5">
-                <p>HOME / SHOP</p>
-              </div>
+  @if (Model.Count > 0)
+  {
+    <div class="row m-0" style="padding: 5% 5% 10px;">
+      <div class="col-1 col-sm-8 col-md-8 p-0" style="display: flex; justify-content: flex-start; align-items: center;">
+        @if(!absolutepath.Equals("/new-arrivals") && !absolutepath.Equals("/coming-soon") && !absolutepath.Equals("/catalog/comingsoon") && !absolutepath.Equals("/flash-sale") && !absolutepath.Equals("/flashsale/show")) {
+          <div class="d-none d-md-block">
+            <span style="font-size: 16px; color: #525252; margin-right: 20px;">SORT BY:</span>
+            <span class="text-sort-hover" name="sortcatalog" id="whatnew">NEW IN</span>
+            <span class="text-sort-hover" name="sortcatalog" id="lowtohigh">PRICE (LOW - HIGH)</span>
+            <span class="text-sort-hover" name="sortcatalog" id="hightolow">PRICE (HIGH - LOW)</span>
+            <span class="text-sort-hover" name="sortcatalog" id="az">A - Z</span>
+            <span class="text-sort-hover" name="sortcatalog" id="za">Z - A</span>
+          </div>
 
-              @* category title *@
-              <div style="border-left: 1px solid lightgrey; border-right: 1px solid lightgrey; border-top: 1px solid lightgrey">
-                <div class="p-2" role="tab" style="font-weight: bold;"> CATEGORIES </div>
-              </div>
-
-              @* category accordion *@
-              <div style="border-left: 1px solid lightgrey; border-right: 1px solid lightgrey; border-top: 1px solid lightgrey">
-                <div class=" p-2" role="tab" id="HeadingOne">
-                  <a style="font-weight: 500;" role="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    PARKLON
-                  </a>
-                </div>
-                <div data-parent="#accordionLeftMenu" id="collapseOne" class="p-2 collapse" role="tabpanel" aria-labelledby="HeadingOne" style="border-top: 1px solid lightgrey">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.
-                </div>
-              </div>
-
-              @* category non accordion *@
-              <div style="border-left: 1px solid lightgrey; border-right: 1px solid lightgrey; border-top: 1px solid lightgrey">
-                <div class="p-2" role="tab">
-                  <a style="font-weight: 500;" href="#" role="button">
-                    NEW ARRIVAL
-                  </a>
-                </div>
-              </div>
-
-              <div style="border: 1px solid lightgrey;">
-                <div class="p-2" role="tab">
-                  <a style="font-weight: 500;" href="#" role="button">
-                    PRE-ORDER
-                  </a>
-                </div>
-              </div>
+          <div class="d-block d-md-none hidden-md hidden-lg sort-dropdown" style="display: flex; justify-content: flex-end; align-items: center; color: black;">
+            <img src="~/Themes/v1/Content/images/arrow-short-by.png" style="height: 25%;"/>
+            <div class="sort-dropdown-content">
+              <form action="">
+                <label><input type="radio" class="text-sort-hover" name="sortcatalog" id="whatnew" style="margin-right: 5px;">NEW IN</label> <br>
+                <label><input type="radio" class="text-sort-hover" name="sortcatalog" id="lowtohigh" style="margin-right: 5px;">PRICE (LOW - HIGH)</label><br>
+                <label><input type="radio" class="text-sort-hover" name="sortcatalog" id="hightolow" style="margin-right: 5px;">PRICE (HIGH - LOW)</label><br>
+                <label><input type="radio" class="text-sort-hover" name="sortcatalog" id="az" style="margin-right: 5px;">A - Z</label><br>
+                <label><input type="radio" class="text-sort-hover" name="sortcatalog" id="za" style="margin-right: 5px;">Z - A</label>
+              </form>
+              <a style="text-decoration: underline; cursor: pointer" id="removesort">Remove Sort</a>
             </div>
           </div>
+        }
         </div>
 
-        <div class="col-12 col-md-9">
-          <div class="row">
-            @foreach (var product in Model)
-            {
-              <div class="col-6 col-sm-6 col-md-4 col-lg-4 catalog-line">
-                @Html.Partial("_ProductBox", product)
-              </div>
-              pg_i++;
-            }
-          </div>
+      <div class="col-11 col-sm-4 col-md-4 p-0" style="display: flex; justify-content: flex-end; align-items: center; ">
+        <span class="text-view-hover" name="sortpageview" id="all">VIEW ALL</span>
+        <span style="font-size: 16px; color: #525252; margin-left: 20px;">SHOW:</span>
+        <span class="text-view-hover" name="sortpageview" id="15">15</span>
+        <span class="text-view-hover" name="sortpageview" id="30">30</span>
+        <span class="text-view-hover" name="sortpageview" id="45">45</span>
+      </div>
+    </div>
+    
+    <hr class="d-block d-md-none" />
+    <div style="padding: 0 5% 0; position: relative; background-color: white;">
+      <div class="row" id="sortnormal">
+        @{
+          var productnormal = Model;
+          var index_productnormal = 0;
+          foreach (var item in productnormal)
+          {
+            var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+            <div data-number="@index_productnormal" class="@colCss catalog-line allproducts" id="normal-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+              @Html.Partial("_ProductBox", item)
+            </div>
+            index_productnormal++; 
+          }
+        }
+      </div>
+
+      <div class="row" style="display: none;" id="sortascending">
+        @{
+          var productasc = Model.OrderBy(x => x.ProductPrice.PriceValue);
+          var index_productasc = 0;
+          foreach (var item in productasc)
+          {
+            var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+            <div data-number="@index_productasc" class="@colCss catalog-line allproducts" id="asc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+              @Html.Partial("_ProductBox", item)
+            </div>
+            index_productasc++; 
+          }
+        }
+      </div>
+
+      <div class="row" style="display: none;" id="sortdescending">
+        @{
+          var productdsc = Model.OrderByDescending(x => x.ProductPrice.PriceValue);
+          var index_productdsc = 0;
+          foreach (var item in productdsc)
+          {
+            var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+            <div data-number="@index_productdsc" class="@colCss catalog-line allproducts" id="desc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+              @Html.Partial("_ProductBox", item)
+            </div>
+            index_productdsc++; 
+          }
+        }
+      </div>
+
+      <div class="row" style="display: none;" id="sortaz">
+        @{
+          var productaz = Model.OrderBy(x => x.Name).ToList();
+          var index_productaz = 0;
+          foreach (var item in productaz)
+          {
+            var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+            <div data-number="@index_productaz" class="@colCss catalog-line allproducts" id="az-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+              @Html.Partial("_ProductBox", item)
+            </div>
+            index_productaz++; 
+          }
+        }
+      </div>
+      
+      <div class="row" style="display: none;" id="sortza">
+        @{
+          var productza = Model.OrderByDescending(x => x.Name).ToList();
+          var index_productza = 0;
+          foreach (var item in productza)
+          {
+            var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+            <div data-number="@index_productza" class="@colCss catalog-line allproducts" id="za-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+              @Html.Partial("_ProductBox", item)
+            </div>
+            index_productza++; 
+          }
+        }
+      </div>
+
+      <div class="row mt-5" style="display: none;" id="emptyproduct">
+        <div class="col-12 col-md-12 col-sm-12 text-center">
+          <h2>We're still preparing the collection. Please stay tuned.</h2>
         </div>
-
-        <div class="gap"></div>
       </div>
-    }
-    else
-    {
-      <p></p>
-      <div class="col-main-slim mt-5">
-        <h3 style="text-align:center;">
-          We are still preparing our collection.<br />
-          Stay tuned!
-        </h3>
-      </div>
-
-    }
-
-  </div>
-
-
-
-
+    </div>
+  } else {
+    <div class="row" style="padding: 10% 5% 0; position: relative; background-color: white;">
+      <div class="col-main-slim" style="max-height: 200px !important;"><h2>We're still preparing the collection. Please stay tuned.</h2></div>
+    </div>
+  }
 
 
 @*sticky thumbnail*@
 <script src="~/Themes/v1/Scripts/jquery.sticky.js"></script>
 <script>
-  $(document).ready(function () {
-    $("#productgallery").sticky({ topSpacing: 58 });
+	$('.nav-item a').click(function(){
+    $(this).tab('show')
+    var name = $(this).attr('href').substr(1)
+    $('#pills-tabContent2').children().each(function(el) {
+      if (name === $(this).attr('id')) {
+        $(this).addClass('active show')
+      } else {
+        $(this).removeClass('active show')
+      }
+    })
+  })
+  //console.log(`PRODUCT CATEGORY`);
+	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	//console.log(model);
+
+  var arr = [null, null, null, null, null, null, null], arr_multi_color = [], arr_multi_brand = [];
+  var all_arr = [], arr_none_cat = [], arr_none_color = [], arr_none_brand = [],arr_none_avail = [], arr_none_price = [], arr_none_new = [];
+  
+  $("[name=sortpageview]").click(function(){
+    var id = String(this.id, 10);
+    arr[4] = id;
+    startfilter();
+    all_arr = [];
+    $("[name=sortpageview]").each(function() {
+      var normal_id = String(this.id, 10);
+      if (normal_id == id) {
+        $(this).css("cssText", "color: #E1C2A4 !important");
+      } else {
+        $(this).css("cssText", "color: #525252 !important");
+      }
+    });
+  });
+  
+  $("[name=sortcatalog]").click(function(){
+    var id = String(this.id, 10);
+    arr[5] = id;
+    startfilter();
+    all_arr = [];
+    $("[name=sortcatalog]").each(function() {
+      var normal_id = String(this.id, 10);
+      if (normal_id == id) {
+        $(this).css("cssText", "color: #E1C2A4 !important");
+      } else {
+        $(this).css("cssText", "color: #525252 !important");
+      }
+    });
   });
 
-  $('#close-alert').click(function(){
-    $("#productgallery").sticky({ topSpacing: 10 });
+  // remove sort product
+  $('#removesort').click(function(){
+    if (document.querySelector('input[name="sortcatalog"]:checked')) {
+      document.querySelector('input[name="sortcatalog"]:checked').checked = false;
+      displaysortproduct("flex", "none", "none", "none", "none")
+      arr[5] = null
+      removesortnew();
+    }
+    startfilter();
   });
+
+  function removesortnew () {
+    //remove display using id
+     if (arr_none_new.length > 0) {
+      for (let i = 0; i < arr_none_new.length; i++) {
+        let temp = arr_none_new[i];
+        displayproduct(temp, "block");
+      }
+      arr_none_new = [];
+     }
+  }
+  
+  function getallarray () {
+    // get all arr
+    $(".allproducts").each(function() {
+      var normal_id = parseInt(this.id.replace("normal-", ""), 10);
+      if (normal_id) {
+        all_arr.push(parseInt(normal_id))
+      }
+    });
+  }
+
+  function startfilter () {
+    getallarray();
+
+    var ih = 0; 
+    var il = 0; 
+    var ia= 0; 
+    var iz = 0; 
+    var inr = 0; 
+    var iw = 0;
+    // start to filter the product
+    $(".allproducts").each(function(index) {
+      var product_id =  parseInt($(this).attr("id").replace("normal-", ""), 10);
+      var page_view_number = $(this).attr("data-number");
+
+      if (product_id) {
+        for (let i = 0; i < arr.length; i++) {
+
+          if (i == 4 && arr[i] && !arr[5]) {
+            displaypageview(arr[4], inr);
+            inr++;
+          }
+          // filter logic hightolow
+          if (i == 5 && arr[i]) {
+            if (arr[i].length > 0) {
+              if (arr[i] == "hightolow") {
+                displaysortproduct("none", "none", "flex", "none")
+                removesortnew();
+                displaypageview(arr[4], ih);
+                ih++;
+              } else if (arr[i] == "lowtohigh") {
+                displaysortproduct("none", "flex", "none", "none", "none")
+                displaypageview(arr[4], il);
+                il++;
+              } else if (arr[i] == "az") {
+                displaysortproduct("none", "none", "none", "flex", "none")
+                removesortnew();
+                displaypageview(arr[4], ia);
+                ia++;
+              } else if (arr[i] == "za") {
+                displaysortproduct("none", "none", "none", "none", "flex")
+                removesortnew();
+                displaypageview(arr[4], iz);
+                iz++;
+              } else if (arr[i] == "whatnew") {
+                var marknew = $(this).attr("data-new");
+                if (marknew == "True") {
+                  if (all_arr.find(element => parseInt(element) == parseInt(product_id))) {
+                    if (arr[4] == `all` || !arr[4]) {
+                      displayproduct(product_id, "block");
+                    } else if (arr[4]){
+                      displaypageview(arr[4], product_id, true, iw);
+                    }
+                  }
+                  iw++;
+                } else {
+                  if (all_arr.find(element => parseInt(element) == parseInt(product_id))) {
+                    all_arr = all_arr.filter(id => parseInt(id) !== parseInt(product_id));
+                    arr_none_new.push(parseInt(product_id));
+                    arr_none_new = [...new Set(arr_none_new)];
+                    displayproduct(product_id, "none");
+                  }
+                }
+              }
+            }
+          } 
+        }
+      }
+    });
+
+    if (all_arr.length == 0) {
+      $('#emptyproduct').css("display", "block");
+    } else {
+      $('#emptyproduct').css("display", "none");
+    }
+  }
+
+  function displaysortproduct (normal, asc, desc, az, za) {
+    $("#sortnormal").css("display", normal);
+    $("#sortascending").css("display", asc);
+    $("#sortdescending").css("display", desc);
+    $("#sortaz").css("display", az);
+    $("#sortza").css("display", za);
+  }
+  
+  function displayproductpageview (number, value) {
+    $('div[data-number='+number+']').css("display", value);
+  }
+  
+  function displaypageview(page, index, newin, newindex) {
+    if (page) {
+      if (page == "all" && !newin) displayproductpageview(index, "block");
+      else if (index < parseInt(page) && !newin) displayproductpageview(index, "block");
+      else if (!newin) displayproductpageview(index, "none");
+
+      if (page == "all" && newin) displayproduct(index, "block");
+      else if (newindex < parseInt(page) && newin) displayproduct(index, "block");
+      else if (newin) displayproduct(index, "none");
+      
+    }
+  }
+
+  function displayproduct (id, value) {
+    $('#normal-'+id).css("display", value);
+    $('#asc-'+id).css("display", value);
+    $('#desc-'+id).css("display", value);
+    $('#az-'+id).css("display", value);
+    $('#za-'+id).css("display", value);
+  }
+
+  function blockproduct (data) {
+    for (let i = 0; i < data.length; i++) {
+      let temp = data[i];
+      displayproduct(temp, "block");
+    }
+  }
+  
 </script>
