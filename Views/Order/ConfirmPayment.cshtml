@@ -36,12 +36,20 @@
                                 @Html.ValidationSummary(true)
                             </div>
 
-
-                            <div class="form-fields">
-                                <div class="form-group">
-                                    @Html.DropDownListFor(model => model.Id, new SelectList(Model.PendingOrder, "OrderId", "DispayText"), null, new { @class = "form-control" })
+                            @if (Model.Guest == 1) {
+                                <div class="form-fields">
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", placeholder = "Order#"} })
+                                        @Html.ValidationMessageFor(model => model.Id)
+                                    </div>
                                 </div>
-                            </div>
+                            } else {
+                                <div class="form-fields">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(model => model.Id, new SelectList(Model.PendingOrder, "OrderId", "DispayText"), null, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            }
                             <div class="form-fields">
                                 <div class="form-group">
                                     @Html.EditorFor(model => model.BankAccountNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Account Number"} })
@@ -84,9 +92,10 @@
                             
                             <div class="form-fields">
                                 <div class="form-group">
-                                    @Html.TextBoxFor(model => model.File1, new {type = "file", @class = "form-control", placeholder = "Upload Confrim Payment", required = "required"})
-                                    @Html.RequiredHint()
-                                    @Html.ValidationMessageFor(model => model.File1)
+                                    <input type="file" id="File1" name="File1" accept="image/png, image/jpeg, image/jpg" required = "required">
+                                    @* @Html.RequiredHint() *@
+                                    @* @Html.ValidationMessageFor(model => model.File1) *@
+                                    @* @Html.TextBoxFor(model => model.File1, new {type = "file", @class = "form-control", placeholder = "Upload Confrim Payment", required = "required"}) *@
                                 </div>
                             </div>
 
