@@ -156,8 +156,8 @@
               date2 = d2.ToString("yyyyMMddHHmmss"); 
 
               if (open) {
-                <div class="mb-2 ml-3">
-                  <a style="line-height: initial; padding: 0; font-size: 16px;" href="/catalog/comingsoon?type=coming-soon&start_date=@date2&end_date=@date1">
+                <div role="tab" id="Headingheader-@category.SeName">
+                  <a style="font-size: 16px; text-transform: uppercase;" href="/catalog/comingsoon?type=coming-soon&start_date=@date2&end_date=@date1">
                     @category.Name
                   </a>
                 </div>

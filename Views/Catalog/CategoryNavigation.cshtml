@@ -156,7 +156,13 @@
                 }
               }
 
-              if (index == Model.Categories.Count() - 2) {
+              if (index == Model.Categories.Count() - 1) {
+                 <a class="category-item headertextcolor" style="@text_header_color" href="/order/ConfirmPayments">
+                    PAYMENT CONFIRMATION
+                  </a>
+                  <a id="flash-sale-header" class="category-item headertextcolor" style="@text_header_color" href="/flashsale/show">
+                    FLASH SALE
+                  </a>
                 if (category.SeName == "coming-soon") {
                   DateTime d1, d3;
                   DateTime d2 = DateTime.Now;
@@ -176,12 +182,6 @@
                   }
 
                 }
-                <a class="category-item headertextcolor" style="@text_header_color" href="/order/ConfirmPayments">
-                  PAYMENT CONFIRMATION
-                </a>
-                <a id="flash-sale-header" class="category-item headertextcolor" style="@text_header_color" href="/flashsale/show">
-                  FLASH SALE
-                </a>
               }
               index++;
             }
@@ -487,4 +487,3 @@
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
 	//console.log(model);
 </script>
-
