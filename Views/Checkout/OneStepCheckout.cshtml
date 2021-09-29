@@ -348,6 +348,13 @@
       ignore: ":hidden"
     });
 
+    function ResetShippingMethod() {
+      $("#grandtotal-number").text(`Calculated during checkout`);
+      $("#shipping-method-select").val("-1");
+      $("#shippingcost-number").text(`Choose Shipping Method`);
+      checkout_obj.shipping_method = null;
+    }
+
     function CloseFormAddress(type) {
       $('#'+type.toLowerCase()+'-new-address-form').css('display', 'none');
 
@@ -459,6 +466,7 @@
         $('#check-same-as').prop('checked', false);
         alert("Please choose billing address")
       }
+      ResetShippingMethod();
     }
 
     async function ChooseAddress(value, type, from_checkbox) {
@@ -469,6 +477,7 @@
         $("#billing-please-wait").css("display", "flex");
       } else {
         $("#shipping-please-wait").css("display", "flex");
+        ResetShippingMethod();
       }
 
       if (value == "default") {
@@ -636,7 +645,7 @@
         var fetch_data = await FetchAjax("post", "/shoppingcart/OrderTotalsJson?iseditable=false", null);
         if (fetch_data) {
           let subtotal_number = fetch_data.SubTotal ? fetch_data.SubTotal : `IDR 0`;
-          let shipping_number = fetch_data.Shipping ? fetch_data.Shipping : `Calculated during checkout`;
+          let shipping_number = fetch_data.Shipping && checkout_obj.shipping_method ? fetch_data.Shipping : `Calculated during checkout`;
           let disc_number = fetch_data.SubTotalDiscount && checkout_obj.discount_code ? fetch_data.SubTotalDiscount : `IDR 0`;
           let grandtotal_number = fetch_data.OrderTotal ? fetch_data.OrderTotal : `Calculated during checkout`;
           setTimeout(function() {

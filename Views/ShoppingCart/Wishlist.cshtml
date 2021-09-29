@@ -66,9 +66,9 @@
                                     <div class="col-md-6 col-sm-6 d-flex justify-content-center align-items=center">
                                         <span class="worksans-medium" style="font-size: 20px; color: #525252">Product</span>
                                     </div>
-                                    <div class="col-md-6 col-sm-6 d-flex justify-content-center align-items=center">
+                                    @* <div class="col-md-6 col-sm-6 d-flex justify-content-center align-items=center">
                                         <span class="worksans-medium" style="font-size: 20px; color: #525252">Price</span>
-                                    </div>
+                                    </div> *@
                                 </div>
                             </div>
                             
@@ -86,7 +86,7 @@
                                             <p class="m-0 worksans-medium" style="color: #525252; font-size: 18px; text-decoration: capitalize;">@item.ProductName</p>
                                             <span style="color: #525252; font-size: 16px">@Html.Raw(item.AttributeInfo)</span>
                                             <p class="m-0" style="color: #525252; font-size: 16px">@item.Quantity</p>
-                                            <div class="row m-0 p-0 d-flex justify-content-center align-items-center">
+                                            <div class="row m-0 p-0 d-flex justify-content-start align-items-center">
                                                 @if (Model.DisplayAddToCart)
                                                 {
                                                     <input 
@@ -114,9 +114,9 @@
                                                 } *@
                                             </div>
                                         </div>
-                                        <div class="col-6 col-md-4 col-sm-4 d-flex justify-content-start align-items-center">
+                                        @* <div class="col-6 col-md-4 col-sm-4 d-flex justify-content-start align-items-center">
                                             <p class="m-0" style="color: #525252; font-size: 16px">@item.SubTotal</p>
-                                        </div>
+                                        </div> *@
                                     </div>
                                 </div>
 
@@ -134,9 +134,9 @@
                                             <p class="m-0" style="color: #525252; font-size: 16px">@item.Quantity</p>
                                             
                                         </div>
-                                        <div class="col-6 col-md-6">
+                                        @* <div class="col-6 col-md-6">
                                             <p class="m-0" style="text-align: right; color: #525252; font-size: 16px">@item.SubTotal</p>
-                                        </div>
+                                        </div> *@
                                     </div>
 
                                     <div class="">
