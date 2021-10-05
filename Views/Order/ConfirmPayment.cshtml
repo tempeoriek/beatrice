@@ -12,26 +12,33 @@
         @*@Html.Action("CustomerNavigation", "Customer", new { selectedTabId = CustomerNavigationEnum.ConfirmPayment, isMobile = true })*@
 
         <h1 class="text-center mb-5">Payment Confirmation</h1>
-        @using (Html.BeginForm("ConfirmPaymentCompleted", "Order", FormMethod.Post, new { id = "confirmPayment" }))
+        @using (Html.BeginForm("ConfirmPaymentCompleted", "Order", FormMethod.Post, new { id = "confirmPayment" , enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
             <div class="panel panel-default">
                 @{
 
-                    if (Model.PendingOrder.Count == 0)
+                    if (Model.Guest == 0 && (Model.PendingOrder.Count == 0))
                     {
-                        <div class="panel-body">
-                            <p class="text-center">
-                                You have no payment to confirm
-                            </p>
-                        </div>
-
-                    }
+                       <div class="panel-body"><p class="text-center">You have no payment to confirm</p></div>
+                    }                    
                     else
                     {
                         //Begin form
+
                         <div class="panel-body">
+                        
+                            <p>
+                                You can wire the payment to the following bank account:<br />
+                                <br />
+                                Beatrice Clothing<br />
+                                BCA XXX.XXX.XXX<br />
+                                KCP XXX
+                                <br /><br />
+                            </p>
+
+                            
                             <div class="message-error">
                                 @Html.ValidationSummary(true)
                             </div>
@@ -50,6 +57,8 @@
                                     </div>
                                 </div>
                             }
+
+
                             <div class="form-fields">
                                 <div class="form-group">
                                     @Html.EditorFor(model => model.BankAccountNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Account Number"} })
@@ -100,7 +109,7 @@
                             </div>
 
 
-                            <div class="buttons">
+                            <div class="buttons mt-30px">
                                 <button type="submit" id="submit-button" name="submit-button" class="btn btn-default" data-loading-text="Processing...">Confirm payment</button>
                                 @Html.HiddenFor(model => model.Guest)
                                 @*<br /><br>

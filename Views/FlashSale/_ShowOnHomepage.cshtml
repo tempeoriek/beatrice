@@ -2,23 +2,29 @@
 @model IEnumerable<FlashSaleViewModel>
 
 @{
-  var data_flash_sale = Model.Where(c => c.status != "finished");
+  var data_flash_sale = Model;
+  @* var data_flash_sale = Model.ToList()[0].flashsale.Where(c => c.status != "finished"); *@
 }
 
-@if (Model != null)
-{
-    if (data_flash_sale.Any()) {
-      <div class="mb-5">
-        @for (var k = 0; k < data_flash_sale.Count(); k++)
-        {
-          if (k == 0) {
-            var session = data_flash_sale.ToList()[k];
+
+@if (data_flash_sale.Any()) {
+  <div class="mb-5">
+    @{
+      int flag = 0;
+      for (var k = 0; k < data_flash_sale.Count(); k++)
+      {
+        var sessions = data_flash_sale.ToList()[k].flashsale;
+
+        for (var q = 0; q < sessions.Count(); q++) {
+          var session = sessions.ToList()[q];
+          if (session.status != "finished" && flag == 0) {
             List<string> date_start = session.start_date.Split(',').ToList();
             List<string> date_time_start = session.start_time.Split(':').ToList();
             List<string> date_end = session.end_date.Split(',').ToList();
             List<string> date_time_end = session.end_time.Split(':').ToList();
             string start_date = date_start[0] + date_time_start[0] + date_time_start[1];
             string end_date = date_end[0] + date_time_end[0] + date_time_end[1];
+            flag++;
 
             start_date = null;
             end_date = null;
@@ -81,8 +87,6 @@
                         <p class="m-0 p-0 worksans-reg text-demo" style="text-decoration:line-through; font-size: 18px; color: #BCBCBC;">@temp.ProductPrice.Price</p> &nbsp;
                         @{
                           var price_for_flashsale = session.status == "coming soon" ? "???.000" : String.Format( "{0:#,##0.##}", temp.FlashSalePrice );
-                          @* var price_for_flashsale = session.status == "coming soon" ? temp.FlashSalePrice > 100000 ? temp.FlashSalePrice.ToString().Substring(0, 1) + "XX.XXX" : temp.FlashSalePrice.ToString().Substring(0, 1) + "X.XXX" : 
-                            String.Format( "{0:#,##0.##}", temp.FlashSalePrice ); *@
                           <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #9D3131;">
                             IDR @price_for_flashsale
                           </p>
@@ -146,8 +150,6 @@
                         <p class="m-0 p-0 worksans-reg text-demo" style="text-decoration:line-through; font-size: 13px !important; color: #BCBCBC;">@temp.ProductPrice.Price</p> &nbsp;
                         @{
                           var price_for_flashsale = session.status == "coming soon" ? "???.000" : String.Format( "{0:#,##0.##}", temp.FlashSalePrice );
-                          @*var price_for_flashsale = session.status == "coming soon" ? temp.FlashSalePrice > 100000 ? temp.FlashSalePrice.ToString().Substring(0, 1) + "XX.XXX" : temp.FlashSalePrice.ToString().Substring(0, 1) + "X.XXX" : 
-                            String.Format( "{0:#,##0.##}", temp.FlashSalePrice ); *@
                           <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 13px !important; color: #9D3131;">IDR @price_for_flashsale</p>
                         }
                       </div>
@@ -163,77 +165,14 @@
                   </div>
                 }
               </div>
-            </div>        
+            </div>
           }
         }
-      </div>
-    } else {
-      @* <div class="d-none d-md-block hidden-xs hidden-sm">
-        <div class="row mx-3 mb-5">
-          @for(var i = 0; i < 6 ; i++) {
-            <div class="col-6 col-sm-4 col-md-4 mt-4">
-              <div class="flash-sale-pad" style="width: 100%;">
-                <div class="row m-0 p-0" style="width: inherit;">
-                  <a href="/anika-short?type=flash-sale&date=26-08-2021T18:00:00" class="clean" style="width: inherit;">
-                    <img src="~/Themes/v1/Content/images/flashsale/show.jpg" class="img-fluid center-block" style="position: relative; width: 100%"/>
-                    <div style="top: 0; position: absolute; height: 10%; width: 16%; background-color: #9D3131;">
-                      <p class="m-0 flash-sale-text" style="font-size: 18px; display: flex !important; justify-content: center; align-items: center;">10% <br> OFF</p>
-                    </div>
-                  </a>
-                </div>
-                <div class="row m-0 p-0 my-2" style="width: inherit;">
-                  <a href="/anika-short?type=flash-sale&date=26-08-2021T18:00:00" class="clean" style="text-decoration: none;">
-                    <p class="m-0 p-0 worksans-medium text-demo" style="font-size: 18px; color: #525252;">Valen Dress</p>
-                  </a>
-                </div>
-                <div class="row m-0 p-0 mb-2" style="width: inherit;">
-                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #525252;">IDR 224.000</p>
-                </div>
-                <div class="row m-0 p-0 mb-2" style="width: inherit;">
-                  <progress id="@i-product" value="32" max="100" style="width: 100%; height: 8px;"/>
-                </div>
-                <div class="row m-0 p-0" style="width: inherit;">
-                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #525252;">Available</p>
-                </div>
-              </div>
-            </div>
-          }
-        </div>
-      </div>
-      
-      <div class="d-block d-md-none hidden-md hidden-xl">
-        <div class="row mx-3 mb-5">
-          @for(var i = 0; i < 4 ; i++) {
-            <div class="col-6 col-sm-4 col-md-4 mt-4">
-              <div class="flash-sale-pad" style="width: 100%;">
-                <div class="row m-0 p-0" style="width: inherit;">
-                  <a href="/anika-short?type=flash-sale&date=26-08-2021T18:00:00" class="clean" style="width: inherit;">
-                    <img src="~/Themes/v1/Content/images/flashsale/show.jpg" class="img-fluid center-block" style="position: relative; width: 100%"/>
-                    <div style="top: 0; position: absolute; height: 10%; width: 16%; background-color: #9D3131;">
-                      <p class="m-0 flash-sale-text" style="font-size: 12px; line-height: 17px;">10% OFF</p>
-                    </div>
-                  </a>
-                </div>
-                <div class="row m-0 p-0 my-2" style="width: inherit;">
-                  <a href="/anika-short?type=flash-sale&date=26-08-2021T18:00:00" class="clean" style="text-decoration: none;">
-                    <p class="m-0 p-0 worksans-medium text-demo" style="font-size: 18px; color: #525252;">Valen Dress</p>
-                  </a>
-                </div>
-                <div class="row m-0 p-0 mb-2" style="width: inherit;">
-                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #525252;">IDR 224.000</p>
-                </div>
-                <div class="row m-0 p-0 mb-2" style="width: inherit;">
-                  <progress id="@i-product" value="32" max="100" style="width: 100%; height: 8px;"/>
-                </div>
-                <div class="row m-0 p-0" style="width: inherit;">
-                  <p class="m-0 p-0 worksans-reg text-demo" style="font-size: 18px; color: #525252;">Available</p>
-                </div>
-              </div>
-            </div>
-          }
-        </div>
-      </div> *@
+      }
     }
+  </div>
+} else {
+
 }
 
 
@@ -242,45 +181,53 @@
 <script>
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
   //console.log(model)
+  let flag = 0;
   let today = new Date();
   let date_today = new Date(`${today.getFullYear()}, ${today.getMonth()}, ${today.getDate()}`);
-  let data = model.filter(mf => mf.status != `finished`).length > 0 ? model.filter(mf => mf.status != `finished`)[0] : null;
-  if (data) {
-    let start_day = data.start_date ? new Date(data.start_date).getDate() : null;
-    let start_month = data.start_date ? new Date(data.start_date).getMonth() : null;
-    let start_year = data.start_date ? new Date(data.start_date).getFullYear() : null;
-    
-    let end_day = data.end_date ? new Date(data.end_date).getDate() : null;
-    let end_month = data.end_date ? new Date(data.end_date).getMonth() : null;
-    let end_year = data.end_date ? new Date(data.end_date).getFullYear() : null;
-
-    let start_date = data.start_date ? `${start_month+1}/${start_day}/${start_year} ${data.start_time}:00` : null;
-    let end_date = data.end_date ? `${end_month+1}/${end_day}/${end_year} ${data.end_time}:00` : null;
-    let only_start_date = data.start_date ? new Date(`${start_year}, ${start_month}, ${start_day}`) : null;
-    let only_end_date = data.end_date ? new Date(`${end_year}, ${end_month}, ${end_day}`) : null;
-    var countDownDate = new Date(end_date).getTime();
-
-    var x2 = setInterval(function() {
-      var now = new Date().getTime();
+  //let data = model.length > 0 && model[0].flashsale.filter(mf => mf.status != `finished`).length > 0 ? model[0].flashsale.filter(mf => mf.status != `finished`)[0] : null;
+  for (let i = 0 ; i < model.length; i++) {
+    let temp_model = model[i].flashsale;
+    for (let h = 0 ; h < temp_model.length; h++) {
+      let data = temp_model[h];
+      if (data && data.status != "finished" && flag == 0) {
+        flag++;
+        let start_day = data.start_date ? new Date(data.start_date).getDate() : null;
+        let start_month = data.start_date ? new Date(data.start_date).getMonth() : null;
+        let start_year = data.start_date ? new Date(data.start_date).getFullYear() : null;
         
-      var distance = countDownDate - now;
-        
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        let end_day = data.end_date ? new Date(data.end_date).getDate() : null;
+        let end_month = data.end_date ? new Date(data.end_date).getMonth() : null;
+        let end_year = data.end_date ? new Date(data.end_date).getFullYear() : null;
 
-      if (distance > 0) {
-        var text_info = data.status == "on going" ? `Ended` : `Available`;
-        var text_count = `${text_info} in ${days} : ${hours} : ${minutes} : ${seconds}`;
-        document.getElementById("demo-flashsale").innerHTML = text_count;
-      } else if (distance < 0) {
-        clearInterval(x2);
-        document.getElementById("demo-flashsale").innerHTML = "Ended";
+        let start_date = data.start_date ? `${start_month+1}/${start_day}/${start_year} ${data.start_time}:00` : null;
+        let end_date = data.end_date ? `${end_month+1}/${end_day}/${end_year} ${data.end_time}:00` : null;
+        let only_start_date = data.start_date ? new Date(`${start_year}, ${start_month}, ${start_day}`) : null;
+        let only_end_date = data.end_date ? new Date(`${end_year}, ${end_month}, ${end_day}`) : null;
+        var countDownDate = new Date(end_date).getTime();
+
+        var x2 = setInterval(function() {
+          var now = new Date().getTime();
+            
+          var distance = countDownDate - now;
+            
+          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          if (distance > 0) {
+            var text_info = data.status == "on going" ? `Ended` : `Available`;
+            var text_count = `${text_info} in ${days} : ${hours} : ${minutes} : ${seconds}`;
+            document.getElementById("demo-flashsale").innerHTML = text_count;
+          } else if (distance < 0) {
+            clearInterval(x2);
+            document.getElementById("demo-flashsale").innerHTML = "Ended";
+          }
+        }, 1000);
+      } else {
+        @* $('#flash-sale-header').addClass('display-header'); *@
       }
-    }, 1000);
-  } else {
-    @* $('#flash-sale-header').addClass('display-header'); *@
+    }
   }
 	
 </script>

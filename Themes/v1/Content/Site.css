@@ -1581,10 +1581,54 @@ a.dropdown-item {
 
 
 
+.day-flashsale-tab {
+    width: 100%;
+    color: #9D3131; 
+    font-size: 20px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    background-color: transparent;
+    padding: 5px;
+}
 
+.day-flashsale-tab.active {
+    width: 100%;
+    color: #9D3131; 
+    font-size: 20px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 10px;
+    border: 2px solid #9D3131;
+}
+
+.time-flashsale-content {
+    background-color: #9D3131;
+    width: 120%;
+    margin-left: -10% !important;
+}
 
 
 /*sign in sign up*/
+.nav-pills-days .nav-link-days {
+    border-radius: 0;
+}
+
+    .nav-pills-days .nav-link-days.active,
+    .nav-pills-days .show > .nav-link-days,
+    .nav-pills-days .show > .nav-link-days:hover,
+    .nav-pills-days .nav-link-days:hover {
+        background-color: transparent;
+        color: #9D3131;
+        border-radius: 0;
+        font-size: 18px;
+        padding: 5px;
+        border-radius: 10px;
+        border: 2px solid #9D3131;
+    }
 .nav-pills-clock .nav-link-clock {
     border-radius: 0;
 }

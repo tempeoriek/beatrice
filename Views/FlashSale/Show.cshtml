@@ -7,183 +7,233 @@
     string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
     var styleDivCenterDesktop = "position: absolute; top: 0; left: 0; height: 100%; width: 100%; right: 0; bottom: 0;";
     var styleContentCenterDeskopFlashSale = "font-size: 40px; color: white; display: flex; justify-content: center; align-items: center; height: 100%;";
-    var title_flashsale = Model.Count() > 0 ? Model.ToList()[0].Name : "Flash Sale";
     DateTime today = DateTime.Now;
-    var temp_model = Model.Where(c => c.status != "finished");
+    @* var temp_model = Model.Where(c => c.status != "finished");
     var models = temp_model.ToList().Count() > 0 ? temp_model.ToList()[0] : null;
-    var data_flash_sale = models != null ? Model.Where(c =>  DateTime.Parse(models.start_date).Date == DateTime.Parse(c.start_date).Date) : null;
+    var data_flash_sale = models != null ? Model.Where(c =>  DateTime.Parse(models.start_date).Date == DateTime.Parse(c.start_date).Date) : null; *@
+    var data_flash_sale = Model;
 }
 
 
 <div class="row d-none d-md-block carousel" style="margin: 15px 0; margin-bottom: 0; position: relative;"> 
   <img class="d-block w-100" src="@String.Format("/Content/Images/uploaded/categories/flashsale.jpg")"> 
   <div class="text-center" style="@styleDivCenterDesktop">
-    <h1 style="@styleContentCenterDeskopFlashSale">@title_flashsale</h1>
+    <h1 class="title-page-flashsale" style="@styleContentCenterDeskopFlashSale">Flash Sale</h1>
   </div>
 </div>
 
 <div class="row d-block d-md-none carousel" style="position: relative;"> 
   <img style="left: 50%; position: relative; transform: translateX(-50%);" class="d-block" src="@String.Format("/Content/Images/uploaded/categories/flashsale.jpg")"> 
   <div class="text-center" style="@styleDivCenterDesktop">
-    <h1 style="@styleContentCenterDeskopFlashSale">@title_flashsale</h1>
+    <h1 class="title-page-flashsale" style="@styleContentCenterDeskopFlashSale">Flash Sale</h1>
   </div>
 </div>
 
 
-@if (data_flash_sale != null)
+@if (data_flash_sale.Any())
 {
-  <div class="row p-0 m-0 mb-5" style="background-color: #9D3131; width: 120%; margin-left: -10% !important;">
-    <div class="col-md-1 col-sm-1"></div>
-    <div class="col-12 col-md-5 col-sm-5 time-flash-sale"> 
-      <ul class="nav nav-pills-clock" id="pills-tab" role="tablist">
-        @{
-          for (int i = 0; i < data_flash_sale.Count(); i++)
-          {
-              var temp = data_flash_sale.ToList();
-              var fs = temp[i];
-
-              <li class="nav-item" style="margin-right: 15px;">
-                <a style="color: white; font-size: 20px;" class="worksans-medium nav-link-clock @(@i == 0 ? "active" : "") " id="pills-id-@i" data-toggle="pill" href="#pills-@i" role="tab" aria-controls="pills-@i" aria-selected="true">
-                  @fs.start_time
-                </a>
-              </li>
-          }
-        }
-      </ul>
-    </div>
-    <div class="col-md-5 col-sm-5 countdown-flash-sale"> 
-      <div class="tab-content" id="pills-tabContent">
-        @for (int z = 0; z < data_flash_sale.Count(); z++)
-        {
-          <div class="tab-pane fade @(@z == 0 ? "show active" : "")" id="pills-@z" role="tabpanel" aria-labelledby="pills-id-@z">
-            <span class="worksans-reg" style="font-style: italic; color: white; font-size: 19px;" id="demo-@z" />
-          </div>
-        }
-      </div>
-    </div>
-    <div class="col-md-1 col-sm-1"></div>
-  </div>
-
-  <div class="row m-0" style="padding: 5% 5% 10px;">
-    <div class="col-1 col-sm-8 col-md-8 p-0" style="display: flex; justify-content: flex-start; align-items: center;">
-    </div>
-
-    <div class="col-11 col-sm-4 col-md-4 p-0" style="display: flex; justify-content: flex-end; align-items: center; ">
-      <span class="text-view-hover" name="sortpageview" id="all">VIEW ALL</span>
-      <span style="font-size: 16px; color: #525252; margin-left: 20px;">SHOW:</span>
-      <span class="text-view-hover" name="sortpageview" id="15">15</span>
-      <span class="text-view-hover" name="sortpageview" id="30">30</span>
-      <span class="text-view-hover" name="sortpageview" id="45">45</span>
-    </div>
-  </div>
-  <hr class="d-block d-md-none" />
-
-  for (int p = 0; p < data_flash_sale.Count(); p++)
-  {
-    var temp2 = data_flash_sale.ToList();
-    var products = temp2[p].Products;
-    var style_display = p == 0 ? "display: block" : "display: none";
-    if (products.Count() > 0) {
-      
-      
-      <div class="list-products-class" style="@style_display; padding: 0 5% 0; position: relative; background-color: white;" id="list-products-@p">
-        <div class="row" id="sortnormal">
-          @{
-            var productnormal = products;
-            var index_productnormal = 0;
-            foreach (var item in productnormal)
-            {
-              var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
-              <div data-number="@index_productnormal" class="@colCss catalog-line allproducts" id="normal-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
-                @Html.Partial("_ProductBox", item)
-              </div>
-              index_productnormal++; 
-            }
-          }
+  //DAYS FLASH SALE
+  <div class="row p-0 m-0" style="background-color: white; height: 65px;">
+    @for (int q = 0; q < data_flash_sale.Count(); q++) {
+      var tab_days = data_flash_sale.ToList();
+      var tab_day = tab_days[q];
+      var title_text = tab_day.flashsale.ToList()[0];
+      if (q <= 4) {
+        <div class="col-3 col-md-3 col-sm-3 d-flex justify-content-center align-items-center">
+          <a id="tabDaysFlashSale-@q" class="worksans-medium day-flashsale-tab @(@q == 0 ? "active" : "")" style="text-decoration: none; cursor: pointer;" data-name="@title_text.Name">
+            @tab_day.date_formated
+          </a>
         </div>
+      }
 
-        <div class="row" style="display: none;" id="sortascending">
-          @{
-            var productasc = products.OrderBy(x => x.ProductPrice.PriceValue);
-            var index_productasc = 0;
-            foreach (var item in productasc)
-            {
-              var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
-              <div data-number="@index_productasc" class="@colCss catalog-line allproducts" id="asc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
-                @Html.Partial("_ProductBox", item)
-              </div>
-              index_productasc++; 
-            }
-          }
-        </div>
-
-        <div class="row" style="display: none;" id="sortdescending">
-          @{
-            var productdsc = products.OrderByDescending(x => x.ProductPrice.PriceValue);
-            var index_productdsc = 0;
-            foreach (var item in productdsc)
-            {
-              var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
-              <div data-number="@index_productdsc" class="@colCss catalog-line allproducts" id="desc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
-                @Html.Partial("_ProductBox", item)
-              </div>
-              index_productdsc++; 
-            }
-          }
-        </div>
-
-        <div class="row" style="display: none;" id="sortaz">
-          @{
-            var productaz = products.OrderBy(x => x.Name).ToList();
-            var index_productaz = 0;
-            foreach (var item in productaz)
-            {
-              var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
-              <div data-number="@index_productaz" class="@colCss catalog-line allproducts" id="az-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
-                @Html.Partial("_ProductBox", item)
-              </div>
-              index_productaz++; 
-            }
-          }
-        </div>
-        
-        <div class="row" style="display: none;" id="sortza">
-          @{
-            var productza = products.OrderByDescending(x => x.Name).ToList();
-            var index_productza = 0;
-            foreach (var item in productza)
-            {
-              var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
-              <div data-number="@index_productza" class="@colCss catalog-line allproducts" id="za-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
-                @Html.Partial("_ProductBox", item)
-              </div>
-              index_productza++; 
-            }
-          }
-        </div>
-
-        <div class="row mt-5" style="display: none;" id="emptyproduct">
-          <div class="col-12 col-md-12 col-sm-12 text-center">
-            <h2>We're still preparing the flash sale product. Please stay tuned.</h2>
-          </div>
-        </div>
-      </div>
-    } else {
-      <div class="list-products-class row" style="@style_display; padding: 10% 5% 0; position: relative; background-color: white;" id="list-products-none-@p">
-        <div class="col-main-slim text-center" style="max-height: 200px !important;"><h2>We're still preparing the flash sale @temp2[p].start_time. Please stay tuned.</h2></div>
-      </div>
     }
+  </div>
+
+  //CONTENT FOR FLASH SALE
+  for (int j = 0; j < data_flash_sale.Count(); j++)
+  {
+    var days = data_flash_sale.ToList();
+    var day = days[j];
+
+    <div id="timeFlashsaleContent-@j" style="@(@j == 0? "display: block" : "display: none");">
+      @* TIME FLASH SALE *@
+      <div class="row p-0 m-0 mb-5 time-flashsale-content">
+        <div class="col-md-1 col-sm-1"></div>
+        <div class="col-12 col-md-5 col-sm-5 time-flash-sale"> 
+          <ul class="nav nav-pills-clock" id="pills-tab" role="tablist">
+            @for (int i = 0; i < day.flashsale.Count(); i++)
+            {
+                var temp = day.flashsale.ToList();
+                var fs = temp[i];
+
+                <li class="nav-item" style="margin-right: 15px;">
+                  <a style="color: white; font-size: 20px;" class="worksans-medium nav-link-clock @(@i == 0 ? "active" : "") " id="pills-id-@i" data-toggle="pill" href="#pills-@i" role="tab" aria-controls="pills-@i" aria-selected="true" data-name="@fs.Name">
+                    @fs.start_time
+                  </a>
+                </li>
+            }
+          </ul>
+        </div>
+        <div class="col-md-5 col-sm-5 countdown-flash-sale"> 
+          <div class="tab-content" id="pills-tabContent">
+            @for (int z = 0; z < day.flashsale.Count(); z++)
+            {
+              <div class="tab-pane fade @(@z == 0 ? "show active" : "")" id="pills-@z" role="tabpanel" aria-labelledby="pills-id-@z">
+                <span class="worksans-reg" style="font-style: italic; color: white; font-size: 19px;" id="demo-@j-@z" />
+              </div>
+            }
+          </div>
+        </div>
+        <div class="col-md-1 col-sm-1"></div>
+      </div>
+
+      @* FILTER PAGE PRODUCT *@
+      <div class="row m-0" style="padding: 5% 5% 10px;">
+        <div class="col-1 col-sm-8 col-md-8 p-0" style="display: flex; justify-content: flex-start; align-items: center;">
+        </div>
+
+        <div class="col-11 col-sm-4 col-md-4 p-0" style="display: flex; justify-content: flex-end; align-items: center; ">
+          <span class="text-view-hover" name="sortpageview" id="all">VIEW ALL</span>
+          <span style="font-size: 16px; color: #525252; margin-left: 20px;">SHOW:</span>
+          <span class="text-view-hover" name="sortpageview" id="15">15</span>
+          <span class="text-view-hover" name="sortpageview" id="30">30</span>
+          <span class="text-view-hover" name="sortpageview" id="45">45</span>
+        </div>
+      </div>
+      <hr class="d-block d-md-none" />
+
+
+      @* PRODUCT CATALOG *@
+      @for (int p = 0; p < day.flashsale.Count(); p++)
+      {
+        var temp2 = day.flashsale.ToList();
+        var products = temp2[p].Products;
+        var style_display = p == 0 ? "display: block" : "display: none";
+        if (products.Count() > 0) {
+          <div class="list-products-class" style="@style_display; padding: 0 5% 0; position: relative; background-color: white;" id="list-products-@p">
+            <div class="row" id="sortnormal">
+              @{
+                var productnormal = products;
+                var index_productnormal = 0;
+                foreach (var item in productnormal)
+                {
+                  var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+                  <div data-number="@index_productnormal" class="@colCss catalog-line allproducts" id="normal-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+                    @Html.Partial("_ProductBox", item)
+                  </div>
+                  index_productnormal++; 
+                }
+              }
+            </div>
+
+            <div class="row" style="display: none;" id="sortascending">
+              @{
+                var productasc = products.OrderBy(x => x.ProductPrice.PriceValue);
+                var index_productasc = 0;
+                foreach (var item in productasc)
+                {
+                  var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+                  <div data-number="@index_productasc" class="@colCss catalog-line allproducts" id="asc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+                    @Html.Partial("_ProductBox", item)
+                  </div>
+                  index_productasc++; 
+                }
+              }
+            </div>
+
+            <div class="row" style="display: none;" id="sortdescending">
+              @{
+                var productdsc = products.OrderByDescending(x => x.ProductPrice.PriceValue);
+                var index_productdsc = 0;
+                foreach (var item in productdsc)
+                {
+                  var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+                  <div data-number="@index_productdsc" class="@colCss catalog-line allproducts" id="desc-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+                    @Html.Partial("_ProductBox", item)
+                  </div>
+                  index_productdsc++; 
+                }
+              }
+            </div>
+
+            <div class="row" style="display: none;" id="sortaz">
+              @{
+                var productaz = products.OrderBy(x => x.Name).ToList();
+                var index_productaz = 0;
+                foreach (var item in productaz)
+                {
+                  var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+                  <div data-number="@index_productaz" class="@colCss catalog-line allproducts" id="az-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+                    @Html.Partial("_ProductBox", item)
+                  </div>
+                  index_productaz++; 
+                }
+              }
+            </div>
+            
+            <div class="row" style="display: none;" id="sortza">
+              @{
+                var productza = products.OrderByDescending(x => x.Name).ToList();
+                var index_productza = 0;
+                foreach (var item in productza)
+                {
+                  var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+                  <div data-number="@index_productza" class="@colCss catalog-line allproducts" id="za-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+                    @Html.Partial("_ProductBox", item)
+                  </div>
+                  index_productza++; 
+                }
+              }
+            </div>
+
+            <div class="row mt-5" style="display: none;" id="emptyproduct">
+              <div class="col-12 col-md-12 col-sm-12 text-center">
+                <h2>We're still preparing the flash sale product. Please stay tuned.</h2>
+              </div>
+            </div>
+          </div>
+        } else {
+          <div class="list-products-class row" style="@style_display; padding: 10% 5% 0; position: relative; background-color: white;" id="list-products-none-@p">
+            <div class="col-main-slim text-center" style="max-height: 200px !important;"><h2>We're still preparing the flash sale @temp2[p].start_time. Please stay tuned.</h2></div>
+          </div>
+        }
+      }
+    </div>
   }
+
 } else {
   <div class="row" style="padding: 10% 5% 0; position: relative; background-color: white;">
     <div class="col-main-slim text-center" style="max-height: 200px !important;"><h2>We're still preparing the flash sale product. Please stay tuned.</h2></div>
   </div>
 }
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 @*sticky thumbnail*@
 <script src="~/Themes/v1/Scripts/jquery.sticky.js"></script>
 <script>
+  $("a[id^='tabDaysFlashSale-']").click(function(){
+    var id = parseInt(this.id.replace("tabDaysFlashSale-", ""), 10);
+    var title_page = $(this).attr("data-name");
+    $(".title-page-flashsale").text(title_page);
+    $("#tabDaysFlashSale-" + id).addClass("active");
+    $("#timeFlashsaleContent-" + id).css("display", "block");
+    $("a[id^='tabDaysFlashSale-']").each(function() {
+      var id_drop = parseInt(this.id.replace("tabDaysFlashSale-", ""), 10);
+      if (id_drop != id) {
+        $("#tabDaysFlashSale-" + id_drop).removeClass("active");
+        $("#timeFlashsaleContent-" + id_drop).css("display", "none");
+      }
+    });
+  });
+  
+  $("a[id^='pills-id-']").click(function(){
+    var title_page = $(this).attr("data-name");
+    $(".title-page-flashsale").text(title_page);
+  });
+  
 	$('.nav-item a').click(function(){
     $(this).tab('show')
     var name = $(this).attr('href').substr(1)
@@ -397,60 +447,67 @@
 	//console.log(`Flash sale`);
   let today_moment = moment().format("MM/DD/YYYY");
 	var model_temp = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	var models = model_temp.filter(mf => mf.status != "finished").length > 0 ? model_temp.filter(mf => mf.status != "finished")[0] : [];
-	var model = models.length > 0 ? model_temp.filter(mf => moment(new Date(mf.start_date)).format("MM/DD/YYYY") == moment(new Date(models.start_date)).format("MM/DD/YYYY")) : [];
-	//console.log(model);
-  if (model.length > 0) {
-    let today = new Date();
-    let date_today = new Date(`${today.getFullYear()}, ${today.getMonth()}, ${today.getDate()}`);
-    
-    // Update the count down every 1 second
-      for (let i = 0; i < model.length; i++) {
-        let data = model[i];
+  //console.log(model_temp);
+	@* var models = model_temp.filter(mf => mf.status != "finished").length > 0 ? model_temp.filter(mf => mf.status != "finished")[0] : null; *@
+	@* var model = model_temp.length > 0 && models ? model_temp.filter(mf => moment(new Date(mf.start_date)).format("MM/DD/YYYY") == moment(new Date(models.start_date)).format("MM/DD/YYYY")) : []; *@
 
-        @* let filter_date = moment(new Date(data.start_date)).format("MM/DD/YYYY");
-        if (today_moment == filter_date)  {
-        } *@
-        let start_day = data && data.start_date ? new Date(data.start_date).getDate() : null;
-        let start_month = data && data.start_date ? new Date(data.start_date).getMonth() : null;
-        let start_year = data && data.start_date ? new Date(data.start_date).getFullYear() : null;
-        
-        let end_day = data && data.end_date ? new Date(data.end_date).getDate() : null;
-        let end_month = data && data.end_date ? new Date(data.end_date).getMonth() : null;
-        let end_year = data && data.end_date ? new Date(data.end_date).getFullYear() : null;
-
-        let start_date = data && data.start_date ? `${start_month+1}/${start_day}/${start_year} ${data.start_time}:00` : null;
-
-        let end_date = data && data.end_date ? `${end_month+1}/${end_day}/${end_year} ${data.end_time}:00` : null;
-        let only_start_date = data && data.start_date ? new Date(`${start_year}, ${start_month}, ${start_day}`) : null;
-        let only_end_date = data && data.end_date ? new Date(`${end_year}, ${end_month}, ${end_day}`) : null;
-        
-        var x = setInterval(function() {
-          // Set the date we're counting down 
-          var countDownDate = new Date(end_date).getTime();
-          var countDownDateStart = new Date(start_date).getTime();
-          // Get today's date and time
-          var now = new Date().getTime();
+  if (model_temp.length > 0) {
+    for (let k = 0; k < model_temp.length; k++) {
+      var model = model_temp[k];
+      if (model.flashsale.length > 0) {
+        let today = new Date();
+        let date_today = new Date(`${today.getFullYear()}, ${today.getMonth()}, ${today.getDate()}`);
+        // Update the count down every 1 second
+          for (let i = 0; i < model.flashsale.length; i++) {
+            let x;
+            let data = model.flashsale[i];
+            if (k ==0 && i==0) $(".title-page-flashsale").text(data.Name);
+            @* let filter_date = moment(new Date(data.start_date)).format("MM/DD/YYYY");
+            if (today_moment == filter_date)  {
+            } *@
+            let start_day = data && data.start_date ? new Date(data.start_date).getDate() : null;
+            let start_month = data && data.start_date ? new Date(data.start_date).getMonth() : null;
+            let start_year = data && data.start_date ? new Date(data.start_date).getFullYear() : null;
             
-          // Find the distance between now and the count down date
-          var distance = countDownDate - now;
-          var distance_start = countDownDateStart - now;
-            
-          // Time calculations for days, hours, minutes and seconds
-          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            let end_day = data && data.end_date ? new Date(data.end_date).getDate() : null;
+            let end_month = data && data.end_date ? new Date(data.end_date).getMonth() : null;
+            let end_year = data && data.end_date ? new Date(data.end_date).getFullYear() : null;
 
-          if (data && distance_start > 0 && distance > 0) {
-            document.getElementById("demo-"+i).innerHTML = "Available in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
-          } else if (data && distance > 0 && distance_start < 0){
-            document.getElementById("demo-"+i).innerHTML = "Ends in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
-          } else if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("demo-"+i).innerHTML = "Ended";
+            let start_date = data && data.start_date ? `${start_month+1}/${start_day}/${start_year} ${data.start_time}:00` : null;
+
+            let end_date = data && data.end_date ? `${end_month+1}/${end_day}/${end_year} ${data.end_time}:00` : null;
+            let only_start_date = data && data.start_date ? new Date(`${start_year}, ${start_month}, ${start_day}`) : null;
+            let only_end_date = data && data.end_date ? new Date(`${end_year}, ${end_month}, ${end_day}`) : null;
+            
+            x = setInterval(function() {
+              // Set the date we're counting down 
+              var countDownDate = new Date(end_date).getTime();
+              var countDownDateStart = new Date(start_date).getTime();
+              // Get today's date and time
+              var now = new Date().getTime();
+                
+              // Find the distance between now and the count down date
+              var distance = countDownDate - now;
+              var distance_start = countDownDateStart - now;
+                
+              // Time calculations for days, hours, minutes and seconds
+              var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+              var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+              var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+              
+              if (data && distance_start > 0 && distance > 0) {
+                document.getElementById("demo-"+k+"-"+i).innerHTML = "Available in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
+              } else if (data && distance > 0 && distance_start < 0){
+                document.getElementById("demo-"+k+"-"+i).innerHTML = "Ends in  " + days + " : " + hours + " : " + minutes + " : " + seconds ;
+              } else if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo-"+k+"-"+i).innerHTML = "Ended";
+              }
+            }, 1000);
           }
-        }, 1000);
       }
+    }
   }
 </script>
