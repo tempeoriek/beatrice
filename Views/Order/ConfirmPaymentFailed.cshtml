@@ -1,0 +1,30 @@
+﻿@using Nop.Web.Models.Customer;
+@model Nop.Web.Models.Flitts.ConfirmPaymentModel
+
+
+
+<section class="col-main-sml mijnaccount mt-large text-center">
+    <h1>Opps something went wrong</h1>
+    <p>
+        @if (Model != null)
+        {
+            <br /><span>@Model.ErrorMsg</span>
+        }
+<br /><br />
+        @{
+
+                            <text>
+                                <a href="~/order/confirmPayment">Back to confirm payment page</a>
+                            </text> }
+
+    </p>
+</section>
+
+
+
+
+@section HeaderSection{
+
+
+
+}
