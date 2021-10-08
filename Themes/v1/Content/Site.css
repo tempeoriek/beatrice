@@ -1601,7 +1601,6 @@ a.dropdown-item {
     align-items: center;
     background-color: transparent;
     padding: 5px;
-    border-radius: 10px;
     border: 2px solid #9D3131;
 }
 
@@ -2844,7 +2843,6 @@ a.dropdown-item {
         padding: 5px;
         text-align: center;
         line-height: 15px;
-        border-radius: 10px;
         border: 2px solid #9D3131;
     }
     
