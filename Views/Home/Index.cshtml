@@ -72,7 +72,7 @@
       }
 
       @* row 2 *@
-      if (item.Id == 2)
+      @* if (item.Id == 2)
       {
         if (item.DesktopItems.Any() && item.MobileItems.Any()) {
           <hr class="mb-5"/>
@@ -120,7 +120,7 @@
             </div>
           </div>
         }
-      }
+      } *@
 
     }
   }
@@ -130,7 +130,9 @@
         Partial view: /views/catalog/_UpcomingCollection.cshtml    
     *@
 
+    <hr class="mb-5"/>
 
+    @Html.Action("HomepageCategories", "Catalog")
     @*@Html.Partial("_HomeComingSoon")*@
 
 

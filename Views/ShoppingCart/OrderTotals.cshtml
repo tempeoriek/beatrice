@@ -138,6 +138,10 @@
         <p style="float: left; color: #454545; font-size: 16px;">Discount</p>
         <p id="discount-number" style="float: right; color: #454545; font-size: 14px;">IDR 0</p>
     </div>
+    <div style="width: 100%; display: flow-root" id="display-points-number">
+        <p style="float: left; color: #454545; font-size: 16px;">Apply Points</p>
+        <p id="points-number" style="float: right; color: #454545; font-size: 14px;">IDR 0</p>
+    </div>
     <hr class="mb-3 mt-3" style="margin: -7%">
     <div style="width: 100%; display: flow-root">
         <b style="float: left; color: #454545; font-size: 16px;">Grand Total</b>
@@ -177,8 +181,11 @@
 
 
 <script>
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-    var text_points = model.RedeemedRewardPoints ? `You have IDR ${model.RedeemedRewardPoints} Points` : `You have IDR 0 Points`;
+    var text_points = model.RewardPointsBalance ? `You have IDR ${numberWithCommas(model.RewardPointsBalance)} Points` : `You have IDR 0 Points`;
     setTimeout(() => {
         $("#loyal-points-now").text(text_points)
     }, 200)

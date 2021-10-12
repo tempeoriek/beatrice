@@ -78,7 +78,7 @@
     min-width: 0px;
     overflow: hidden;
     margin-top: 10px;
-    transition: 0.35s width ease, 0.35s min-width ease;
+    transition: 0.8s width ease, 0.8s min-width ease;
     opacity: 0.6;
 }
 .asidesearch .close {

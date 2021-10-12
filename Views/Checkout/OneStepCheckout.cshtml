@@ -127,7 +127,7 @@
 
                 <li id="opc-shipping_method" class="tab-section allow card-content active">
                     <div class="step-title checkout-margin-title">
-                        <h4 class="title">Shipping Method</h4>
+                        <h4 class="title">Shipping method</h4>
                     </div>
                     <div>
                       <div class="checkout-data">
@@ -211,6 +211,7 @@
                       @* <div onclick="applypoint()" id="button-point" class="d-flex justify-content-center align-items-center" style="background-color: transparent; width: 35%;  border: 0; border-left: 1px solid #707070; cursor: pointer;">APPLY</div> *@
                       <input style="margin-top: 5px;" onclick="applypoint()" type="checkbox" id="loyalpoint-check"/>&nbsp;Apply Loyalty Points
                   </div>
+                  <span class="please-wait" id="points-please-wait" style="display: none;">Please wait..</span>
                   @* <p class="m-0 p-0" style="color: #9D5D3E; font-size: 14px;">You’ll get IDR 24.000 after checking out</p>  *@
                   <hr class="mb-3 mt-3" style="margin: -7%">
                   <p class="m-0 p-0" style="font-weight: bold; color: #454545; font-size: 14px;">Redeem Voucher</p> 
@@ -261,8 +262,15 @@
       //shipping_method: model.ShippingMethod.ShippingMethods.find(mss => mss.Selected).Name,
       //payment_method: model.PaymentMethod.PaymentMethods.find(mss => mss.Selected).PaymentMethodSystemName,
       discount_code: null,
-      point_code: null
+      point_code: false
     };
+
+    $("#display-points-number").css("display", "none");
+    $("b[id^='copy-coupon-']").each(async function() {
+      let temp = $(this).text();
+      await RemoveDiscountAjax(temp);
+    });
+
 
     function inputDisc (value) {
       if (!value) {
@@ -318,19 +326,25 @@
         $("#button-disc").text("APPLY");
         RemoveDiscountAjax(disc)
       }
-
     }
 
-    function applypoint() {
-      $("#checkout-step-button").prop("disabled", true);
+    async function applypoint() {
+      $("#points-please-wait").css("display", "flex");
 
-      var checkBox = document.getElementById("loyalpoint-check");
-      try {
-        var fetch_data = FetchAjax("post", "/checkout/UseRewardPoints", {IsRedeemPoint: checkBox.checked});
-        UpdateOrderTotal()
-      } catch (err) {
-        console.log(err)
-        $("#checkout-step-button").removeAttr('disabled');
+      if (checkout_obj.shipping_address && checkout_obj.shipping_method && checkout_obj.payment_method) {
+        $("#checkout-step-button").prop("disabled", true);
+        var checkBox = document.getElementById("loyalpoint-check");
+        try {
+          var fetch_data = await FetchAjax("post", "/checkout/UseRewardPoints", {IsRedeemPoint: checkBox.checked});
+          checkout_obj.point_code = fetch_data.IsApplied;
+          UpdateOrderTotal()
+        } catch (err) {
+          console.log(err)
+          $("#checkout-step-button").removeAttr('disabled');
+        }
+      } else {
+        $('#loyalpoint-check').prop('checked', false);
+        alert("Please fill the shipping address, shipping method and payment method");
       }
       /*let value = $("#couponcode").val();
       let button_text = $("#button-point").text();
@@ -342,6 +356,8 @@
         $("#couponcode").val("")
         $("#button-point").text("APPLY");
       }*/
+      $("#points-please-wait").css("display", "none");
+
     }
 
     $.validator.setDefaults({
@@ -410,7 +426,7 @@
     function GetNewShippingMethod(items) {
       //EMPTY DATA SHIPPING METHOD 
       $('#shipping-method-select').empty();
-
+      items.sort((a, b) => a.Fee > b.Fee ? 1 : -1);
       //CREATE NEW LIST SHIPPING METHOD
       $.each(items, function (i, item) {
         let method_id = `${item.Name}___${item.ShippingRateComputationMethodSystemName}`;
@@ -647,11 +663,16 @@
           let subtotal_number = fetch_data.SubTotal ? fetch_data.SubTotal : `IDR 0`;
           let shipping_number = fetch_data.Shipping && checkout_obj.shipping_method ? fetch_data.Shipping : `Calculated during checkout`;
           let disc_number = fetch_data.SubTotalDiscount && checkout_obj.discount_code ? fetch_data.SubTotalDiscount : `IDR 0`;
+          let point_number = checkout_obj.point_code ? fetch_data.RedeemedRewardPointsAmount : `IDR 0`;
           let grandtotal_number = fetch_data.OrderTotal ? fetch_data.OrderTotal : `Calculated during checkout`;
           setTimeout(function() {
+            let disp = checkout_obj.point_code ? "flow-root" : "none";
+            $("#display-points-number").css("display", disp);
+
             $("#subtotal-number").text(`${subtotal_number}`);
             $("#shippingcost-number").text(`${shipping_number}`);
             $("#discount-number").text(`${disc_number}`);
+            $("#points-number").text(`${point_number}`);
             if (checkout_obj.payment_method) {
               $("#grandtotal-number").text(`${grandtotal_number}`);
             }
