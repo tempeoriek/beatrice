@@ -434,6 +434,8 @@
       if (id_drop != id) {
         showDropDownHeader(id_drop, "none");
         $("#headingCategory-" + id_drop).css("text-decoration", "none");
+      } else {
+        $("#headingCategory-" + id_drop).css("text-decoration", "underline");
       }
     });
   });
