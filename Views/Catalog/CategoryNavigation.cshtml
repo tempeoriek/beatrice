@@ -224,7 +224,13 @@
               <div class="row px-5 mx-3" style="height: 100%">
                 @for (var i = 0 ; i < 4; i++) {
                   <div class="col-3 col-md-3 col-sm-3 text-center d-flex" style="position: relative; height: 100%">
-                    <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
+                    @* <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/> *@
+                    @if (i == 3) {
+                      <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
+                      <a id="close-category-header-@i" class="ml-3" style="font-size: 20px; cursor: pointer; font-weight: 600; position: absolute; top: 1%; right: -5%;">X</a>
+                    } else {
+                      <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
+                    }
                   </div>
                 }
               </div>
@@ -257,13 +263,13 @@
               <div class="row px-5 mx-3" style="height: 100%">
                 @for (var i = 0 ; i < 4; i++) {
                   <div class="col-3 col-md-3 col-sm-3 text-center d-flex" style="position: relative; height: 100%">
-                    <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
-                    @* @if (i == 3) {
+                    @* <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/> *@
+                    @if (i == 3) {
                       <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
-                      <a id="close-category-header" class="ml-3" style="font-size: 20px; cursor: pointer; font-weight: 600; position: absolute; top: 1%; right: -5%;">X</a>
+                      <a id="close-category-header-@i+100" class="ml-3" style="font-size: 20px; cursor: pointer; font-weight: 600; position: absolute; top: 1%; right: -5%;">X</a>
                     } else {
                       <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
-                    } *@
+                    }
                   </div>
                 }
               </div>
@@ -321,6 +327,7 @@
 		});
 	}
   
+
   function showDropDownHeader(id, show) {
     $("#dropdownMenuLink-" + id).css("display", show);
   }
@@ -338,9 +345,10 @@
   }
 
   //Close header
-  $( "#close-category-header" ).click(function() {
-    scrollHeaderStyle("black", "white", "white");
-    
+  $("a[id^='close-category-header-']" ).click(function() {
+    open_header=false
+    scrollHeaderStyle("black", "white", "black");
+    @* scrollHeaderStyle("black", "white", "white"); *@
     $("a[id^='headingCategory-']").each(function() {
       var id = parseInt(this.id.replace("headingCategory-", ""), 10);
       showDropDownHeader(id, "none");
@@ -389,7 +397,7 @@
   );
 
   //Hover header category
-  $("a[id^='headingCategory-']").hover(
+  @* $("a[id^='headingCategory-']").hover(
     function() {
       open_header = true;
       var id = parseInt(this.id.replace("headingCategory-", ""), 10);
@@ -410,7 +418,25 @@
       showDropDownHeader(id_drop, "flex");
       closeHeader(id_drop);
     }
-  );
+  ); *@
+
+
+  //click header category
+  $("a[id^='headingCategory-']" ).click(function() {
+    open_header = true;
+    var id = parseInt(this.id.replace("headingCategory-", ""), 10);
+
+    showDropDownHeader(id, "flex");
+    scrollHeaderStyle("black", "black", "black");
+
+    $("a[id^='headingCategory-']").each(function() {
+      var id_drop = parseInt(this.id.replace("headingCategory-", ""), 10);
+      if (id_drop != id) {
+        showDropDownHeader(id_drop, "none");
+        $("#headingCategory-" + id_drop).css("text-decoration", "none");
+      }
+    });
+  });
 
   function closeHeader(new_id_drop) {
     var flag = 0;

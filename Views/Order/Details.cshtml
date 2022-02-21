@@ -99,7 +99,7 @@
 
 <script>
     var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	console.log(model);    
+	//console.log(model);    
 
     let changeColor = window.location.pathname == `/customer/info` ? ".account-setting" : 
         window.location.pathname == `/customer/addressAdd` ? ".address-setting" : 

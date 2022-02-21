@@ -1510,7 +1510,9 @@ a.link-nav {
     }*/
 
 
-
+.red {
+    color: #d04626 !important;
+}
 .float-wa {
     position:fixed;
 	width:60px;
@@ -1519,7 +1521,7 @@ a.link-nav {
 	right:40px;
 	border-radius:50px;
 	text-align:center;
-	box-shadow: 2px 2px 3px #999;
+	/* box-shadow: 2px 2px 3px #999; */
     z-index:100;
 }
 a.dropdown-item {
