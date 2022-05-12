@@ -5,12 +5,20 @@
 @using Nop.Web.Models.Catalog;
 
 @{
-  DateTime d1 = Model.PreviewEndDateTimeUtc.Value;
-  DateTime d3 = Model.PreviewStartDateTimeUtc.Value;
+  DateTime? temp_d1 = Model.PreviewEndDateTimeUtc;
+  DateTime? temp_d3 = Model.PreviewStartDateTimeUtc;
   DateTime d2 = DateTime.Now;
-  bool open = d1 > d2 ? true : false;
-  string date1 = d1.ToString("yyyyMMddHHmmss"); 
-  string date2 = d3.ToString("yyyyMMddHHmmss"); 
+  bool open = false;
+  string date1 = "";
+  string date2 = "";
+  if (temp_d1.HasValue && temp_d3.HasValue)
+  {
+    DateTime d1 = Model.PreviewEndDateTimeUtc.Value;
+    DateTime d3 = Model.PreviewStartDateTimeUtc.Value;
+    open = d1 > d2 ? true : false;
+    date1 = d1.ToString("yyyyMMddHHmmss"); 
+    date2 = d3.ToString("yyyyMMddHHmmss"); 
+  }
 
 }
 @if (Model.Products.Any() && open)
