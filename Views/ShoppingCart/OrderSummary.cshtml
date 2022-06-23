@@ -258,7 +258,7 @@
             </div> *@
 
             <!-- cart footer -->
-            <div class="cart-footer d-block d-sm-none">
+            @* <div class="cart-footer d-block d-sm-none">
                 @Html.Partial("_GiftCardDiscountBox", Model.DiscountBox)
                 @Html.Action("OrderTotals", "ShoppingCart", new { isEditable = Model.IsEditable })
 
@@ -272,7 +272,7 @@
                 }
 
             
-            </div>
+            </div> *@
 
         if (Model.IsEditable && Model.Items.Count > 0 && Model.DisplayTaxShippingInfo)
         {
@@ -306,14 +306,14 @@
         {
             <div class="d-none d-md-block">
                 <div class="row">
-
                     <div class="col-6 col-sm-6 checkout-margin-left">
                         @if (Model.IsEditable)
                         {
-                            <button type="submit" id="continueshopping" name="continueshopping" value="@T("ShoppingCart.ContinueShopping")" class="btn btn-default mt-4" style="width: 368px;"> < @T("ShoppingCart.ContinueShopping")</button>
+                            <button type="submit" id="continueshopping" name="continueshopping" value="@T("ShoppingCart.ContinueShopping")" class="btn btn-default mt-4" style="width: 368px;">
+                                < @T("ShoppingCart.ContinueShopping")
+                            </button>
                         }
                     </div>
-
                     <div class="col-6 col-sm-6 mt-4 d-flex justify-content-end">
                         <div>
                             @if (String.IsNullOrEmpty(Model.MinOrderSubtotalWarning))
@@ -352,16 +352,73 @@
                     </div>
                 </div>
             </div>
-                    }
-                }
 
-            }
-            else
-            {
-        <div class="no-data text-center">
-            @T("ShoppingCart.CartIsEmpty")
-        </div>
+            <div class="d-block d-sm-none">
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        @if (Model.IsEditable)
+                        {
+                            <button 
+                                type="submit" 
+                                id="continueshopping" 
+                                name="continueshopping" 
+                                value="@T("ShoppingCart.ContinueShopping")" 
+                                class="btn btn-default mt-4"
+                                style="width: 100%;"
+                            >
+                                < @T("ShoppingCart.ContinueShopping")
+                            </button>
+                        }
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div>
+                            @if (String.IsNullOrEmpty(Model.MinOrderSubtotalWarning))
+                            {
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $('#checkout').click(function () {
+                                            //terms of service
+                                            var termOfServiceOk = true;
+                                            if ($('#termsofservice').length > 0) {
+                                                //terms of service element exists
+                                                if (!$('#termsofservice').is(':checked')) {
+                                                    $("#terms-of-service-warning-box").dialog();
+                                                    termOfServiceOk = false;
+                                                } else {
+                                                    termOfServiceOk = true;
+                                                }
+                                            }
+                                            return termOfServiceOk;
+                                        });
+                                    });
+                                </script>
+
+                                <button 
+                                    type="submit" 
+                                    id="checkout" 
+                                    name="checkout" 
+                                    value="checkout" 
+                                    class="btn btn-default mt-3"
+                                    style="width: 100%;"
+                                >
+                                    Checkout >
+                                </button>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
     }
+
+}
+else
+{
+    <div class="no-data text-center">
+        @T("ShoppingCart.CartIsEmpty")
+    </div>
+}
 
   
 

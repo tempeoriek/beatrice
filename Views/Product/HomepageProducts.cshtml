@@ -20,11 +20,32 @@
       <div class="carouseldesktop best-seller" style="padding-left: 2%; padding-right: 2%;">
         @for(var i = 0; i < Model.Count() ; i++) {
           var temp = Model[i];
+          var label = "";
+          if (temp.MarkAsNew == true) {
+            label = "NEW";
+          }
+          else if (temp.ProductPrice.AvailableForPreOrder == true) {
+            label = "PRE-ORDER";
+          }
+          
           <div class="col-12">
             <div class="row" style="padding: 0 3rem;">
-              <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName})" class="clean">
-                <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block" style="position: relative;"/> 
-              </a>
+              <div style="position: relative;">
+                <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName})" class="clean">
+                  <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block" style=""/> 
+                  @if(label != "") {
+                    <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
+                      <p class="m-0 text-center" style="color: #9D5D3E; height: 100%; font-size: 17px;">@label</p>
+                    </div>
+                  }
+                </a>
+              </div>
+              @* <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName})" class="clean">
+                <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block" style=""/> 
+                <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
+                  <p class="m-0 text-center" style="color: #9D5D3E; height: 100%; font-size: 17px;">@label</p>
+                </div>
+              </a> *@
 
             </div>
             <div class="row mt-2" style="padding: 0 3rem;">
@@ -34,7 +55,14 @@
               
             </div>
             <div class="row" style="padding: 0 3rem;">
-              <p class="worksans-reg" style="font-size: 18px; color: #525252;" class="m-0">@temp.ProductPrice.Price</p>
+              @if (temp.Quantity == 0) {
+                <p class="worksans-reg" style="font-size: 18px; color: #525252;" class="m-0">Out of stock</p>
+              } else if (temp.ProductPrice.AvailableForPreOrder) {
+                <p class="worksans-reg" style="font-size: 18px; color: #525252;" class="m-0">Request A Quote</p>
+              }
+              else {
+                <p class="worksans-reg" style="font-size: 18px; color: #525252;" class="m-0">@temp.ProductPrice.Price</p>
+              }
             </div>
           </div>
         }
@@ -64,11 +92,29 @@
         @for (int i = 0; i < Model.Count(); i++)
         {
           var temp = Model[i];
+          var label = "";
+          if (temp.MarkAsNew == true) {
+            label = "NEW";
+          }
+          else if (temp.ProductPrice.AvailableForPreOrder == true) {
+            label = "PRE-ORDER";
+          }
+
           <div class="col-12 col-md-12 col-sm-12">
             <div class="row px-4" style="display: flex; justify-content: center; align-items: center;">
-              <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName})">
+              <div style="position: relative;">
+                <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName})">
+                  <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block" />
+                  @if(label != "") {
+                    <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
+                      <p class="m-0 text-center" style="color: #9D5D3E; height: 100%; font-size: 17px;">@label</p>
+                    </div>
+                  }
+                </a>
+              </div>
+              @* <a href="@Url.RouteUrl("Product", new { SeName = temp.SeName})">
                 <img src="@temp.DefaultPictureModel.ImageUrl" class="img-fluid center-block" />
-              </a>
+              </a> *@
             </div>
             
             <div class="row px-4" style="font-size: 15px; line-height: 19px; margin-top: 10px;">
@@ -77,7 +123,14 @@
               </a>
             </div>
             <div class="row px-4" style="margin-top: -10px; font-size: 14px;">
-              <p class="worksans-reg" style="font-size: 15px; color: #525252;">@temp.ProductPrice.Price</p>
+              @if (temp.Quantity == 0) {
+                <p class="worksans-reg" style="font-size: 15px; color: #525252;">Out of stock</p>
+              } else if (temp.ProductPrice.AvailableForPreOrder) {
+                <p class="worksans-reg" style="font-size: 15px; color: #525252;">Request A Quote</p>
+              }
+              else {
+                <p class="worksans-reg" style="font-size: 15px; color: #525252;">@temp.ProductPrice.Price</p>
+              }
             </div>
           </div>
         }

@@ -22,8 +22,8 @@
         <div class="container-fluid">
           @if (item.DesktopItems.Any())
           {
-            <div class="row d-none d-md-block hidden-xs hidden-sm">
-              <div class="col-12 d-block d-md-block">
+            @* <div class="row d-none d-md-block hidden-xs hidden-sm">
+              <div class="col-12 d-block d-md-block" style="margin-top: 70px;">
                 <div class="position-relative">
                   <a href="@item.DesktopItems[0].NavigateTo" class="">
                     <img class="d-block w-100 bannerhomeheader" src="@item.DesktopItems[0].PictureUrl">
@@ -35,14 +35,104 @@
                 </div>
                 
                 @Html.Action("Listpartial", "Voucher")
-                @* @Html.Partial("_HomeCoupon") *@
+                //@Html.Partial("_HomeCoupon")
+              </div>
+            </div> *@
+
+            <div class="row d-none d-md-block hidden-xs hidden-sm carousel slide mb-5" data-ride="carousel" id="carouselDesktop">
+              <div class="carousel-inner col-12 d-block d-md-block">
+                @{
+                  var index = 0;
+                  var firstactive = "active";
+                  for (int i = 0; i < item.DesktopItems.Count(); i++)
+                  {
+                    var img = item.DesktopItems[i];
+                    if (i > 0)
+                    {
+                      firstactive = "";
+                    }
+                    <div class="carousel-item @firstactive position-relative">
+                      <a href="@img.NavigateTo" class="">
+                        <img class="d-block w-100 bannerhomeheader" src="@img.PictureUrl">
+                        
+                        @if (img.Title != null) {
+                          <div class="title-inside-banner">
+                            @Html.Raw(img.Title) 
+                          </div>
+                        }
+
+                        @Html.Action("Listpartial", "Voucher")
+                      </a>
+                      
+                    </div>
+
+                    
+                  }
+                }
+              </div>
+              <div class="row" style="position: absolute; bottom: 15%; right: 11%">
+                <div class="mr-5">
+                  <a href="#carouselDesktop" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </div>
+                <div>
+                  <a href="#carouselDesktop" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
               </div>
             </div>
           }
 
           @if (item.MobileItems.Any())
           {
-            <div class="row d-block d-md-none hidden-md hidden-xl carousel slide">
+            <div class="row d-block d-md-none carousel slide" data-ride="carousel" id="carouselExampleControls">
+              <div class="carousel-inner col-12 d-block d-md-block position-relative">
+
+                  @{
+                      var index = 0;
+                      var firstactive = "active";
+                      foreach (var img in item.MobileItems)
+                      {
+                          if (index > 0)
+                          {
+                              firstactive = "";
+                          }
+
+                          <div class="carousel-item @firstactive">
+                              <a href="@img.NavigateTo">
+                                  <img class="d-block w-100" src="@img.PictureUrl">
+                                  @if (img.Title != null) {
+                                    <div class="title-inside-banner">
+                                      @Html.Raw(item.MobileItems[0].Title)
+                                    </div>
+                                  }
+
+                                  <div class="coupon-inside-banner">
+                                    @Html.Action("Listpartial", "Voucher")
+                                  </div>
+                              </a>
+
+
+                          </div>
+
+                          index++;
+                      }
+                  }
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+              </a>
+          </div>
+            @* <div class="row d-block d-md-none hidden-md hidden-xl carousel slide">
               <div class="position-relative">
                 <a href="@item.MobileItems[0].NavigateTo">
                   <img class="d-block w-100" src="@item.MobileItems[0].PictureUrl">
@@ -53,10 +143,10 @@
               </div>
               <div class="coupon-inside-banner">
                 @Html.Action("Listpartial", "Voucher")
-                @* @Html.Partial("_HomeCoupon") *@
+                @Html.Partial("_HomeCoupon")
               </div>
               
-            </div>
+            </div> *@
 
           }
 
@@ -324,5 +414,5 @@
 
 	//console.log(`HOME`);
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	//console.log(model);    
+	//console.log(model);
 </script>

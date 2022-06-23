@@ -53,7 +53,7 @@
                             } else {
                                 <div class="form-fields">
                                     <div class="form-group">
-                                        @Html.DropDownListFor(model => model.Id, new SelectList(Model.PendingOrder, "OrderId", "DispayText"), null, new { @class = "form-control" })
+                                        @Html.DropDownListFor(model => model.Id, new SelectList(Model.PendingOrder, "OrderId", "DispayText"), null, new {@onchange="change_price()", @class = "form-control" })
                                     </div>
                                 </div>
                             }
@@ -180,6 +180,22 @@
             }
         }
     });
+
+	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+    console.log(model)
+    if (model.PendingOrder.length > 0) {
+        var amount = model.PendingOrder[0].OrderTotal.replace(/[^0-9\.]+/g, "");
+        $('input[name="Amount"]').val(parseInt(amount));
+    }
+    function change_price() {
+        var x = document.getElementById("Id").value;
+        if (model.PendingOrder.length > 0) {
+            var pending_order = model.PendingOrder.find(item => item.OrderId == x)
+            var amount = pending_order.OrderTotal.replace(/[^0-9\.]+/g, "");
+            console.log(pending_order, amount)
+            $('input[name="Amount"]').val(parseInt(amount));
+        }
+    }
 </script>
 @section HeaderSection{
     <link href="~/Content/themes/base/datepicker.css" rel="stylesheet" />

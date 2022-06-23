@@ -19,6 +19,14 @@
   }
 
   var style_text = absolutepath.Equals("/new-arrivals") ? "line-height: 1.5em; justify-content: space-between; height: 45px;" : "line-height: 1.5em; justify-content: start; height: 45px;";
+  var label = "";
+  if (Model.MarkAsNew == true) {
+    label = "NEW";
+  }
+  else if (Model.ProductPrice.AvailableForPreOrder == true) {
+    label = "PRE-ORDER";
+  }
+
 }
 <div class="product-item">
   <div class="ori-product-img">
@@ -46,9 +54,16 @@
           }
         </div>
       } else {
-        <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName})" class="clean">
-          <img src="@Model.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
-        </a>
+        <div style="position: relative;">
+          <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName})" class="clean">
+            <img src="@Model.DefaultPictureModel.ImageUrl" class="img-fluid center-block"/>
+            @if(label != "") {
+              <div style="bottom: 0; position: absolute; width: 100%; background-color: rgba(255,255,255, 0.7);">
+                <p class="m-0 text-center" style="color: #9D5D3E; height: 100%; font-size: 17px;">@label</p>
+              </div>
+            }
+          </a>
+        </div>
       }
       
       @if (Model.Quantity == 0 && Model.FlashsaleStatus != "coming soon") {

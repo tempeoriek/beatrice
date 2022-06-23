@@ -120,7 +120,8 @@
   var divId = (ViewBag.isMobile != null) ? "shop-mobile" : "shop";
   string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
   string host = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-	var text_header_color = absolutepath.Equals("/") ? "color: white !important": "color: black !important";
+	var text_header_color = absolutepath.Equals("/") ? "color: black !important": "color: black !important";
+	@* var text_header_color = absolutepath.Equals("/") ? "color: white !important": "color: black !important"; *@
 }
 
 
@@ -321,7 +322,8 @@
 					$(".headertextcolor").attr('style', 'color: black !important');
 				} else {
           if (!open_header) {
-					  $(".headertextcolor").attr('style', 'color: white !important');
+					  $(".headertextcolor").attr('style', 'color: black !important');
+					  @* $(".headertextcolor").attr('style', 'color: white !important'); *@
           }
 				}
 		});
@@ -347,7 +349,7 @@
   //Close header
   $("a[id^='close-category-header-']" ).click(function() {
     open_header=false
-    scrollHeaderStyle("black", "white", "black");
+    scrollHeaderStyle("black", "black", "black");
     @* scrollHeaderStyle("black", "white", "white"); *@
     $("a[id^='headingCategory-']").each(function() {
       var id = parseInt(this.id.replace("headingCategory-", ""), 10);
@@ -477,7 +479,8 @@
       $("a[id^='headingCategory-']").each(function() {
         var id = parseInt(this.id.replace("headingCategory-", ""), 10);
         showDropDownHeader(id, "none");
-        scrollHeaderStyle("black", "white", "black");
+        scrollHeaderStyle("black", "black", "black");
+        @* scrollHeaderStyle("black", "white", "black"); *@
         $("#headingCategory-" + id).css("text-decoration", "none");
       });
     }, 500);
