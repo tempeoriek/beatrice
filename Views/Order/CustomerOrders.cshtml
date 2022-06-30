@@ -23,7 +23,7 @@
             <div class="d-none d-md-block">
                 @Html.Action("CustomerRewardPointsPartial", "Order")
                 <br/><br/>
-                <a class="account-setting" href="@Url.RouteUrl("CustomerInfo")" style="color: #525252; font-size: 16px;">Settings</a><br/>
+                <a class="account-setting" href="@Url.RouteUrl("CustomerInfo")" style="color: #525252; font-size: 16px;">Contact</a><br/>
                 <a class="change-password-setting" href="@Url.RouteUrl("CustomerInfo")" style="color: #525252; font-size: 16px;">Change Password</a><br/>
                 <a class="address-setting" href="~/customer/addressAdd" style="color: #525252; font-size: 16px;">Address</a><br/>
                 <a class="order-setting" href="@Url.RouteUrl("CustomerOrders")" style="color: #525252; font-size: 16px;">Order History</a><br/>
@@ -143,7 +143,7 @@
         window.location.pathname == `/order/history` ? ".order-setting" : 
         window.location.pathname == `/customer/wishlist` ? ".wishlist-setting" : null;
     $(`${changeColor}`).css("cssText", 'color: #E1C2A4 !important; font-size: 16px;');
-    let menuName = window.location.pathname == `/customer/info` ? "Settings" : 
+    let menuName = window.location.pathname == `/customer/info` ? "Contact" : 
         window.location.pathname == `/customer/addressAdd` ? "Address" : 
         window.location.pathname.includes(`/customer/addressedit`) ? "Edit Address" : 
         window.location.pathname == `/customer/changepassword` ? "Change Password" : 

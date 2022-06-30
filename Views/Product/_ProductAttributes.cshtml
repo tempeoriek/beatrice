@@ -30,7 +30,7 @@
               case AttributeControlType.DropdownList:
               {
                 <select name="@(controlId)" id="@(controlId)" class="form-control" style="border: 1px solid #BCBCBC; text-align-last:left; height: 45px;">
-                  <option value="0" selected="selected" style="">Choose your size</option>
+                  <option value="0" selected="selected" style="">Choose Your @att_name</option>
                   @foreach (var pvaValue in attribute.Values)
                   {
                       var attributeName = String.IsNullOrEmpty(pvaValue.PriceAdjustment) ?

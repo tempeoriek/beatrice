@@ -39,7 +39,7 @@
               </div>
             </div> *@
 
-            <div class="row d-none d-md-block hidden-xs hidden-sm carousel slide mb-5" data-ride="carousel" id="carouselDesktop">
+            <div class="row d-none d-md-block hidden-xs hidden-sm carousel slide mb-5" data-ride="carousel" id="carouselDesktop" style="margin-top:70px;">
               <div class="carousel-inner col-12 d-block d-md-block">
                 @{
                   var index = 0;
@@ -89,7 +89,7 @@
 
           @if (item.MobileItems.Any())
           {
-            <div class="row d-block d-md-none carousel slide" data-ride="carousel" id="carouselExampleControls">
+            <div class="row d-block d-md-none carousel slide" data-ride="carousel" id="carouselExampleControls" style="margin-top:60px;">
               <div class="carousel-inner col-12 d-block d-md-block position-relative">
 
                   @{
@@ -131,7 +131,7 @@
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
               </a>
-          </div>
+            </div>
             @* <div class="row d-block d-md-none hidden-md hidden-xl carousel slide">
               <div class="position-relative">
                 <a href="@item.MobileItems[0].NavigateTo">

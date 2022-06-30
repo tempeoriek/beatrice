@@ -24,8 +24,8 @@
           if (temp.MarkAsNew == true) {
             label = "NEW";
           }
-          else if (temp.ProductPrice.AvailableForPreOrder == true) {
-            label = "PRE-ORDER";
+          if (temp.ProductPrice.AvailableForPreOrder == true) {
+            label = "PRE ORDER";
           }
           
           <div class="col-12">
@@ -57,9 +57,10 @@
             <div class="row" style="padding: 0 3rem;">
               @if (temp.Quantity == 0) {
                 <p class="worksans-reg" style="font-size: 18px; color: #525252;" class="m-0">Out of stock</p>
-              } else if (temp.ProductPrice.AvailableForPreOrder) {
+              } 
+              @* else if (temp.ProductPrice.AvailableForPreOrder) {
                 <p class="worksans-reg" style="font-size: 18px; color: #525252;" class="m-0">Request A Quote</p>
-              }
+              } *@
               else {
                 <p class="worksans-reg" style="font-size: 18px; color: #525252;" class="m-0">@temp.ProductPrice.Price</p>
               }
@@ -96,8 +97,8 @@
           if (temp.MarkAsNew == true) {
             label = "NEW";
           }
-          else if (temp.ProductPrice.AvailableForPreOrder == true) {
-            label = "PRE-ORDER";
+          if (temp.ProductPrice.AvailableForPreOrder == true) {
+            label = "PRE ORDER";
           }
 
           <div class="col-12 col-md-12 col-sm-12">
@@ -125,9 +126,10 @@
             <div class="row px-4" style="margin-top: -10px; font-size: 14px;">
               @if (temp.Quantity == 0) {
                 <p class="worksans-reg" style="font-size: 15px; color: #525252;">Out of stock</p>
-              } else if (temp.ProductPrice.AvailableForPreOrder) {
+              } 
+              @* else if (temp.ProductPrice.AvailableForPreOrder) {
                 <p class="worksans-reg" style="font-size: 15px; color: #525252;">Request A Quote</p>
-              }
+              } *@
               else {
                 <p class="worksans-reg" style="font-size: 15px; color: #525252;">@temp.ProductPrice.Price</p>
               }

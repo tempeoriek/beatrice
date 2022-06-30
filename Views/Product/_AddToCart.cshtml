@@ -109,23 +109,23 @@
             if (Model.AvailableForPreOrder)
             {
               @* addToCartText = T("ShoppingCart.PreOrder").Text; *@
-              addToCartText = "REQUEST A QUOTE";
+              addToCartText = "PRE ORDER";
             }
           }
-        if (Model.AvailableForPreOrder) {
-          @* <p class="pt-2" style="color: #707070; font-size: 13px; margin: 0;">Pre-Order : 3/4 weeks from order</p> *@
+        @* if (Model.AvailableForPreOrder) {
+          <p class="pt-2" style="color: #707070; font-size: 13px; margin: 0;">Pre-Order : 3/4 weeks from order</p>
           <button type="button" id="add-to-cart-button-@Model.ProductId" class="btn-addcart button_sare"
             data-productid="@Model.ProductId"
             onclick="location.href='https://wa.me/628111459933'">
             <span>@addToCartText</span>
           </button>
-        } else {
+        } else { *@
           <button id="button-atc" type="button" id="add-to-cart-button-@Model.ProductId" class="btn-addcart button_sare"
               data-productid="@Model.ProductId"
               onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form');return false;">
             <span>@addToCartText</span>
           </button>
-        }
+        @* } *@
         var dataDictAddToWishlist = new ViewDataDictionary();
         dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.ProductId);
 

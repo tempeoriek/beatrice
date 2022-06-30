@@ -36,11 +36,12 @@
           </div>
           
           <div class="row mx-2" style="margin-top: -8px; font-size: 14px;">
-            @if (temp.ProductPrice.AvailableForPreOrder) {
+            @* @if (temp.ProductPrice.AvailableForPreOrder) {
               <div class="price">Request A Quote</div>
             } else {
               <p class="worksans-reg" style="font-size: 20px; color: #525252;">@temp.ProductPrice.Price</p>
-            }
+            } *@
+            <p class="worksans-reg" style="font-size: 20px; color: #525252;">@temp.ProductPrice.Price</p>
 
           </div>
         </div>
@@ -89,11 +90,12 @@
                 </a>
               </div>
               <div class="row mx-1" style="margin-top: -8px; font-size: 14px;">
-                @if (temp.ProductPrice.AvailableForPreOrder) {
+                @* @if (temp.ProductPrice.AvailableForPreOrder) {
                   <div class="price">Request A Quote</div>
                 } else {
                   <p class="worksans-reg">@temp.ProductPrice.Price</p>
-                }
+                } *@
+                <p class="worksans-reg">@temp.ProductPrice.Price</p>
               </div>
             </div>
           }

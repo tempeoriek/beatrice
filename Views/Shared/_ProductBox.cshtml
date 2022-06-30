@@ -23,8 +23,8 @@
   if (Model.MarkAsNew == true) {
     label = "NEW";
   }
-  else if (Model.ProductPrice.AvailableForPreOrder == true) {
-    label = "PRE-ORDER";
+  if (Model.ProductPrice.AvailableForPreOrder == true) {
+    label = "PRE ORDER";
   }
 
 }
@@ -88,9 +88,11 @@
     <div class="prices text-left" style="line-height: 1.5em; padding-top: 0;">
       @if (Model.Quantity == 0 && !modified_product_box) {
         <div class="text-out-of-stock price worksans-reg" style="color: #9D5D3E; font-size: 18px; text-transform: capitalize;">Out of stock</div>
-      } else if (Model.ProductPrice.AvailableForPreOrder) {
+      } 
+      @* else if (Model.ProductPrice.AvailableForPreOrder) {
         <div class="price worksans-reg">Request A Quote</div>
-      } else if (type_url == "coming-soon") {
+      }  *@
+      else if (type_url == "coming-soon") {
         <div id="price-cs-@Model.Id" class="worksans-reg prices" style="color: #454545; text-transform: initial; font-size: 18px;">@strInfoNewArrivals</div>
       } else if (type_url == "flash-sale" && Model.FlashsaleStatus != "finished") {
         <div class="price old--price">

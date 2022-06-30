@@ -114,15 +114,15 @@
                 var dataDictPrice = new ViewDataDictionary();
                 dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
                 
-                if (Model.AddToCart.AvailableForPreOrder) {
+                @* if (Model.AddToCart.AvailableForPreOrder) {
                   <div class="description" style="color: black;">
                     PRE-ORDER
                   </div>
-                } else {
+                } else { *@
                   <div class="d-flex justify-content-center align-items-center">
                     @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
                   </div>
-                }
+                @* } *@
               }
             
               
@@ -232,7 +232,7 @@
 
 @* Related Products Desktop *@
 @Html.Action("RelatedProducts", "Product", new {productId = Model.Id})
-@Html.Action("RelatedProducts", "Product", new {productId = Model.Id})
+@* @Html.Action("RelatedProducts", "Product", new {productId = Model.Id}) *@
 
   <script>
     function copyUrl() {
