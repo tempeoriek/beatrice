@@ -922,12 +922,13 @@ a[class*="child-acc-category-"] {
 .category-item:hover,
 .category-item:active,
 .category-item:focus {
-    color: white;
+    color: black;
     text-decoration:none;
 }
 
 .category-item {
-    color: white;
+    color: black;
+    /* color: white; */
     margin: 0 1em;
     font-size:16px;
 }
