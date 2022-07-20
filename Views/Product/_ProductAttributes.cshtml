@@ -29,7 +29,7 @@
             {
               case AttributeControlType.DropdownList:
               {
-                <select name="@(controlId)" id="@(controlId)" class="form-control" style="border: 1px solid #BCBCBC; text-align-last:left; height: 45px;">
+                <select name="@(controlId)" id="@(controlId)" class="form-control dropdownlist-attr" style="border: 1px solid #BCBCBC; text-align-last:left; height: 45px;">
                   <option value="0" selected="selected" style="">Choose Your @att_name</option>
                   @foreach (var pvaValue in attribute.Values)
                   {
@@ -37,9 +37,29 @@
                               pvaValue.Name :
                               T("Products.ProductAttributes.PriceAdjustment", pvaValue.Name, pvaValue.PriceAdjustment).Text;
                           
-                      <option selected="@pvaValue.IsPreSelected" value="@pvaValue.Id" style=" ">@attributeName</option>
+                      <option id="@pvaValue.PictureModel.FullSizeImageUrl" selected="@pvaValue.IsPreSelected" value="@pvaValue.Id" style=" ">@attributeName</option>
                   }
                 </select>
+
+                <script type="text/javascript">
+
+                  $(document).ready(function() {
+                    $('.dropdownlist-attr').on('change', function() {
+                      var img_num = $('.dropdownlist-attr option:selected').attr('id');
+                      $("img").filter(function(index) {
+                        if ($(this).attr("src").match(img_num)) {
+                          if ($(this).attr("id")) {
+                            var id = parseInt(this.id.replace("prodimg-", ""), 10);
+                            $("div[id^='product-image-']").each(function() {
+                                $(this).removeClass("active");
+                            });
+                            $("#product-image-"+id).addClass("active");
+                          }
+                        }
+                      });
+                    });
+                  });
+                </script>
               }
               break;
               case AttributeControlType.RadioList:
@@ -512,5 +532,5 @@
   });
   //console.log(`HOME`);
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-	//console.log(model);    
+	//console.log(model);
 </script>
