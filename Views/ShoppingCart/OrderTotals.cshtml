@@ -185,6 +185,7 @@
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	//console.log(model);
     var text_points = model.RewardPointsBalance ? `You have IDR ${numberWithCommas(model.RewardPointsBalance)} Points` : `You have IDR 0 Points`;
     setTimeout(() => {
         $("#loyal-points-now").text(text_points)

@@ -17,11 +17,16 @@
             <div class="col-12 col-md-4 col-sm-4 @offset">
                 <div class="row p-3 m-0">
                     <div class="col-9 col-md-9 col-sm-9 text-center body-coupon">
-                        <p style="font-size: 17px; font-weight: 400; line-height: 20px;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
-                        <p style="font-size: 17px; font-weight: 600; margin-top: -20px !important;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon-@i">@discount.CouponCode</p> 
+                        @if (discount.CouponCode != null) {
+                            <p style="font-size: 17px; font-weight: 400; line-height: 20px;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
+                            <p style="font-size: 17px; font-weight: 600; margin-top: -20px !important;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon-@i">@discount.CouponCode</p> 
+                        }
+                        else {
+                            <p style="font-size: 17px; font-weight: 400; line-height: 20px;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
+                        }
                     </div>
                     <div onclick="copyCouponCodeHome(@i)" class="col-3 col-md-3 col-sm-3 text-center d-flex justify-content-center align-items-center body-coupon" style="cursor: pointer;">
-                        <a class="copy-voucher-@i" style="font-size: 17px; color: white; text-decoration: none;"  id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</a>
+                        <p class="copy-voucher-@i p-0 m-0" style="font-size: 17px; color: white; text-decoration: none;"  id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</p>
                     </div>
                 </div>
             </div>

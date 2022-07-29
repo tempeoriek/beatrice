@@ -40,7 +40,7 @@
                 </div>
                 <hr style="margin-bottom: 10px; margin-top: 10px;"/>
                 foreach (var products in Model.Items) {
-                    var img_url = "/Themes/v1/Content/images/flash-sale.jpg";
+                    var img_url = products.Thumbnail;
                     <div id="orderdetail-@products.Id" class="m-0 p-0 mb-3">
                         <div class="row m-0 p-0">
                             <div class="mr-4" style="width: 122px;">
@@ -99,7 +99,6 @@
 
 <script>
     var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-
     let changeColor = window.location.pathname == `/customer/info` ? ".account-setting" : 
         window.location.pathname == `/customer/addressAdd` ? ".address-setting" : 
         window.location.pathname.includes(`/customer/addressedit`) ? ".address-setting" : 
