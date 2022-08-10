@@ -224,12 +224,15 @@
           </div>
 
           <div style="margin: 20px 10px;">
+
+              @Html.Action("CheckoutProductSummary", "ShoppingCart")
+
               @Html.Action("OrderTotals", "ShoppingCart", new { isEditable = true })
 
               @* <input type="submit" id="confirm-button" name="confirm-button" value="Place Order >" class="btn btn-default btn-primary quarter-width" onclick="Checkout()"/> *@
               @* @Html.ValidationSummary(true, "", new { @class = "text-danger" }) *@
               @* <input type="submit" id="confirm-button" name="confirm-button" value="Review order" class="btn btn-default btn-primary quarter-width" />
-              @Html.ValidationSummary(true, "", new { @class = "text-danger" }) *@
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" }) *@
           </div>
       </div>
       </div>

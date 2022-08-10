@@ -1,0 +1,81 @@
+﻿@using Nop.Web.Models.ShoppingCart;
+@model ShoppingCartModel
+
+
+<div style="margin: 10px 0; border: 1px solid #707070; padding: 20px; background-color: #E5E3DF4D;">
+    <p style="color: #454545; font-size: 16px; font-weight: bold;">ORDER SUMMARY</p>
+    @foreach (var item in Model.Items) {
+        <div class="row">
+            <div class="col-4 col-md-4">
+                <img src="@item.Picture.ImageUrl" class="img-fluid"/>
+            </div>
+            <div class="col-2 col-md-2">
+                @item.ProductName
+            </div>
+            <div class="col-2 col-md-2 text-right p-0 m-0">
+                @item.Quantity
+            </div>
+            <div class="col-4 col-md-4 text-right">
+                @item.UnitPrice
+            </div>
+        </div>
+    }
+</div>
+
+@* <div style="margin: 10px 0; border: 1px solid #707070; padding: 20px; background-color: #E5E3DF4D;">
+    <table>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                @if (Model.ShowProductImages)
+                {
+                    <td><img src="@item.Picture.ImageUrl" style="height:120px" /></td>
+                }
+
+                <td style="padding-left:5px; padding-top:5px;">
+                    @item.ProductName
+                    @if (Model.ShowSku)
+                    {
+                        <span class="sku-number">@item.Sku</span>
+                    }
+                    @if (!String.IsNullOrEmpty(item.Size))
+                    {
+                        <span class="attributes text-font">
+                            @Html.Raw(item.Size)
+                        </span>
+                    }
+
+                    <p>
+                        @string.Format("Qty: {0}", item.Quantity)
+                    </p>
+
+                    <p>Price @item.UnitPrice</p>
+
+
+                    <p>
+                        @item.SubTotal
+                        @if (!String.IsNullOrEmpty(item.Discount))
+                        {
+                            <span class="discount">
+                                @T("ShoppingCart.ItemYouSave") @item.Discount
+                            </span>}
+                    </p>
+
+                    @if (item.Warnings.Count > 0)
+                    {
+                        <span class="text-danger">
+                            @for (int i = 0; i < item.Warnings.Count; i++)
+                            {@item.Warnings[i]}
+                        </span>
+                    }
+
+                </td>
+            </tr>
+        }
+    </table>
+</div> *@
+
+<script>
+    var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+	//console.log(model);
+</script>
