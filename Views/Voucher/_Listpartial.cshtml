@@ -8,28 +8,44 @@
 }
 
 @if (homepage) {
-    <div class="row mb-5 m-0 p-0" style="position: absolute; width: 100%; bottom: -35px; color: white;">
+    <div class="row mb-5 m-0 p-0 d-flex justify-content-center align-center" style="position: absolute; width: 100%; bottom: -35px; color: white;">
         @for (int i = 0; i < Model.Count(); i++)
         {
             var temp = Model.ToList();
             var discount = temp[i];
-            var offset = i == 0 ? "offset-md-2 offset-sm-2" : "";
-            <div class="col-12 col-md-4 col-sm-4 @offset">
+            if (discount.CouponCode != null) {
+                @* var offset = i == 0 ? "offset-md-2 offset-sm-2" : "";
+                <div class="col-12 col-md-4 col-sm-4 @offset">
+                    <div class="row p-3 m-0">
+                        <div class="col-9 col-md-9 col-sm-9 text-center body-coupon">
+                            @if (discount.CouponCode != null) {
+                                <p style="font-size: 17px; font-weight: 400; line-height: 20px;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
+                                <p style="font-size: 17px; font-weight: 600; margin-top: -20px !important;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon-@i">@discount.CouponCode</p> 
+                            }
+                            else {
+                                <p style="font-size: 17px; font-weight: 400; line-height: 20px;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
+                            }
+                        </div>
+                        <div onclick="copyCouponCodeHome(@i)" class="col-3 col-md-3 col-sm-3 text-center d-flex justify-content-center align-items-center body-coupon" style="cursor: pointer;">
+                            <p class="copy-voucher-@i p-0 m-0" style="font-size: 17px; color: white; text-decoration: none;"  id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</p>
+                        </div>
+                    </div>
+                </div> *@
                 <div class="row p-3 m-0">
                     <div class="col-9 col-md-9 col-sm-9 text-center body-coupon">
-                        @if (discount.CouponCode != null) {
-                            <p style="font-size: 17px; font-weight: 400; line-height: 20px;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
-                            <p style="font-size: 17px; font-weight: 600; margin-top: -20px !important;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon-@i">@discount.CouponCode</p> 
-                        }
-                        else {
+                        @if (discount.DiscountPercentage != 0) {
                             <p style="font-size: 17px; font-weight: 400; line-height: 20px;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountPercentage)% Off by using coupon code</p> 
                         }
+                        else if (discount.DiscountAmount != 0) {
+                            <p style="font-size: 17px; font-weight: 400; line-height: 20px;" class="text-white d-flex justify-content-center align-items-center p-0 m-0">@Convert.ToInt32(discount.DiscountAmount) IDR Off by using coupon code</p> 
+                        }
+                        <p style="font-size: 17px; font-weight: 600; margin-top: -20px !important;" class="text-white d-flex justify-content-center align-items-center p-0 m-0" id="copy-coupon-@i">@discount.CouponCode</p> 
                     </div>
                     <div onclick="copyCouponCodeHome(@i)" class="col-3 col-md-3 col-sm-3 text-center d-flex justify-content-center align-items-center body-coupon" style="cursor: pointer;">
                         <p class="copy-voucher-@i p-0 m-0" style="font-size: 17px; color: white; text-decoration: none;"  id="copy-@i" data-toggle="tooltip" data-placement="top" title="Copy text">Copy</p>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
 
@@ -38,16 +54,23 @@
     {
         var temp2 = Model.ToList();
         var discount2 = temp2[i];
-        <div id="disc-@i" class="row mt-3 m-0 disc-div" style="line-height: 15px; font-size: 12px; text-align: center; ">
-            <div style="display: grid; align-items: center; width: 65%; height: 80px; border-left: 1px solid #707070; border-bottom: 1px solid #707070; border-top: 1px solid #707070;">
-                <p class="m-0 p-0" style="font-size: 13px">@Convert.ToInt32(discount2.DiscountPercentage)% Off by using coupon code</p>
-                <b id="copy-coupon-@i" class="m-0 p-0" style="font-size: 15px">@discount2.CouponCode</b>
-                <p class="m-0 p-0" style="font-size: 9px">*T&C: one voucher per transaction</p>
+        if (discount2.CouponCode != null) {
+            <div id="disc-@i" class="row mt-3 m-0 disc-div" style="line-height: 15px; font-size: 12px; text-align: center; ">
+                <div style="display: grid; align-items: center; width: 65%; height: 80px; border-left: 1px solid #707070; border-bottom: 1px solid #707070; border-top: 1px solid #707070;">
+                    @if (discount2.DiscountPercentage != 0) {
+                        <p class="m-0 p-0" style="font-size: 13px">@Convert.ToInt32(discount2.DiscountPercentage)% Off by using coupon code</p>
+                    }
+                    else if (discount2.DiscountAmount != 0) {
+                        <p class="m-0 p-0" style="font-size: 13px">@Convert.ToInt32(discount2.DiscountAmount) IDR Off by using coupon code</p>
+                    }
+                    <b id="copy-coupon-@i" class="m-0 p-0" style="font-size: 15px">@discount2.CouponCode</b>
+                    <p class="m-0 p-0" style="font-size: 9px">*T&C: one voucher per transaction</p>
+                </div>
+                <div id="apply-disc-@i" onclick="copyCouponCode(@i)" class="d-flex justify-content-center align-items-center" style="width: 35%; border: 1px solid #707070; cursor: pointer;">
+                    APPLY
+                </div>
             </div>
-            <div id="apply-disc-@i" onclick="copyCouponCode(@i)" class="d-flex justify-content-center align-items-center" style="width: 35%; border: 1px solid #707070; cursor: pointer;">
-                APPLY
-            </div>
-        </div>
+        }
     }
 }
 
