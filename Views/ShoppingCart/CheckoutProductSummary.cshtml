@@ -5,17 +5,17 @@
 <div style="margin: 10px 0; border: 1px solid #707070; padding: 20px; background-color: #E5E3DF4D;">
     <p style="color: #454545; font-size: 16px; font-weight: bold;">ORDER SUMMARY</p>
     @foreach (var item in Model.Items) {
-        <div class="row">
+        <div class="row pt-2">
             <div class="col-4 col-md-4">
                 <img src="@item.Picture.ImageUrl" class="img-fluid"/>
             </div>
             <div class="col-2 col-md-2">
                 @item.ProductName
             </div>
-            <div class="col-2 col-md-2 text-right p-0 m-0">
+            <div class="col-2 col-md-2 p-0 m-0" style="text-align: right;">
                 @item.Quantity
             </div>
-            <div class="col-4 col-md-4 text-right">
+            <div class="col-4 col-md-4" style="text-align: right;">
                 @item.UnitPrice
             </div>
         </div>
