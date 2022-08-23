@@ -177,7 +177,8 @@
                     </div>
                   </div>
                   <div style="font-size: 16px; color: #525252;" class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    @Model.ShortDescription
+                    @Html.Raw(Model.FullDescription)
+                    @* @Model.ShortDescription *@
                   </div>
                 </div>
               </div>
