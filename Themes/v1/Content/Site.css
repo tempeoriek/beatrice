@@ -304,8 +304,21 @@ label { font-weight: normal; margin-bottom: 0; color: black; text-transform: cap
     border: 1px solid #9D5D3E;
 }
 
+.header-container-text { 
+    padding-top: 8%; padding-bottom: 20px; width: 50%; max-width: 100%; height: 500px; flex-direction: column; flex-wrap: wrap;
+}
+.header-text-width { 
+    width: 100%; max-width: 200px;
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
 .open-header-hover-text { 
     margin-bottom: 9%;
+    font-size: 16px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+.open-header-hover-text2 { 
     font-size: 16px;
     cursor: pointer;
     text-transform: uppercase;

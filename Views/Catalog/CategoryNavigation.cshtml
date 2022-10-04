@@ -208,35 +208,47 @@
     if (Model.Categories.Count > 0) {
       foreach (var category in Model.Categories) {
         <div class="content-hover open-header-hover" id="dropdownMenuLink-@category.Id">
-          <div class="row" style="margin: 0px; padding-top: 8%; padding-bottom: 20px; width: 100%;"> 
-            <div class="col-2 col-md-2 col-sm-2 text-left" style="height: 100%">
+          @if (category.SeName == "collection") {
+            <div class="d-flex header-container-text"> 
               @foreach (var sc in category.SubCategories) {
                 if (sc.SeName != "flash-sale" && sc.SeName != "coming-soon") {
-                  <div class="row" id="sub-subCategory-@sc.Id">
-                    <a  href="@Url.RouteUrl("Category", new { SeName = sc.SeName })" class="subcategory-item text-left pl-5 open-header-hover-text">
+                    <a  href="@Url.RouteUrl("Category", new { SeName = sc.SeName })" class="subcategory-item open-header-hover-text2 pl-5 header-text-width">
                       @sc.Name
                     </a>
-                  </div>
                 }
               }
             </div>
-
-            <div class="col-10 col-md-10 col-sm-10" style="height: 100%">
-              <div class="row px-5 mx-3" style="height: 100%">
-                @for (var i = 0 ; i < 4; i++) {
-                  <div class="col-3 col-md-3 col-sm-3 text-center d-flex" style="position: relative; height: 100%">
-                    @* <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/> *@
-                    @if (i == 3) {
-                      <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
-                      <a id="close-category-header-@i" class="ml-3" style="font-size: 20px; cursor: pointer; font-weight: 600; position: absolute; top: 1%; right: -5%;">X</a>
-                    } else {
-                      <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
-                    }
-                  </div>
+          }
+          else {
+            <div class="row" style="margin: 0px; padding-top: 8%; padding-bottom: 20px; width: 100%;"> 
+              <div class="col-2 col-md-2 col-sm-2 text-left" style="height: 100%">
+                @foreach (var sc in category.SubCategories) {
+                  if (sc.SeName != "flash-sale" && sc.SeName != "coming-soon") {
+                    <div class="row" id="sub-subCategory-@sc.Id">
+                      <a  href="@Url.RouteUrl("Category", new { SeName = sc.SeName })" class="subcategory-item text-left pl-5 open-header-hover-text">
+                        @sc.Name
+                      </a>
+                    </div>
+                  }
                 }
               </div>
+
+              <div class="col-10 col-md-10 col-sm-10" style="height: 100%">
+                <div class="row px-5 mx-3" style="height: 100%">
+                  @for (var i = 0 ; i < 4; i++) {
+                    <div class="col-3 col-md-3 col-sm-3 text-center d-flex" style="position: relative; height: 100%">
+                      @if (i == 3) {
+                        <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
+                        <a id="close-category-header-@i" class="ml-3" style="font-size: 20px; cursor: pointer; font-weight: 600; position: absolute; top: 1%; right: -5%;">X</a>
+                      } else {
+                        <img src="@String.Format("/Content/Images/uploaded/home/header-{0}-img.jpg", i)" class="header-photos"/>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
             </div>
-          </div>
+          }
         </div>
       } 
     } else {
@@ -514,7 +526,6 @@
     }
   );
 
-	//console.log(`CATEGORY NAVIGATION`);
 	var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
 	//console.log(model);
 </script>
