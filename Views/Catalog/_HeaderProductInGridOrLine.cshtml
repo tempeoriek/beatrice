@@ -7,7 +7,8 @@
 
 @if (absolutepath.Equals("/new-arrivals")) {
   <div class="row d-none d-md-block carousel" style="margin: 15px 0; margin-bottom: 0; position: relative;"> 
-    <img class="d-block w-100" src="@String.Format("/Content/Images/uploaded/categories/{0}.jpg", Model.SeName)"> 
+    <img class="d-block w-100" src="@Model.PictureModel.ImageUrl"> 
+    @* <img class="d-block w-100" src="@String.Format("/Content/Images/uploaded/categories/{0}.jpg", Model.SeName)">  *@
     <div class="text-center" style="@styleDivCenterDesktop">
       <h1 style="@styleContentCenterDeskopFlashSale">@Model.Name</h1>
     </div>
@@ -21,7 +22,8 @@
   </div>
 } else {
   <div class="row d-none d-md-block carousel" style="margin: 15px 0; margin-bottom: 0; position: relative;"> 
-    <img class="d-block w-100" src="@String.Format("/Content/Images/uploaded/categories/{0}.jpg", Model.SeName)"> 
+    <img class="d-block w-100" src="@Model.PictureModel.ImageUrl"> 
+    @* <img class="d-block w-100" src="@String.Format("/Content/Images/uploaded/categories/{0}.jpg", Model.SeName)">  *@
     <div class="text-center" style="@styleDivCenterDesktop">
     </div>
   </div>
