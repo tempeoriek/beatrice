@@ -103,6 +103,21 @@
           }
         }
       </div>
+      
+      <div class="row" style="display: none;" id="sortcreatedon">
+        @{
+          var productcreatedon = Model.Products.OrderBy(x => x.CreatedOnUtc).ToList();
+          var index_productcreatedon = 0;
+          foreach (var item in productcreatedon)
+          {
+            var colCss = "col-6 col-sm-6 col-md-3 col-lg-3 p-1";
+            <div data-number="@index_productcreatedon" class="@colCss catalog-line allproducts" id="za-@item.Id" style="text-transform: uppercase;" data-new="@item.MarkAsNew">
+              @Html.Partial("_ProductBox", item)
+            </div>
+            index_productcreatedon++; 
+          }
+        }
+      </div>
 
       <div class="row mt-5" style="display: none;" id="emptyproduct">
         <div class="col-12 col-md-12 col-sm-12 text-center">
@@ -207,6 +222,7 @@
     var il = 0; 
     var ia= 0; 
     var iz = 0; 
+    var sort_new = 0; 
     var inr = 0; 
     var iw = 0;
     // start to filter the product
@@ -225,25 +241,33 @@
           if (i == 5 && arr[i]) {
             if (arr[i].length > 0) {
               if (arr[i] == "hightolow") {
-                displaysortproduct("none", "none", "flex", "none")
+                displaysortproduct("none", "none", "flex", "none", "none")
                 removesortnew();
                 displaypageview(arr[4], ih);
                 ih++;
               } else if (arr[i] == "lowtohigh") {
-                displaysortproduct("none", "flex", "none", "none", "none")
+                displaysortproduct("none", "flex", "none", "none", "none", "none")
+                removesortnew();
                 displaypageview(arr[4], il);
                 il++;
               } else if (arr[i] == "az") {
-                displaysortproduct("none", "none", "none", "flex", "none")
+                displaysortproduct("none", "none", "none", "flex", "none", "none")
                 removesortnew();
                 displaypageview(arr[4], ia);
                 ia++;
               } else if (arr[i] == "za") {
-                displaysortproduct("none", "none", "none", "none", "flex")
+                displaysortproduct("none", "none", "none", "none", "flex", "none")
                 removesortnew();
                 displaypageview(arr[4], iz);
                 iz++;
+              @* } else if (arr[i] == "whatnew") {
+                displaysortproduct("none", "none", "none", "none", "none", "flex")
+                removesortnew();
+                displaypageview(arr[4], sort_new);
+                sort_new++;
+              } *@
               } else if (arr[i] == "whatnew") {
+                displaysortproduct("none", "none", "none", "none", "none", "none")
                 var marknew = $(this).attr("data-new");
                 if (marknew == "True") {
                   if (all_arr.find(element => parseInt(element) == parseInt(product_id))) {
@@ -276,12 +300,13 @@
     }
   }
 
-  function displaysortproduct (normal, asc, desc, az, za) {
+  function displaysortproduct (normal, asc, desc, az, za, sort_new) {
     $("#sortnormal").css("display", normal);
     $("#sortascending").css("display", asc);
     $("#sortdescending").css("display", desc);
     $("#sortaz").css("display", az);
     $("#sortza").css("display", za);
+    $("#sortcreatedon").css("display", sort_new);
   }
   
   function displayproductpageview (number, value) {

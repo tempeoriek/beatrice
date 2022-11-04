@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Nop.Web.Models.Flitts.InstagramViewModel>
+@{ 
+    var navTo = "";
+}
+
+
+@{
+    if (Model != null)
+    {
+    <section>
+        <div class="row" style="margin-top: 5%;">
+            <div class="col-12 col-md-12 col-sm-12" style="height: inherit">
+                <h1 class="text-center text-title-demo" style="font-size: 30px;">#iwearbeatrice</h1>
+            </div>
+        </div>
+
+        @*desktop*@
+        <div class="d-none d-md-block hidden-xs hidden-sm">
+            <div class="row p-5">
+                @foreach (var feed in Model)
+                {
+
+                    navTo = "https://www.instagram.com/beatriceclothing";
+                    if (string.IsNullOrWhiteSpace(feed.NavigateTo))
+                    {
+                        navTo = feed.NavigateTo;
+                    }
+
+                    <div class="col-6 col-sm-3 col-md-3 text-center">
+                        <a href="@navTo" target="_blank" rel="noopener noreferrer" class="clean"><img src="@feed.PictureUrl" class="img-fluid center-block" style="padding: 10px;"></a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @*Mobile*@
+        <div class="d-block d-md-none hidden-md hidden-xl mt-5 mb-5">
+            <div style="overflow-x: scroll;">
+                <div style="width: 1000px; margin-left: 35px;">
+                    @foreach (var feed in Model)
+                    {
+
+                        navTo = "https://www.instagram.com/beatriceclothing";
+                        if (string.IsNullOrWhiteSpace(feed.NavigateTo))
+                        {
+                            navTo = feed.NavigateTo;
+                        }
+
+                        <a href="@navTo" target="_blank" rel="noopener noreferrer" class="clean">
+                            <img src="@feed.PictureUrl" class="img-fluid" style="max-width:200px; padding: 5px;">
+                        </a>
+                       
+                    }
+                 </div>
+            </div>
+        </div>
+    </section>
+
+
+       
+
+
+    }
+}
+
+
+

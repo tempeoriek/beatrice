@@ -52,7 +52,7 @@
 	}
   string absolutepath = HttpContext.Current.Request.Url.AbsolutePath;
   string host = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-	var src_img = ""; var menu_icon = ""; var bag_icon = ""; var acc_icon = ""; var logo_header = ""; var logo_mobile = host + "/Themes/v1/Content/images/logo-hitam.svg"; var text_header_color = ""; var header_background = ""; var header_background_mobile = "";
+	var src_img = ""; var menu_icon = ""; var bag_icon = ""; var acc_icon = ""; var logo_header = ""; var logo_mobile = host + "/Themes/v1/Content/images/logo-hitam.png"; var text_header_color = ""; var header_background = ""; var header_background_mobile = "";
 	if (absolutepath.Equals("/")) {
 		@* header_background_mobile = "background-color: transparent;";
 		header_background = "background-color: transparent; height: 70px;";
@@ -68,7 +68,7 @@
 		src_img = host + "/Themes/v1/Content/images/search2.svg";
 		bag_icon = host + "/Themes/v1/Content/images/cart-icon-black.svg";
 		acc_icon = host + "/Themes/v1/Content/images/account-icon-black.svg";
-		logo_header = host + "/Themes/v1/Content/images/logo-hitam.svg";
+		logo_header = host + "/Themes/v1/Content/images/logo-hitam.png";
 		text_header_color = "color: black !important";
 	} else {
 		header_background_mobile = "background-color: white;";
@@ -78,7 +78,7 @@
 		bag_icon = host + "/Themes/v1/Content/images/cart-icon-black.svg";
 		acc_icon = host + "/Themes/v1/Content/images/account-icon-black.svg";
 		text_header_color = "color: black !important";
-		logo_header = host + "/Themes/v1/Content/images/logo-hitam.svg";
+		logo_header = host + "/Themes/v1/Content/images/logo-hitam.png";
 	}
 	
 }
@@ -286,13 +286,13 @@
 	if (window.location.pathname == '/') {
 		$(window).on("scroll", function() {
 				
-				@* let logo_header = $(window).scrollTop() > 50 ?  "/Themes/v1/Content/images/logo-hitam.svg" :  "/Themes/v1/Content/images/logo.svg";
+				@* let logo_header = $(window).scrollTop() > 50 ?  "/Themes/v1/Content/images/logo-hitam.png" :  "/Themes/v1/Content/images/logo.svg";
 				let menu_icon = $(window).scrollTop() > 50 ? "/Themes/v1/Content/images/menu-black.svg" : "/Themes/v1/Content/images/menu-white.svg";
 				let src_img = $(window).scrollTop() > 50 ? "/Themes/v1/Content/images/search2.svg" : "/Themes/v1/Content/images/search.svg";
 				let bag_icon = $(window).scrollTop() > 50 ? "/Themes/v1/Content/images/cart-icon-black.svg" : "/Themes/v1/Content/images/cart-icon.svg";
 				let acc_icon = $(window).scrollTop() > 50 ? "/Themes/v1/Content/images/account-icon-black.svg" : "/Themes/v1/Content/images/account-icon.svg"; *@
 				
-				let logo_header =  "/Themes/v1/Content/images/logo-hitam.svg";
+				let logo_header =  "/Themes/v1/Content/images/logo-hitam.png";
 				let menu_icon = "/Themes/v1/Content/images/menu-black.svg";
 				let src_img = "/Themes/v1/Content/images/search2.svg";
 				let bag_icon = "/Themes/v1/Content/images/cart-icon-black.svg";

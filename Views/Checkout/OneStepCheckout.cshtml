@@ -302,7 +302,7 @@
         UpdateOrderTotal()
         checkout_obj.discount_code = null;
       } catch (err) {
-        console.log(err)
+        //console.log(err)
       }
     }
 
@@ -320,7 +320,7 @@
               $("#button-disc").text("REMOVE");
             }
         } catch (err) {
-          console.log(err)
+          //console.log(err)
           $("#checkout-step-button").removeAttr('disabled');
         }
       } else {
@@ -342,7 +342,7 @@
           checkout_obj.point_code = fetch_data.IsApplied;
           UpdateOrderTotal()
         } catch (err) {
-          console.log(err)
+          //console.log(err)
           $("#checkout-step-button").removeAttr('disabled');
         }
       } else {
@@ -522,15 +522,15 @@
               //UPDATE ORDER TOTAL NUMBERS
               UpdateOrderTotal();
             } else {
-              console.log(`No Shipping Method`);
+              //console.log(`No Shipping Method`);
             }
           } else if (value > 0 && type == "Billing") {
             checkout_obj.billing_address = value;
           }
           
         } catch (err) {
-          console.log('err')
-          console.log(err)
+          //console.log('err')
+          //console.log(err)
         }
       }
       $("#billing-please-wait").css("display", "none");
@@ -590,7 +590,7 @@
             let items = fetch_data.ShippingMethods;
             GetNewShippingMethod(items)
           } else {
-            console.log(`No Shipping Method`);
+            //console.log(`No Shipping Method`);
           }
         } else if (type == "Billing") {
           if (fetch_data.ExistingAddresses.length > 0) {
@@ -602,8 +602,8 @@
           }
         }
       } catch (err) {
-        console.log('err')
-        console.log(err)
+        //console.log('err')
+        //console.log(err)
       }
 
       CloseFormAddress(type)
@@ -628,8 +628,8 @@
           //UPDATE ORDER TOTAL NUMBERS
           UpdateOrderTotal();
         } catch (err) {
-          console.log('err')
-          console.log(err)
+          //console.log('err')
+          //console.log(err)
         }
       }
       $("#shipping-method-please-wait").css("display", "none");
@@ -650,8 +650,8 @@
           //UPDATE ORDER TOTAL NUMBERS
           UpdateOrderTotal();
         } catch (err) {
-          console.log('err')
-          console.log(err)
+          //console.log('err')
+          //console.log(err)
         }
         checkout_obj.payment_method = value == "-1" ? null : value;
       }
@@ -681,11 +681,11 @@
             }
           }, 100);
         } else {
-          console.log("Order total empty")
+          //console.log("Order total empty")
         }
       } catch (err) {
-        console.log('err')
-        console.log(err)
+        //console.log('err')
+        //console.log(err)
       }
       $("#checkout-step-button").removeAttr('disabled');
     }
@@ -704,7 +704,7 @@
             alert(fetch_data.message)
           }
         } catch (err) {
-          console.log(err)
+          //console.log(err)
         }
       }*/
       $("#confirm-order-please-wait").css("display", "none");
