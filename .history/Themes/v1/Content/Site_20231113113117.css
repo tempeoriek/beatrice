@@ -141,14 +141,7 @@ h4{
     text-transform:uppercase;   /*flyout cart & cart*/
 }
 
-p {
-    font-family: worksans-reg;
-    color: black;
-}
-
-span {
-    font-family: worksans-reg;
-}
+p {color: black;}
 
 a:focus,
 a:active,

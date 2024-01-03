@@ -755,9 +755,7 @@
         if (fetch_data) {
           let subtotal_number = fetch_data.SubTotal ? fetch_data.SubTotal : `IDR 0`;
           let shipping_number = fetch_data.Shipping && checkout_obj.shipping_method ? fetch_data.Shipping : `Calculated during checkout`;
-          let disc_number = `IDR 0`;
-          if (fetch_data.SubTotalDiscount && checkout_obj.discount_code) disc_number = fetch_data.SubTotalDiscount;
-          else if (fetch_data.OrderTotalDiscount && checkout_obj.discount_code) disc_number = fetch_data.OrderTotalDiscount;
+          let disc_number = fetch_data.SubTotalDiscount && checkout_obj.discount_code ? fetch_data.SubTotalDiscount : `IDR 0`;
           let point_number = checkout_obj.point_code ? fetch_data.RedeemedRewardPointsAmount : `IDR 0`;
           let grandtotal_number = fetch_data.OrderTotal ? fetch_data.OrderTotal : `Calculated during checkout`;
           setTimeout(function() {

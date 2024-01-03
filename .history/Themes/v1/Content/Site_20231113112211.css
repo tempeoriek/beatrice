@@ -118,7 +118,7 @@ body {
 
 .h1, .h2, .h3, .h4, .h5, .h6,
 h1, h2, h3, h4, h5, h6 {
-    font-family: worksans-reg;
+    font-family: abhaya;
     color: black;
     margin: 0;
     font-weight: normal;
@@ -141,14 +141,7 @@ h4{
     text-transform:uppercase;   /*flyout cart & cart*/
 }
 
-p {
-    font-family: worksans-reg;
-    color: black;
-}
-
-span {
-    font-family: worksans-reg;
-}
+p {color: black;}
 
 a:focus,
 a:active,

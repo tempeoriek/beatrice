@@ -146,10 +146,6 @@ p {
     color: black;
 }
 
-span {
-    font-family: worksans-reg;
-}
-
 a:focus,
 a:active,
 a:hover {
